@@ -1,0 +1,95 @@
+#!/bin/lua
+
+-- program apis/clear
+-- custom logic for determining if we can clear a block
+local clearLogic = function(detect, dig)
+    if detect() then
+        if dig() then
+                return 1
+        else
+                return 0
+        end
+    else
+        return 1
+    end
+    if detect() then
+        return 0
+    else
+        return 1
+    end
+end
+
+function down()
+    return clearLogic(turtle.detectDown, turtle.digDown)
+end
+function forward()
+    return clearLogic(turtle.detect, turtle.dig)
+end
+function left()
+    turtle.turnLeft()
+    return forward()
+end
+function right()
+    turtle.turnRight()
+    return forward()
+end
+function up()
+    return clearLogic(turtle.detectUp, turtle.digUp)
+end
+
+
+-- section for the logic and call functions of spirals
+local spiralLogic = function( turn )
+    local i = 0
+    while turtle.detect() do
+        while turtle.detect() do
+            turtle.dig()
+            turtle.forward()
+            i = i + 1
+        end
+        turn()
+    end
+    return i
+end
+
+function spiralLeft()
+    return spiralLogic(turtle.turnLeft)
+end
+function spiralRight()
+    return spiralLogic(turtle.turnRight)
+end
+
+
+-- custom tunnel, 4 high, num long
+function tunnel( num )
+
+    local movements = { turtle.up, turtle.down }
+    local i = 0
+    while i < num do
+
+        local j = 0
+        local movement = movements[ (i%2)+1 ]
+        while j < 3 do
+            forward()
+            movement()
+            j = j + 1
+        end
+        forward()
+
+        i = i + 1
+
+        -- settle
+        if i == num then
+            -- odd amount of movements
+            if i%2 == 1 then
+                    move.down( 3 )
+            end
+
+        -- move forward a step
+        else
+            move.forward()
+        end
+    end
+
+end
+

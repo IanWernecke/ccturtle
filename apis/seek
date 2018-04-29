@@ -1,0 +1,39 @@
+#!/bin/lua
+
+
+-- program apis/seek
+-- logic and controlling for seek segment
+local seekLogic = function(detect, movement)
+	local i = 0
+	while not detect() do
+		movement()
+		i = i + 1
+	end
+	return i
+end
+
+function back()
+	local i = 0
+	while turtle.back() do
+		i = i + 1
+	end
+	return i
+end
+function forward()
+	return seekLogic(turtle.detect, turtle.forward)
+end
+function down()
+	return seekLogic(turtle.detectDown, turtle.down)
+end
+function left()
+	turtle.turnLeft()
+	return forward()
+end
+function right()
+	turtle.turnRight()
+	return forward()
+end
+function up()
+	return seekLogic(turtle.detectUp, turtle.up)
+end
+

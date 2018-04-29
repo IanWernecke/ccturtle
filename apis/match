@@ -1,0 +1,37 @@
+#!/bin/lua
+
+
+-- program apis/match
+-- logic to match the block using inspection
+local matchLogic = function(string_id, action)
+    local success, data = action()
+    if success then
+        return (string_id == data.name)
+    else
+        return false
+    end
+end
+
+-- series of commands to test strings against connected blocks
+function back(string_id)
+    turn.back()
+    return forward(string_id)
+end
+function forward(string_id)
+    return matchLogic(string_id, turtle.inspect)
+end
+function down(string_id)
+    return matchLogic(string_id, turtle.inspectDown)
+end
+function left(string_id)
+    turtle.turnLeft()
+    return forward(string_id)
+end
+function right(string_id)
+    turtle.turnRight()
+    return forward(string_id)
+end
+function up(string_id)
+    return matchLogic(string_id, turtle.inspectUp)
+end
+

@@ -1,0 +1,55 @@
+#!/bin/lua
+
+
+-- count all of the items in the inventory
+-- with a given string id or all if string_id
+-- is nil
+function count(string_id)
+
+    local i = 1
+    local data = nil
+    local total = 0
+    while i < 16 do
+        if string_id == nil then
+            total = total + turtle.getItemCount(i)
+        else
+            data = turtle.getItemDetail(i)
+            if data.name == string_id then
+                total = total + turtle.getItemCount(i)
+            end
+        end
+    end
+    return total
+
+end
+
+
+-- select the first available item that matches
+-- the given string id, or the first stack
+-- with items if string_id is nil
+function select(string_id)
+
+    local i = 1
+    if string_id == nil then
+        while i < 16 do
+            if 0 < turtle.getItemCount(i) then
+                turtle.select(i)
+                return true
+            end
+            i = i + 1
+        end
+    else
+        local data = nil
+        while i < 16 do
+            data = turtle.getItemDetail(i)
+            if data.name == string_id then
+                turtle.select(i)
+                return true
+            end
+            i = i + 1
+        end
+    end
+    return false
+
+end
+

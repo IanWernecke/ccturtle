@@ -1,0 +1,4 @@
+#!/bin/lua
+
+seek.back()
+

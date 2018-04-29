@@ -1,0 +1,38 @@
+#!/bin/lua
+
+
+-- apis/fill.lua
+-- methods for filling areas (simple)
+ 
+function down()
+	local moved = seek.down()
+	local i = 0
+	while i < moved do
+		turtle.up()
+		place.down()
+		i = i + 1
+	end
+	return moved
+end
+function forward()
+	local moved = seek.forward()
+	local i = 0
+	while i < moved do
+		turtle.back()
+		place.forward()
+		i = i + 1
+	end
+	return moved
+
+end
+function up()
+	local moved = seek.up()
+	local i = 0
+	while i < moved do
+		turtle.down()
+		place.up()
+		i = i + 1
+	end
+	return moved 
+end
+

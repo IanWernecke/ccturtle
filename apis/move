@@ -1,0 +1,57 @@
+#!/bin/lua
+
+
+-- program apis/move
+-- logic and controlling for movement segment
+local moveLogic = function(movement, num)
+
+	-- basic fixer for null parameter
+	if num==nil then
+		num=1
+	end
+
+	-- perform the movements
+	local i = 0
+	while i < num do
+		if movement() then
+			i = i + 1
+		else
+			return i
+		end
+	end
+	return i
+
+end
+
+function back(num)
+	return moveLogic(turtle.back, num)
+end
+function down(num)
+	return moveLogic(turtle.down, num)
+end
+function forward(num)
+	return moveLogic(turtle.forward, num)
+end
+function left(num)
+	turtle.turnLeft()
+	return moveLogic(turtle.forward, num)
+end
+function right(num)
+	turtle.turnRight()
+	return moveLogic(turtle.forward, num)
+end
+function up(num)
+	return moveLogic(turtle.up, num)
+end
+
+
+-- special functions
+function magnet()
+	while turtle.detectDown() and not turtle.detect() do
+		turtle.forward()
+	end
+	if not turtle.detectDown() then
+		turtle.back()
+	end
+end
+

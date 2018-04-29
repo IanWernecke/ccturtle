@@ -1,0 +1,31 @@
+#!/bin/lua
+
+
+-- logic to describe the block using inspection
+local describeLogic = function(action)
+	local success, data = action()
+	if success then
+		print("Block name: " .. data.name)
+		print("Block metadata: " .. data.metadata)
+	end
+end
+
+-- series of commands to test strings against connected blocks
+function forward()
+	return describeLogic(turtle.inspect)
+end
+function down()
+	return describeLogic(turtle.inspectDown)
+end
+function left()
+	turtle.turnLeft()
+	return forward()
+end
+function right()
+	turtle.turnRight()
+	return forward()
+end
+function up()
+	return describeLogic(turtle.inspectUp)
+end
+

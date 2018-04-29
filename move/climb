@@ -1,0 +1,7 @@
+-- program to move up a sheer cliff face
+
+while turtle.detect() do
+	turtle.up()
+end
+turtle.forward()
+

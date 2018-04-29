@@ -1,0 +1,11 @@
+function back()
+    turtle.turnLeft()
+    turtle.turnLeft()
+end
+function left()
+    turtle.turnLeft()
+end
+function right()
+    turtle.turnRight()
+end
+

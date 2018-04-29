@@ -1,0 +1,15 @@
+#!/bin/lua
+
+
+-- program for digging out non-stone blocks
+
+function ore()
+
+    if detect.forward() and not match.forward("minecraft:stone") then
+        turtle.dig()
+        turtle.forward()
+        ore()
+    end
+
+end
+

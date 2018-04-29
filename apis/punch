@@ -1,0 +1,44 @@
+#!/bin/lua
+
+
+-- set of functions for boring and returning
+function back()
+    local i = 0
+    turtle.turnLeft()
+    turtle.turnLeft()
+    i = forward()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    return i
+end
+function down()
+    local i = bore.down()
+    move.up(i)
+    return i
+end
+function forward()
+    local i = 0
+    i = bore.forward()
+    move.back(i)
+    return i
+end
+function left()
+    local i = 0
+    turtle.turnLeft()
+    i = forward()
+    turtle.turnRight()
+    return i
+end
+function right()
+    local i = 0
+    turtle.turnRight()
+    i = forward()
+    turtle.turnLeft()
+    return i
+end
+function up()
+    local i = bore.up()
+    move.down(i)
+    return i
+end
+

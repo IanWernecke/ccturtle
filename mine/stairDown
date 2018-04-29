@@ -1,0 +1,32 @@
+#!/bin/lua
+
+-- catwalk program
+
+local args = {...}
+
+-- Check number of arguments for usage
+if #args ~= 1 then
+	print( "Argument required for depth of staircase." )
+	exit()
+end
+
+-- number of levels down we wish to go down
+local MAX = tonumber(args[1])
+local depth = 0
+while depth < MAX do
+
+    dig.forward(6)
+
+    -- move back five (off by one so we don't make a wall)
+    move.back(5)
+
+    -- move down one
+    if turtle.detectDown() and depth < MAX -1 then
+        dig.down()
+    end
+
+    depth = depth + 1
+
+end
+
+

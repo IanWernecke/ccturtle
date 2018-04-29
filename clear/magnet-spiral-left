@@ -1,0 +1,33 @@
+-- clear/magnet-spiral-left.lua
+
+os.run( {}, "/move/magnet" )
+
+-- hit object in front
+if turtle.detect() then
+
+	turtle.up()
+
+	-- probably not good
+	if turtle.detect() then
+		turtle.down()
+		shell.exit()
+	end
+
+	turtle.forward()
+	turtle.turnRight()
+
+else
+
+	turtle.turnLeft()
+
+end
+
+os.run( {}, "/move/magnet" )
+
+turtle.turnLeft()
+turtle.back()
+turtle.down()
+
+clear.spiralLeft()
+
+
