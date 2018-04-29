@@ -1,0 +1,74 @@
+rm turtle
+mkdir turtle/.
+github get IanWernecke/ccturtle/master/test test
+github get IanWernecke/ccturtle/master/setup setup
+github get IanWernecke/ccturtle/master/basic basic
+github get IanWernecke/ccturtle/master/info info
+github get IanWernecke/ccturtle/master/build.py build.py
+github get IanWernecke/ccturtle/master/startup startup
+mkdir turtle/fill
+github get IanWernecke/ccturtle/master/fill/spiralRight fill/spiralRight
+mkdir turtle/seek
+github get IanWernecke/ccturtle/master/seek/forward seek/forward
+github get IanWernecke/ccturtle/master/seek/right seek/right
+github get IanWernecke/ccturtle/master/seek/back seek/back
+github get IanWernecke/ccturtle/master/seek/left seek/left
+github get IanWernecke/ccturtle/master/seek/down seek/down
+github get IanWernecke/ccturtle/master/seek/up seek/up
+mkdir turtle/mine
+github get IanWernecke/ccturtle/master/mine/stairDown mine/stairDown
+github get IanWernecke/ccturtle/master/mine/trench mine/trench
+github get IanWernecke/ccturtle/master/mine/trenchSeek.lua mine/trenchSeek.lua
+github get IanWernecke/ccturtle/master/mine/trenchSeek mine/trenchSeek
+github get IanWernecke/ccturtle/master/mine/trench.lua mine/trench.lua
+mkdir turtle/build
+github get IanWernecke/ccturtle/master/build/catwalk.lua build/catwalk.lua
+github get IanWernecke/ccturtle/master/build/wallStruts build/wallStruts
+github get IanWernecke/ccturtle/master/build/wall build/wall
+github get IanWernecke/ccturtle/master/build/wall.lua build/wall.lua
+mkdir turtle/build/signal
+github get IanWernecke/ccturtle/master/build/signal/home build/signal/home
+mkdir turtle/place
+github get IanWernecke/ccturtle/master/place/forward place/forward
+mkdir turtle/clear
+github get IanWernecke/ccturtle/master/clear/magnet-spiral-right clear/magnet-spiral-right
+github get IanWernecke/ccturtle/master/clear/forwardLeft clear/forwardLeft
+github get IanWernecke/ccturtle/master/clear/forwardRight clear/forwardRight
+github get IanWernecke/ccturtle/master/clear/magnet-spiral-left clear/magnet-spiral-left
+github get IanWernecke/ccturtle/master/clear/forwardBoth clear/forwardBoth
+github get IanWernecke/ccturtle/master/clear/tunnel clear/tunnel
+mkdir turtle/clear/spiral
+github get IanWernecke/ccturtle/master/clear/spiral/right clear/spiral/right
+github get IanWernecke/ccturtle/master/clear/spiral/left clear/spiral/left
+mkdir turtle/strafe
+github get IanWernecke/ccturtle/master/strafe/right strafe/right
+github get IanWernecke/ccturtle/master/strafe/left strafe/left
+mkdir turtle/apis
+github get IanWernecke/ccturtle/master/apis/bore apis/bore
+github get IanWernecke/ccturtle/master/apis/dig apis/dig
+github get IanWernecke/ccturtle/master/apis/fill apis/fill
+github get IanWernecke/ccturtle/master/apis/seek apis/seek
+github get IanWernecke/ccturtle/master/apis/mine apis/mine
+github get IanWernecke/ccturtle/master/apis/describe apis/describe
+github get IanWernecke/ccturtle/master/apis/match apis/match
+github get IanWernecke/ccturtle/master/apis/place apis/place
+github get IanWernecke/ccturtle/master/apis/clear apis/clear
+github get IanWernecke/ccturtle/master/apis/basic apis/basic
+github get IanWernecke/ccturtle/master/apis/turn apis/turn
+github get IanWernecke/ccturtle/master/apis/move apis/move
+github get IanWernecke/ccturtle/master/apis/inventory apis/inventory
+github get IanWernecke/ccturtle/master/apis/punch apis/punch
+mkdir turtle/move
+github get IanWernecke/ccturtle/master/move/forward move/forward
+github get IanWernecke/ccturtle/master/move/climb move/climb
+github get IanWernecke/ccturtle/master/move/right move/right
+github get IanWernecke/ccturtle/master/move/back move/back
+github get IanWernecke/ccturtle/master/move/magnet move/magnet
+github get IanWernecke/ccturtle/master/move/left move/left
+github get IanWernecke/ccturtle/master/move/down move/down
+github get IanWernecke/ccturtle/master/move/up move/up
+mkdir turtle/util
+github get IanWernecke/ccturtle/master/util/describe util/describe
+github get IanWernecke/ccturtle/master/util/describeUp util/describeUp
+github get IanWernecke/ccturtle/master/util/describeDown util/describeDown
+github get IanWernecke/ccturtle/master/util/select util/select
