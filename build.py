@@ -43,11 +43,12 @@ def main():
 
             # find the relative path to the directory
             rel_file = os.path.relpath(abs_file, base_dir)
-            lines.append('shell.run("/openp/github get {github_user}/{github_repo}/{github_branch}/{github_path} {pc_path}")'.format(
+            lines.append('shell.run("/openp/github get {github_user}/{github_repo}/{github_branch}/{github_path} {pc_root}/{pc_path}")'.format(
                 github_user=github_user,
                 github_repo=github_repo,
                 github_branch=github_branch,
                 github_path=rel_file,
+                pc_root=pc_root,
                 pc_path=rel_file
             ))
 
