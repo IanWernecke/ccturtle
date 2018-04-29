@@ -1,0 +1,26 @@
+#!/bin/lua
+
+-- Show current turtle system status
+
+print("Turtle: " .. os.getComputerLabel())
+print("Version: " .. os.version())
+print("Fuel: " .. turtle.getFuelLevel() .. " / " .. turtle.getFuelLimit())
+print("Time: " .. os.day() .. 'T' .. os.time())
+
+-- load desired apis
+-- simple (standalone)
+
+os.loadAPI("/apis/dig") -- requires:
+os.loadAPI("/apis/move") -- requires:
+os.loadAPI("/apis/seek") -- requires:
+os.loadAPI("/apis/clear") -- requires:
+os.loadAPI("/apis/bore") -- requires:
+os.loadAPI("/apis/describe") -- requires:
+os.loadAPI("/apis/match") -- requires:
+os.loadAPI("/apis/place") -- requires:
+
+-- compound (require simple)
+
+os.loadAPI("/apis/punch") -- requires: bore, move
+os.loadAPI("/apis/fill") -- requires: place
+
