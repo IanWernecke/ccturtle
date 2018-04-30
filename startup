@@ -7,7 +7,7 @@ maximum = turtle.getFuelLimit()
 
 print("Turtle: " .. os.getComputerLabel())
 print("Version: " .. os.version())
-print("Fuel: " (current / maximum * 100) .. "%  (" .. current .. " / " .. maximum .. ")")
+print("Fuel: " .. (current / maximum * 100) .. "%  (" .. current .. " / " .. maximum .. ")")
 print("Time: " .. os.day() .. 'T' .. os.time())
 
 -- load desired apis
