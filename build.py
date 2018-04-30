@@ -35,11 +35,11 @@ def main():
         # walk each file in the directory
         for sub_file in sub_files:
 
-            # ignore garbage files
-            if sub_file in ignore:
-                continue
-
             abs_file = os.path.join(rel_dir, sub_file)
+
+            # ignore garbage files
+            if abs_file in ignore:
+                continue
 
             # find the relative path to the directory
             rel_file = os.path.relpath(abs_file, base_dir)

@@ -1,0 +1,17 @@
+#!/bin/lua
+
+-- basic program
+
+local args = {...}
+
+-- Check number of arguments for usage
+if #args ~= 1 then
+	print( "Argument required for length of run." )
+	exit()
+end
+
+for i,v in ipairs(args) do
+	print( "argument #" .. i .. " is:" .. v )
+end
+
+

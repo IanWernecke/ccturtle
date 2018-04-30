@@ -1,0 +1,14 @@
+#!/bin/lua
+
+-- inventory/select program
+
+local args = {...}
+
+-- Check number of arguments for usage
+if #args ~= 1 then
+    print( "Argument required for length of run." )
+    exit()
+end
+
+inventory.select(args[1])
+

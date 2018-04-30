@@ -1,0 +1,13 @@
+#!/bin/lua
+
+-- inventory/count program
+
+local args = {...}
+
+block = nil
+if #args == 1 then
+    block = args[1]
+end
+
+print(inventory.count(block))
+
