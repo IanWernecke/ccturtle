@@ -1,6 +1,7 @@
 #!/bin/lua
 
-local apiLogic = function(detect, dig, move, num)
+-- api core logic
+local basic_logic = function(detect, dig, move, num)
     local i = 0
     while i < num do
         if detect() then
@@ -15,26 +16,28 @@ local apiLogic = function(detect, dig, move, num)
     return i
 end
 
+
+-- standard six directional commands
 function back(num)
     turtle.turnLeft()
     turtle.turnLeft()
-    return apiLogic(turtle.dig, num)
+    return forward(num)
 end
 function down(num)
-   return apiLogic(turtle.digDown, num) 
+   return basic_logic(turtle.digDown, num) 
 end
 function forward(num)
-    return apiLogic(turtle.dig, num)
+    return basic_logic(turtle.dig, num)
 end
 function left(num)
     turtle.turnLeft()
-    return apiLogic(turtle.dig, num)
+    return forward(num)
 end
 function right(num)
     turtle.turnRight()
-    return apiLogic(turtle.dig, num)
+    return forward(num)
 end
 function up(num)
-    return apiLogic(turtle.digUp, num)
+    return basic_logic(turtle.digUp, num)
 end
 

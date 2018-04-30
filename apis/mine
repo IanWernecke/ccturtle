@@ -2,12 +2,42 @@
 
 
 -- program for digging out non-stone blocks
-
+-- this is not tested
 function ore()
 
-    if detect.forward() and not match.forward("minecraft:stone") then
-        turtle.dig()
-        turtle.forward()
+    -- detect in a direction, dig and move for each, recursive
+
+    -- forward
+    if turtle.detect() and not match.forward("minecraft:stone") then
+        dig.forward()
+        ore()
+    end
+
+    -- right
+    turtle.turnRight()
+    if turtle.detect() and not match.forward("minecraft:stone") then
+        dig.forward()
+        ore()
+    end
+    turtle.turnLeft()
+
+    -- left
+    turtle.turnLeft()
+    if turtle.detect() and not match.forward("minecraft:stone") then
+        dig.forward()
+        ore()
+    end
+    turtle.turnRight()
+    
+    -- up
+    if turtle.detectUp() and not match.up("minecraft:stone") then
+        dig.up()
+        ore()
+    end
+
+    -- down
+    if turtle.detectDown() and not match.down("minecraft:stone") then
+        dig.down()
         ore()
     end
 

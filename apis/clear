@@ -1,29 +1,37 @@
 #!/bin/lua
 
--- program apis/clear
--- custom logic for determining if we can clear a block
-local clearLogic = function(detect, dig)
+
+-- api core logic
+local clear_logic = function(detect, dig)
+
+    -- if a block is detected
     if detect() then
+
+        -- if digging is successful
         if dig() then
                 return 1
         else
                 return 0
         end
+
+    -- no block detected, return success
     else
         return 1
     end
-    if detect() then
-        return 0
-    else
-        return 1
-    end
+
 end
 
+
+function back()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    return forward()
+end
 function down()
-    return clearLogic(turtle.detectDown, turtle.digDown)
+    return clear_logic(turtle.detectDown, turtle.digDown)
 end
 function forward()
-    return clearLogic(turtle.detect, turtle.dig)
+    return clear_logic(turtle.detect, turtle.dig)
 end
 function left()
     turtle.turnLeft()
@@ -34,12 +42,12 @@ function right()
     return forward()
 end
 function up()
-    return clearLogic(turtle.detectUp, turtle.digUp)
+    return clear_logic(turtle.detectUp, turtle.digUp)
 end
 
 
 -- section for the logic and call functions of spirals
-local spiralLogic = function( turn )
+local spiral = function(turn_command)
     local i = 0
     while turtle.detect() do
         while turtle.detect() do
@@ -47,16 +55,16 @@ local spiralLogic = function( turn )
             turtle.forward()
             i = i + 1
         end
-        turn()
+        turn_command()
     end
     return i
 end
 
-function spiralLeft()
-    return spiralLogic(turtle.turnLeft)
+function spiral_left()
+    return spiral(turtle.turnLeft)
 end
-function spiralRight()
-    return spiralLogic(turtle.turnRight)
+function spiral_right()
+    return spiral(turtle.turnRight)
 end
 
 

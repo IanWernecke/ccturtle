@@ -3,37 +3,39 @@
 
 -- program apis/seek
 -- logic and controlling for seek segment
-local seekLogic = function(detect, movement)
-	local i = 0
-	while not detect() do
-		movement()
-		i = i + 1
-	end
-	return i
+local seek_logic = function(detection, movement)
+    local i = 0
+    while not detect() do
+        movement()
+        i = i + 1
+    end
+    return i
 end
 
+
+-- six standard directions
 function back()
-	local i = 0
-	while turtle.back() do
-		i = i + 1
-	end
-	return i
+    local i = 0
+    while turtle.back() do
+        i = i + 1
+    end
+    return i
 end
 function forward()
-	return seekLogic(turtle.detect, turtle.forward)
+    return seek_logic(turtle.detect, turtle.forward)
 end
 function down()
-	return seekLogic(turtle.detectDown, turtle.down)
+    return seek_logic(turtle.detectDown, turtle.down)
 end
 function left()
-	turtle.turnLeft()
-	return forward()
+    turtle.turnLeft()
+    return forward()
 end
 function right()
-	turtle.turnRight()
-	return forward()
+    turtle.turnRight()
+    return forward()
 end
 function up()
-	return seekLogic(turtle.detectUp, turtle.up)
+    return seek_logic(turtle.detectUp, turtle.up)
 end
 

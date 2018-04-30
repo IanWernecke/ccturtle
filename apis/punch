@@ -1,7 +1,11 @@
 #!/bin/lua
 
 
+-- file: apis/punch
 -- set of functions for boring and returning
+-- these functions do not follow the normal schema
+-- because they revert their turns to their original
+-- orientation
 function back()
     local i = 0
     turtle.turnLeft()
@@ -12,15 +16,10 @@ function back()
     return i
 end
 function down()
-    local i = bore.down()
-    move.up(i)
-    return i
+    return move.up(bore.down())
 end
 function forward()
-    local i = 0
-    i = bore.forward()
-    move.back(i)
-    return i
+    return move.back(bore.forward())
 end
 function left()
     local i = 0
@@ -37,8 +36,6 @@ function right()
     return i
 end
 function up()
-    local i = bore.up()
-    move.down(i)
-    return i
+    return move.down(bore.up())
 end
 

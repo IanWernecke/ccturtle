@@ -1,40 +1,41 @@
 #!/bin/lua
 
-local digLogic = function(detect, dig, move, num)
+
+-- api core logic
+local dig_logic = function(detect, dig, move, num)
 
     -- optional arg fix
     if num == nil then
         num = 1
     end
 
-    local i = 0
-    while i < num do
+    for i=1,num do
 
         if detect() then
             dig()
         end
 
-        if move() then
-            i = i + 1
-        else
+        if not move() then
             return i
         end
 
     end
-    return i
+    return num
 
 end
 
+
+-- six basic directions
 function back(num)
     turtle.turnLeft()
     turtle.turnLeft()
     return forward(num)
 end
 function down(num)
-    return digLogic(turtle.detectDown, turtle.digDown, turtle.down, num) 
+    return dig_logic(turtle.detectDown, turtle.digDown, turtle.down, num) 
 end
 function forward(num)
-    return digLogic(turtle.detect, turtle.dig, turtle.forward, num)
+    return dig_logic(turtle.detect, turtle.dig, turtle.forward, num)
 end
 function left(num)
     turtle.turnLeft()
@@ -45,6 +46,6 @@ function right(num)
     return forward(num)
 end
 function up(num)
-    return digLogic(turtle.detectUp, turtle.digUp, turtle.up, num) 
+    return dig_logic(turtle.detectUp, turtle.digUp, turtle.up, num) 
 end
 

@@ -2,14 +2,18 @@
 
 -- Show current turtle system status
 
+current = turtle.getFuelLevel()
+maximum = turtle.getFuelLimit()
+
 print("Turtle: " .. os.getComputerLabel())
 print("Version: " .. os.version())
-print("Fuel: " .. turtle.getFuelLevel() .. " / " .. turtle.getFuelLimit())
+print("Fuel: " (current / maximum * 100) .. "%  (" .. current .. " / " .. maximum .. ")")
 print("Time: " .. os.day() .. 'T' .. os.time())
 
 -- load desired apis
 -- simple (standalone)
 
+os.loadAPI("/apis/detect") -- requires:
 os.loadAPI("/apis/dig") -- requires:
 os.loadAPI("/apis/move") -- requires:
 os.loadAPI("/apis/seek") -- requires:

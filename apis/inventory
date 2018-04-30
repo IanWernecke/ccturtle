@@ -1,25 +1,69 @@
 #!/bin/lua
 
 
+-- function: contains
+-- param string_id: the name of the block to search for in inventory
+-- return: boolean
+function contains(string_id)
+
+    return find(string_id) ~= nil
+
+end
+
+
 -- count all of the items in the inventory
 -- with a given string id or all if string_id
 -- is nil
 function count(string_id)
 
-    local i = 1
-    local data = nil
+    local data
     local total = 0
-    while i < 16 do
+    for i=1,16 do
         if string_id == nil then
             total = total + turtle.getItemCount(i)
         else
             data = turtle.getItemDetail(i)
             if data.name == string_id then
-                total = total + turtle.getItemCount(i)
+                total = total + data.count
             end
         end
     end
     return total
+
+end
+
+
+-- function: find
+-- param string_id: the name of an item to seek
+-- return: a slot number that matches the string_id
+function find(string_id)
+
+    assert(string_id, 'string_id must be given')
+
+    -- search for an item that matches a given string_id
+    local data
+    for i=1,16 do
+        data = turtle.getItemDetail(i)
+        if data.name == string_id then
+            return i
+        end
+    end
+    return nil
+
+end
+
+
+-- function: first
+-- return: returns the first inventory slot with items in it
+function first()
+
+    for i=1,16 do
+        if 0 < turtle.getItemCount(i) then
+            return i
+        end
+    end
+
+    error("Unable to find any items in inventory")
 
 end
 
@@ -29,27 +73,15 @@ end
 -- with items if string_id is nil
 function select(string_id)
 
-    local i = 1
-    if string_id == nil then
-        while i < 16 do
-            if 0 < turtle.getItemCount(i) then
-                turtle.select(i)
-                return true
-            end
-            i = i + 1
-        end
-    else
-        local data = nil
-        while i < 16 do
-            data = turtle.getItemDetail(i)
-            if data.name == string_id then
-                turtle.select(i)
-                return true
-            end
-            i = i + 1
-        end
+    assert(string_id, 'string_id must be given')
+
+    local i = find(string_id)
+    if i == nil then
+        return false
     end
-    return false
+
+    turtle.select(i)
+    return true
 
 end
 

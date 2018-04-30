@@ -6,7 +6,10 @@ import sys
 
 builder_py = os.path.abspath(__file__)
 base_dir = os.path.dirname(builder_py)
-ignore = [builder_py]
+ignore = [
+    builder_py,
+    os.path.join(base_dir, 'README.md')
+]
 
 github_user = 'IanWernecke'
 github_repo = 'ccturtle'
@@ -20,9 +23,7 @@ def main():
 
     :return: a system exit code.
     """
-
     lines = ['shell.run("rm {}")'.format(pc_root)]
-    # lines = ['mkdir {}'.format(pc_root_dir)]
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
         if '.git' in walked_dir:

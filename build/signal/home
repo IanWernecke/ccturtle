@@ -1,79 +1,81 @@
+#!/bin/lua
+
 -- build a home signal
 
 -- buffer
-move.up( 30 )
+move.up(30)
 
 -- begin arrow down
-turtle.placeDown()
+place.down()
 
 -- second layer
 for i=1,4 do
-	turtle.place()
-	turtle.turnRight()
+    place.forward()
+    turtle.turnRight()
 end
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- third layer
 for i=1,4 do
-	turtle.forward()
-	turtle.place()
-	turtle.back()
-	turtle.place()
-	turtle.turnRight()
+    turtle.forward()
+    place.forward()
+    turtle.back()
+    place.forward()
+    turtle.turnRight()
 end
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- fourth and fifth layer
 for i = 1,3 do
-	turtle.up()
-	turtle.placeDown()
+    move.up()
+    place.down()
 end
 
 -- begin house
 -- sixth layer
 for i=1,4 do
-	turtle.place()
-	turtle.turnRight()
+    place.forward()
+    turtle.turnRight()
 end
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- seventh layer
 for i=1,4 do
-	turtle.place()
-	turtle.turnRight()
+    place.forward()
+    turtle.turnRight()
 end
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- eigth layer
 for i=1,4 do
-	turtle.forward()
-	turtle.place()
-	turtle.back()
-	turtle.place()
-	turtle.turnRight()
+    move.forward()
+    place.forward()
+    move.back()
+    place.forward()
+    turtle.turnRight()
 end
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- ninth layer
 for i=1,4 do
-	turtle.place()
-	turtle.turnRight()
+    place.forward()
+    turtle.turnRight()
 end
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- tip top
-turtle.up()
-turtle.placeDown()
+move.up()
+place.down()
 
 -- move forward 3 and sink
 for i=1,3 do
-	turtle.forward()
+    turtle.forward()
 end
-move.seekDown()
+seek.down()
 

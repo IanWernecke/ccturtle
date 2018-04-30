@@ -1,44 +1,32 @@
 #!/bin/lua
 
 
--- program apis/place
--- logic to place the next available block
-local placeLogic = function(action, detect)
+-- program apis/place_logic
+-- logic to place_logic the next available block
+local place_logic = function(action_command)
 
-    if turtle.getItemCount() > 0 then
-        action()
-        return detect()
+    -- if able to place_logic block, success!
+    if action_command() then
+        return true
     end
 
-    -- select next slot with item count
-    local i = 1
-    turtle.select(i)
-    while turtle.getItemCount() == 0 and i < 16 do
-        i = i + 1
-        turtle.select(i)
-    end
-
-    -- exit if we found nothing
-    if turtle.getItemCount() == 0 then
-        return false
-    end
-
-    action()
-    return detect()
+    turtle.select(inventory.first())
+    return action_command()
 
 end
 
--- series of commands to always place any available blocks (after current spot)
+
+-- series of commands to always place_logic any available blocks (after current spot)
 function back()
     turtle.turnLeft()
     turtle.turnleft()
     return forward()
 end
 function forward()
-    return placeLogic(turtle.place, turtle.detect)
+    return place_logic(turtle.place)
 end
 function down()
-    return placeLogic(turtle.placeDown, turtle.detectDown)
+    return place_logic(turtle.placeDown)
 end
 function left()
     turtle.turnLeft()
@@ -49,6 +37,6 @@ function right()
     return forward()
 end
 function up()
-    return placeLogic(turtle.placeUp, turtle.detectUp)
+    return place_logic(turtle.placeUp)
 end
 

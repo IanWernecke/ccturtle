@@ -1,7 +1,5 @@
--- program to move up a sheer cliff face
+#!/bin/lua
 
-while turtle.detect() do
-	turtle.up()
-end
-turtle.forward()
+-- program to move up a sheer cliff face
+move.climb()
 
