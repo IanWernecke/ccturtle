@@ -54,7 +54,7 @@ def main():
                 pc_path=rel_file
             ))
 
-    # testing; write out the setup so far
+    # write the new setup file
     output = '\n'.join(lines)
     with open('setup', 'wb') as f:
         f.write(output.encode('utf-8'))
