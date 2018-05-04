@@ -22,6 +22,7 @@ os.loadAPI("/apis/bore") -- requires:
 os.loadAPI("/apis/describe") -- requires:
 os.loadAPI("/apis/match") -- requires:
 os.loadAPI("/apis/place") -- requires:
+os.loadAPI("/apis/slide") -- requires:
 
 -- compound (require simple)
 
