@@ -1,0 +1,13 @@
+#!/bin/lua
+
+local ins = turtle.inspect
+
+turtle.turnRight()
+
+local data = ins()
+local count = mine.match(data.name)
+
+turtle.turnLeft()
+
+print("Mined " .. tostring(count) .. " " .. data.name)
+

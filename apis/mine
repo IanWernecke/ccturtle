@@ -43,3 +43,63 @@ function ore()
 
 end
 
+
+-- mine all of an exact block type
+function match(block)
+
+    if block == nil then
+       if turtle.detect() then
+            local data = turtle.inspect()
+            block = data.name
+            print("Mining: " .. block)
+        else
+            error("Unable to detect block.")
+        end 
+    end
+
+    local count = 0
+
+    -- forward
+    if turtle.detect() and match.forward(block) then
+        dig.forward()
+        count = count + exact(block) + 1
+        turtle.back()
+    end
+
+    -- right
+    turtle.turnRight()
+    if turtle.detect() and match.forward(block) then
+        dig.forward()
+        count = count + exact(block) + 1
+        turtle.back()
+    end
+    turtle.turnLeft()
+
+    -- left
+    turtle.turnLeft()
+    if turtle.detect() and match.forward(block) then
+        dig.forward()
+        count = count + exact(block) + 1
+        turtle.back()
+    end
+    turtle.turnRight()
+
+    -- up
+    if turtle.detectUp() and match.up(block) then
+        dig.up()
+        count = count + exact(block) + 1
+        turtle.down()
+    end
+   
+    -- down
+    if turtle.detectDown() and match.down(block) then
+        dig.down()
+        count = count + exact(block) + 1
+        turtle.up()
+    end 
+
+    return count
+
+end
+
+
