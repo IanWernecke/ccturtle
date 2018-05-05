@@ -54,15 +54,6 @@ end
 
 
 -- special functions
-function climb()
-    local i = 0
-    while turtle.detect() do
-        turtle.up()
-        i = i + 1
-    end
-    turtle.forward()
-    return i
-end
 function magnet()
     while turtle.detectDown() and not turtle.detect() do
         turtle.forward()

@@ -4,7 +4,7 @@ while turtle.detectDown() and not turtle.detect() do
 	turtle.forward()
 end
 
-if not turtle.detect() then
+if not turtle.detectDown() then
 	turtle.back()
 end
 
