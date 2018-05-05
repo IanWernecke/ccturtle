@@ -5,7 +5,7 @@
 -- logic and controlling for seek segment
 local seek_logic = function(detection, movement)
     local i = 0
-    while not detect() do
+    while not detection() do
         movement()
         i = i + 1
     end
