@@ -1,0 +1,4 @@
+shell.run("rm /setup")
+shell.run("/openp/github get IanWernecke/ccturtle/master/setup /setup")
+shell.run("/setup")
+
