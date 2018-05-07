@@ -1,88 +1,25 @@
 #!/bin/lua
 
 
--- program for digging out non-stone blocks
--- this is not tested
-function ore()
+-- mine all blocks that match the given block id
+function vein(block)
 
-    -- detect in a direction, dig and move for each, recursive
-
-    -- forward
-    if turtle.detect() and not match.forward("minecraft:stone") then
-        dig.forward()
-        ore()
-    end
-
-    -- right
-    turtle.turnRight()
-    if turtle.detect() and not match.forward("minecraft:stone") then
-        dig.forward()
-        ore()
-    end
-    turtle.turnLeft()
-
-    -- left
-    turtle.turnLeft()
-    if turtle.detect() and not match.forward("minecraft:stone") then
-        dig.forward()
-        ore()
-    end
-    turtle.turnRight()
-    
-    -- up
-    if turtle.detectUp() and not match.up("minecraft:stone") then
-        dig.up()
-        ore()
-    end
-
-    -- down
-    if turtle.detectDown() and not match.down("minecraft:stone") then
-        dig.down()
-        ore()
-    end
-
-end
-
-
--- mine all of an exact block type
-function match(block)
-
+    -- throw an error if the block name is not passed
     if block == nil then
-       if turtle.detect() then
-            local data = turtle.inspect()
-            block = data.name
-            print("Mining: " .. block)
-        else
-            error("Unable to detect block.")
-        end 
+        error("Block is nil.")
     end
 
     local count = 0
 
-    -- forward
-    if turtle.detect() and match.forward(block) then
-        dig.forward()
-        count = count + exact(block) + 1
-        turtle.back()
+    -- loop and look in all four directions
+    for i=1,4 do
+        if turtle.detect() and match.forward(block) then
+            dig.forward()
+            count = count + exact(block) + 1
+            turtle.back()
+        end
+        turtle.turnLeft()
     end
-
-    -- right
-    turtle.turnRight()
-    if turtle.detect() and match.forward(block) then
-        dig.forward()
-        count = count + exact(block) + 1
-        turtle.back()
-    end
-    turtle.turnLeft()
-
-    -- left
-    turtle.turnLeft()
-    if turtle.detect() and match.forward(block) then
-        dig.forward()
-        count = count + exact(block) + 1
-        turtle.back()
-    end
-    turtle.turnRight()
 
     -- up
     if turtle.detectUp() and match.up(block) then

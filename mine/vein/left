@@ -2,12 +2,12 @@
 
 local ins = turtle.inspect
 
-turtle.turnRight()
+turtle.turnLeft()
 
 local data = ins()
-local count = mine.match(data.name)
+local count = mine.vein(data.name)
 
-turtle.turnLeft()
+turtle.turnRight()
 
 print("Mined " .. tostring(count) .. " " .. data.name)
 

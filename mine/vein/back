@@ -6,7 +6,7 @@ turtle.turnLeft()
 turtle.turnLeft()
 
 local data = ins()
-local count = mine.match(data.name)
+local count = mine.vein(data.name)
 
 turtle.turnLeft()
 turtle.turnLeft()
