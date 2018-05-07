@@ -2,6 +2,9 @@
 
 
 -- mine all blocks that match the given block id
+-- TODO: determine a fix for java exception error after
+-- arbitrary limit of 256 recursion
+-- error: java.lang.ArrayIndexOutOfBoundsException
 function vein(block)
 
     -- throw an error if the block name is not passed
@@ -10,6 +13,25 @@ function vein(block)
     end
 
     local count = 0
+
+    -- up
+    -- checking up first should mean that we float first and
+    -- encounter fewer recursion errors, probably
+    if turtle.detectUp() and match.up(block) then
+        dig.up()
+        count = count + vein(block) + 1
+        turtle.down()
+    end
+
+    -- down
+    -- hoping that checking down second also cuts down on
+    -- recursion count, since top and bottom of spheres
+    -- should have a smaller count
+    if turtle.detectDown() and match.down(block) then
+        dig.down()
+        count = count + vein(block) + 1
+        turtle.up()
+    end 
 
     -- loop and look in all four directions
     for i=1,4 do
@@ -20,20 +42,6 @@ function vein(block)
         end
         turtle.turnLeft()
     end
-
-    -- up
-    if turtle.detectUp() and match.up(block) then
-        dig.up()
-        count = count + vein(block) + 1
-        turtle.down()
-    end
-   
-    -- down
-    if turtle.detectDown() and match.down(block) then
-        dig.down()
-        count = count + vein(block) + 1
-        turtle.up()
-    end 
 
     return count
 
