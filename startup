@@ -28,5 +28,5 @@ os.loadAPI("/apis/slide") -- requires:
 
 os.loadAPI("/apis/punch") -- requires: bore, move
 os.loadAPI("/apis/fill") -- requires: place
-os.loadAPI("/api/mine") -- requires: match, dig
+os.loadAPI("/apis/mine") -- requires: match, dig
 
