@@ -15,7 +15,7 @@ function vein(block)
     for i=1,4 do
         if turtle.detect() and match.forward(block) then
             dig.forward()
-            count = count + exact(block) + 1
+            count = count + vein(block) + 1
             turtle.back()
         end
         turtle.turnLeft()
@@ -24,14 +24,14 @@ function vein(block)
     -- up
     if turtle.detectUp() and match.up(block) then
         dig.up()
-        count = count + exact(block) + 1
+        count = count + vein(block) + 1
         turtle.down()
     end
    
     -- down
     if turtle.detectDown() and match.down(block) then
         dig.down()
-        count = count + exact(block) + 1
+        count = count + vein(block) + 1
         turtle.up()
     end 
 
