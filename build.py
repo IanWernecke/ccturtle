@@ -91,7 +91,7 @@ def main():
             continue
         if '.git' == f:
             continue
-        lines.append('rm /{}'.format(f))
+        lines.append('shell.run("rm /{}")'.format(f))
 
     lines_to_file(lines, 'sanitize')
 
