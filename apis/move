@@ -27,12 +27,19 @@ end
 --      which is against traditional schema
 -- 
 function back(num)
+
+    -- null argument fixer
+    if num == nil then
+        num = 1
+    end
+
     local count = 0
     for i=1,num do
         turtle.back()
         count = count + 1
     end
     return count
+
 end
 function down(num)
     return move_logic(turtle.down, num)

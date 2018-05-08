@@ -23,25 +23,40 @@ function vein(block)
         turtle.down()
     end
 
+    -- loop and look in all four directions
+    for i=1,4 do
+
+        -- seek forward so long as the blocks in front match
+        local distance = 0
+        while turtle.detect() and match.forward(block) do
+            dig.forward()
+            distance = distance + 1
+        end
+
+        -- append the total number of mined blocks
+        count = count + distance
+
+        -- move back and check for blocks while doing so
+        while distance > 0 do
+            count = count + vein(block)
+            turtle.back()
+            distance = distance - 1
+        end
+
+        -- turn to check all directions        
+        turtle.turnLeft()
+
+    end
+
     -- down
-    -- hoping that checking down second also cuts down on
-    -- recursion count, since top and bottom of spheres
-    -- should have a smaller count
+    -- this used to be done second but that means there is
+    -- a risk of lots of ups and downs at the corners of
+    -- the spheres. up-middle-down hopefully is sane
     if turtle.detectDown() and match.down(block) then
         dig.down()
         count = count + vein(block) + 1
         turtle.up()
     end 
-
-    -- loop and look in all four directions
-    for i=1,4 do
-        if turtle.detect() and match.forward(block) then
-            dig.forward()
-            count = count + vein(block) + 1
-            turtle.back()
-        end
-        turtle.turnLeft()
-    end
 
     return count
 
