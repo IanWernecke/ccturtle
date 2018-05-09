@@ -1,3 +1,4 @@
+shell.run("rm /dig")
 shell.run("rm /fill")
 shell.run("rm /seek")
 shell.run("rm /setup")

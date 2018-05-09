@@ -1,15 +1,25 @@
 #!/bin/lua
 
 
+-- set a limit to the amount of times the vein function can call itself
+local recursion_limit = 250
+
+
 -- mine all blocks that match the given block id
 -- TODO: determine a fix for java exception error after
 -- arbitrary limit of 256 recursion
 -- error: java.lang.ArrayIndexOutOfBoundsException
-function vein(block)
+function vein(block, level)
 
     -- throw an error if the block name is not passed
     if block == nil then
         error("Block is nil.")
+    end
+
+    -- a way to keep track of the recursion level, and not
+    -- call ourselves if we're in deep
+    if level == nil then
+        level = 1
     end
 
     local count = 0
@@ -19,7 +29,10 @@ function vein(block)
     -- encounter fewer recursion errors, probably
     if turtle.detectUp() and match.up(block) then
         dig.up()
-        count = count + vein(block) + 1
+        count = count + 1
+        if level < recursion_limit then
+            count = count + vein(block, level + 1)
+        end
         turtle.down()
     end
 
@@ -38,7 +51,9 @@ function vein(block)
 
         -- move back and check for blocks while doing so
         while distance > 0 do
-            count = count + vein(block)
+            if level < limit then
+                count = count + vein(block, level + 1)
+            end
             turtle.back()
             distance = distance - 1
         end
@@ -54,7 +69,10 @@ function vein(block)
     -- the spheres. up-middle-down hopefully is sane
     if turtle.detectDown() and match.down(block) then
         dig.down()
-        count = count + vein(block) + 1
+        count = count + 1
+        if level < limit then
+            count = count + vein(block, level + 1)
+        end
         turtle.up()
     end 
 

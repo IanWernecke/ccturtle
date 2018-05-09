@@ -1,41 +1,80 @@
 #!/bin/lua
 
 
+-- punch logic
+-- param: detector
+local punch_logic = function(detector, digger, matcher, mover, block)
+
+    local i = 0
+    if block == nil then
+        -- block was not given, punch through everything
+        while detector() do
+            digger()
+            i = i + 1
+        end
+    else
+        -- if a block was given, only punch through blocks that match
+        while detector() and matcher(block) do
+            digger()
+            i = i + 1
+        end
+    end
+    mover(i)
+    return i
+
+end
+
+
 -- file: apis/punch
 -- set of functions for boring and returning
 -- these functions do not follow the normal schema
 -- because they revert their turns to their original
 -- orientation
-function back()
-    local i = 0
+function back(block)
     turtle.turnLeft()
     turtle.turnLeft()
-    i = forward()
+    local result = forward(block)
     turtle.turnLeft()
     turtle.turnLeft()
-    return i
+    return result
 end
-function down()
-    return move.up(bore.down())
+function down(block)
+    return punch_logic(
+        turtle.detectDown,
+        dig.down,
+        match.down,
+        move.up,
+        block
+    )
 end
-function forward()
-    return move.back(bore.forward())
+function forward(block)
+    return punch_logic(
+        turtle.detect,
+        dig.forward,
+        match.forward,
+        move.back,
+        block
+    )
 end
-function left()
-    local i = 0
+function left(block)
     turtle.turnLeft()
-    i = forward()
+    local result = forward(block)
     turtle.turnRight()
-    return i
+    return result
 end
-function right()
-    local i = 0
+function right(block)
     turtle.turnRight()
-    i = forward()
+    local result = forward(block)
     turtle.turnLeft()
-    return i
+    return result
 end
-function up()
-    return move.down(bore.up())
+function up(block)
+    return punch_logic(
+        turtle.detectUp,
+        dig.up,
+        match.up,
+        move.down,
+        block
+    )
 end
 
