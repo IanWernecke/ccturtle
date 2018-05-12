@@ -1,6 +1,8 @@
 #!/bin/lua
 
--- Show current turtle system status
+--
+-- show current turtle system status
+--
 
 current = turtle.getFuelLevel()
 maximum = turtle.getFuelLimit()
@@ -10,23 +12,49 @@ print("Version: " .. os.version())
 print("Fuel: " .. (current / maximum * 100) .. "%  (" .. current .. " / " .. maximum .. ")")
 print("Time: " .. os.day() .. 'T' .. os.time())
 
+--
 -- load desired apis
--- simple (standalone)
+--
 
-os.loadAPI("/apis/detect") -- requires:
-os.loadAPI("/apis/dig") -- requires:
-os.loadAPI("/apis/move") -- requires:
-os.loadAPI("/apis/seek") -- requires:
-os.loadAPI("/apis/clear") -- requires:
-os.loadAPI("/apis/bore") -- requires:
-os.loadAPI("/apis/describe") -- requires:
-os.loadAPI("/apis/match") -- requires:
-os.loadAPI("/apis/place") -- requires:
-os.loadAPI("/apis/slide") -- requires:
+-- requires: nil
+os.loadAPI("/apis/con")
 
--- compound (require simple)
+-- requires: nil
+os.loadAPI("/apis/detect")
 
-os.loadAPI("/apis/punch") -- requires: bore, move
-os.loadAPI("/apis/fill") -- requires: place
-os.loadAPI("/apis/mine") -- requires: match, dig
+-- requires: nil
+os.loadAPI("/apis/dig")
+
+-- requires: nil
+os.loadAPI("/apis/move")
+
+-- requires: nil
+os.loadAPI("/apis/seek")
+
+-- requires: nil
+os.loadAPI("/apis/clear")
+
+-- requires: nil
+os.loadAPI("/apis/bore")
+
+-- requires: nil
+os.loadAPI("/apis/describe")
+
+-- requires: nil
+os.loadAPI("/apis/match")
+
+-- requires: nil
+os.loadAPI("/apis/place")
+
+-- requires: nil
+os.loadAPI("/apis/slide")
+
+-- requires: bore, move
+os.loadAPI("/apis/punch")
+
+-- requires: place
+os.loadAPI("/apis/fill")
+
+-- requires: match, dig
+os.loadAPI("/apis/mine")
 

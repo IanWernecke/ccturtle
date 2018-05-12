@@ -2,6 +2,7 @@
 
 
 import os
+import subprocess
 import sys
 
 
@@ -29,6 +30,27 @@ turtle_ignore = [
     'openp',
     'rom'
 ]
+
+
+def execute(args, cwd=None):
+    """
+    Call something on the host and get the result.
+
+    :return: stdout, stderr, returncode
+    """
+    if cwd is None:
+        cwd = os.getcwd()
+
+    p = subprocess.Popen(
+        args,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        cwd=cwd
+    )
+
+    stdout, stderr = p.communicate()
+
+    return stdout, stderr, p.returncode
 
 
 def lines_to_file(file_lines, file_name):
@@ -94,6 +116,8 @@ def main():
         lines.append('shell.run("rm /{}")'.format(f))
 
     lines_to_file(lines, 'sanitize')
+
+    execute(['git', 'add', 'setup', 'sanitize'])
 
     return 0
 
