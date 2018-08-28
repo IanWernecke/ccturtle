@@ -1,60 +1,77 @@
 #!/bin/lua
 
---
--- show current turtle system status
---
 
-current = turtle.getFuelLevel()
-maximum = turtle.getFuelLimit()
+function print_system_status()
+    -- print the current system label, version, fuel level, and time
 
-print("Turtle: " .. os.getComputerLabel())
-print("Version: " .. os.version())
-print("Fuel: " .. (current / maximum * 100) .. "%  (" .. current .. " / " .. maximum .. ")")
-print("Time: " .. os.day() .. 'T' .. os.time())
+    print("Label: " .. os.getComputerLabel())
+    print("Version: " .. os.version())
+    if turtle then
+        current = turtle.getFuelLevel()
+        maximum = turtle.getFuelLimit()
+        print("Fuel: " .. (current / maximum * 100) .. "%  (" .. current .. " / " .. maximum .. ")")
+    end
+    print("Time: " .. os.day() .. 'T' .. os.time())
 
---
--- load desired apis
---
+end
 
--- requires: nil
-os.loadAPI("/apis/con")
 
--- requires: nil
-os.loadAPI("/apis/detect")
+function load_turtle_apis()
+    -- load apis to be used by a turtle
 
--- requires: nil
-os.loadAPI("/apis/dig")
+    -- requires: nil
+    os.loadAPI("/apis/con")
 
--- requires: nil
-os.loadAPI("/apis/move")
+    -- requires: nil
+    os.loadAPI("/apis/detect")
 
--- requires: nil
-os.loadAPI("/apis/seek")
+    -- requires: nil
+    os.loadAPI("/apis/dig")
 
--- requires: nil
-os.loadAPI("/apis/clear")
+    -- requires: nil
+    os.loadAPI("/apis/move")
 
--- requires: nil
-os.loadAPI("/apis/bore")
+    -- requires: nil
+    os.loadAPI("/apis/seek")
 
--- requires: nil
-os.loadAPI("/apis/describe")
+    -- requires: nil
+    os.loadAPI("/apis/clear")
 
--- requires: nil
-os.loadAPI("/apis/match")
+    -- requires: nil
+    os.loadAPI("/apis/bore")
 
--- requires: nil
-os.loadAPI("/apis/place")
+    -- requires: nil
+    os.loadAPI("/apis/describe")
 
--- requires: nil
-os.loadAPI("/apis/slide")
+    -- requires: nil
+    os.loadAPI("/apis/match")
 
--- requires: bore, move
-os.loadAPI("/apis/punch")
+    -- requires: nil
+    os.loadAPI("/apis/place")
 
--- requires: place
-os.loadAPI("/apis/fill")
+    -- requires: nil
+    os.loadAPI("/apis/slide")
 
--- requires: match, dig
-os.loadAPI("/apis/mine")
+    -- requires: bore, move
+    os.loadAPI("/apis/punch")
+
+    -- requires: place
+    os.loadAPI("/apis/fill")
+
+    -- requires: match, dig
+    os.loadAPI("/apis/mine")
+
+end
+
+
+function main()
+    -- print the system status and load any required apis
+
+    print_system_status()
+    if turtle then
+        load_turtle_apis()
+    end
+
+end
+main()
 
