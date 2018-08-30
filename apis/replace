@@ -1,0 +1,106 @@
+#!/bin/lua
+
+
+-- program apis/seek
+-- logic and controlling for seek segment
+-- match_string: attempt to find blocks of this string
+-- place_string: attempt to place blocks of this string
+-- seek_action: the function to move through empty blocks
+-- match_action: the match function to call
+-- dig_action: the dig action to call
+-- place_action: the place action to call
+-- move_action: the move action to call (during return)
+local replace_logic = function(
+    match_string,
+    place_string,
+    seek_action,
+    match_action,
+    dig_action,
+    place_action,
+    move_action
+)
+
+    local i = seek_action()
+    local total = i
+    local j = 0
+
+    -- dig through the blocks that match
+    while match_action(match_string) do
+        dig_action()
+        j = j + 1
+    end
+    total = total + j
+
+    -- if the turtle moved, try again (for gaps)
+    if 0 < total then
+        replace_logic()
+    end
+
+    -- replace blocks that were dug
+    while 0 < j do
+        place_action(place_string)
+        j = j - 1
+    end
+
+    -- move back the number of blocks sought
+    move_action(i)
+    return total
+
+end
+
+
+-- six standard directions
+function back(match_string, place_string)
+    turtle.turnLeft()
+    turtle.turnLeft()
+    local result = forward(match_string, place_string)
+    turtle.turnLeft()
+    turtle.turnLeft()
+    return result
+end
+function forward(match_string, place_string)
+    return replace_logic(
+        match_string,
+        place_string,
+        seek.forward,
+        match.forward,
+        dig.forward,
+        place.forward,
+        move.back
+    )
+end
+function down(match_string, place_string)
+    return replace_logic(
+        match_string,
+        place_string,
+        seek.down,
+        match.down,
+        dig.down,
+        place.down,
+        move.up
+    )
+end
+function left(match_string, place_string)
+    turtle.turnLeft()
+    local result = forward(match_string, place_string)
+    turtle.turnRight()
+    return result
+end
+function right(match_string, place_string)
+    turtle.turnRight()
+    local result = forward(match_string, place_string)
+    turtle.turnLeft()
+    return result
+end
+function up(match_string, place_string)
+    return replace_logic(
+        match_string,
+        place_string,
+        seek.up,
+        match.up,
+        dig.up,
+        place.up,
+        move.down
+    )
+end
+

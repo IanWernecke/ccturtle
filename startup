@@ -61,6 +61,9 @@ function load_turtle_apis()
     -- requires: match, dig
     os.loadAPI("/apis/mine")
 
+    -- requires: seek, match, dig, place, move
+    os.loadAPI("/apis/replace")
+
 end
 
 
