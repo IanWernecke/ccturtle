@@ -33,7 +33,10 @@ local replace_logic = function(
 
     -- if the turtle moved, try again (for gaps)
     if 0 < total then
-        replace_logic()
+        total = total + replace_logic(
+            match_string, replace_string,
+            seek_action, match_action, dig_action, place_action, move_action
+        )
     end
 
     -- replace blocks that were dug
