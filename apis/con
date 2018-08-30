@@ -1,4 +1,5 @@
 #!/bin/lua
 
 NETHER_GOLD = "NetherOres:tile.netherores.ore.0"
+SKYSTONE = "appliedenergistics2:tile.BlockSkyStone"
 
