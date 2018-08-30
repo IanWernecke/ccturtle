@@ -108,7 +108,7 @@ def main():
 
     # write the new cleaner file
     lines = []
-    for f in os.listdir(base_dir):
+    for f in sorted(os.listdir(base_dir)):
         if f in turtle_ignore:
             continue
         if '.git' == f:
