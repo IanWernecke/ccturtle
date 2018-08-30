@@ -10,7 +10,7 @@
 -- dig_action: the dig action to call
 -- place_action: the place action to call
 -- move_action: the move action to call (during return)
-local replace_logic = function(
+function replace_logic(
     match_string,
     place_string,
     seek_action,
@@ -41,6 +41,7 @@ local replace_logic = function(
 
     -- replace blocks that were dug
     while 0 < j do
+        move_action(1)
         place_action(place_string)
         j = j - 1
     end
@@ -54,6 +55,7 @@ end
 
 -- six standard directions
 function back(match_string, place_string)
+    inventory.select(place_string)
     turtle.turnLeft()
     turtle.turnLeft()
     local result = forward(match_string, place_string)
@@ -62,6 +64,7 @@ function back(match_string, place_string)
     return result
 end
 function forward(match_string, place_string)
+    inventory.select(place_string)
     return replace_logic(
         match_string,
         place_string,
@@ -73,6 +76,7 @@ function forward(match_string, place_string)
     )
 end
 function down(match_string, place_string)
+    inventory.select(place_string)
     return replace_logic(
         match_string,
         place_string,
@@ -84,18 +88,21 @@ function down(match_string, place_string)
     )
 end
 function left(match_string, place_string)
+    inventory.select(place_string)
     turtle.turnLeft()
     local result = forward(match_string, place_string)
     turtle.turnRight()
     return result
 end
 function right(match_string, place_string)
+    inventory.select(place_string)
     turtle.turnRight()
     local result = forward(match_string, place_string)
     turtle.turnLeft()
     return result
 end
 function up(match_string, place_string)
+    inventory.select(place_string)
     return replace_logic(
         match_string,
         place_string,

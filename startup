@@ -29,6 +29,9 @@ function load_turtle_apis()
     os.loadAPI("/apis/dig")
 
     -- requires: nil
+    os.loadAPI("/apis/inventory")
+
+    -- requires: nil
     os.loadAPI("/apis/move")
 
     -- requires: nil
