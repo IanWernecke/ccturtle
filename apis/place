@@ -3,7 +3,13 @@
 
 -- program apis/place_logic
 -- logic to place_logic the next available block
-local place_logic = function(action_command)
+local place_logic = function(place_string, action_command)
+
+    -- select the specific place string if it is not already selected
+    if inventory.current() ~= place_string then
+        assert(inventory.contains(place_string), "Inventory does not contain: "..place_string)
+        inventory.select(place_string)
+    end
 
     -- if able to place_logic block, success!
     if action_command() then
@@ -17,26 +23,26 @@ end
 
 
 -- series of commands to always place_logic any available blocks (after current spot)
-function back()
+function back(place_string)
     turtle.turnLeft()
     turtle.turnleft()
-    return forward()
+    return forward(place_string)
 end
-function forward()
-    return place_logic(turtle.place)
+function forward(place_string)
+    return place_logic(place_string, turtle.place)
 end
-function down()
-    return place_logic(turtle.placeDown)
+function down(place_string)
+    return place_logic(place_string, turtle.placeDown)
 end
-function left()
+function left(place_string)
     turtle.turnLeft()
-    return forward()
+    return forward(place_string)
 end
-function right()
+function right(place_string)
     turtle.turnRight()
-    return forward()
+    return forward(place_string)
 end
-function up()
-    return place_logic(turtle.placeUp)
+function up(place_string)
+    return place_logic(place_string, turtle.placeUp)
 end
 

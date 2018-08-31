@@ -19,41 +19,22 @@ end
 function load_turtle_apis()
     -- load apis to be used by a turtle
 
-    -- requires: nil
-    os.loadAPI("/apis/con")
-
-    -- requires: nil
-    os.loadAPI("/apis/detect")
-
-    -- requires: nil
-    os.loadAPI("/apis/dig")
-
-    -- requires: nil
-    os.loadAPI("/apis/inventory")
-
-    -- requires: nil
-    os.loadAPI("/apis/move")
-
-    -- requires: nil
-    os.loadAPI("/apis/seek")
-
-    -- requires: nil
-    os.loadAPI("/apis/clear")
-
+    -- simple api loads
     -- requires: nil
     os.loadAPI("/apis/bore")
-
-    -- requires: nil
+    os.loadAPI("/apis/clear")
+    os.loadAPI("/apis/con")
     os.loadAPI("/apis/describe")
-
-    -- requires: nil
+    os.loadAPI("/apis/detect")
+    os.loadAPI("/apis/dig")
+    os.loadAPI("/apis/inventory")
     os.loadAPI("/apis/match")
-
-    -- requires: nil
-    os.loadAPI("/apis/place")
-
-    -- requires: nil
+    os.loadAPI("/apis/move")
+    os.loadAPI("/apis/seek")
     os.loadAPI("/apis/slide")
+
+    -- requires: inventory
+    os.loadAPI("/apis/place")
 
     -- requires: bore, move
     os.loadAPI("/apis/punch")

@@ -33,6 +33,20 @@ function count(string_id)
 end
 
 
+-- function: current
+-- return: the string id of the currently selected item
+function current()
+
+    local data = turtle.getItemDetail()
+    if data then
+        return data.name
+    else
+        return nil
+    end
+
+end
+
+
 -- function: find
 -- param string_id: the name of an item to seek
 -- return: a slot number that matches the string_id
@@ -44,7 +58,7 @@ function find(string_id)
     local data
     for i=1,16 do
         data = turtle.getItemDetail(i)
-        if data.name == string_id then
+        if data ~= nil and data.name == string_id then
             return i
         end
     end
