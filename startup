@@ -39,7 +39,7 @@ function load_turtle_apis()
     -- requires: bore, move
     os.loadAPI("/apis/punch")
 
-    -- requires: place
+    -- requires: place, seek
     os.loadAPI("/apis/fill")
 
     -- requires: match, dig

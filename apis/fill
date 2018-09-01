@@ -3,37 +3,37 @@
 
 -- api core logic
 -- methods for filling areas (simple)
-local fill_logic = function(seeker, mover, placer)
+local fill_logic = function(seeker, mover, placer, place_string)
     local moved = seeker()
     for i=1,moved do
         mover()
-        placer()
+        placer(place_string)
     end
     return moved
 end
 
 
 -- six basic directions
-function back()
+function back(place_string)
     turtle.turnLeft()
     turtle.turnLeft()
-    return forward()
+    return forward(place_string)
 end 
-function down()
-    return fill_logic(seek.down, turtle.up, place.down)
+function down(place_string)
+    return fill_logic(seek.down, turtle.up, place.down, place_string)
 end
-function forward()
-    return fill_logic(seek.forward, turtle.back, place.forward)
+function forward(place_string)
+    return fill_logic(seek.forward, turtle.back, place.forward, place_string)
 end
-function left()
+function left(place_string)
     turtle.turnLeft()
-    return forward()
+    return forward(place_string)
 end
-function right()
+function right(place_string)
     turtle.turnRight()
-    return forward()
+    return forward(place_string)
 end
-function up()
-    return fill_logic(seek.up, turtle.down, place.up)
+function up(place_string)
+    return fill_logic(seek.up, turtle.down, place.up, place_string)
 end
 
