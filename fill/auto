@@ -49,6 +49,9 @@ while placed do
 
 end
 
+turtle.up()
+place.down()
+
 -- try to move back to the starting level
 if 0 < sank then
     move.up(sank - 1)
