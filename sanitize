@@ -1,6 +1,7 @@
 shell.run("rm /README.md")
 shell.run("rm /apis")
 shell.run("rm /basic")
+shell.run("rm /bore")
 shell.run("rm /build")
 shell.run("rm /build.py")
 shell.run("rm /clear")
