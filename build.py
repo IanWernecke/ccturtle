@@ -74,6 +74,10 @@ def main():
     lines = ['#!/bin/lua', 'shell.run("rm {}")'.format(pc_root)]
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
+        # ensure the directories and files are in alphabetical order
+        sub_dirs.sort()
+        sub_files.sort()
+
         # skip git files and information
         if '.git' in walked_dir:
             continue
