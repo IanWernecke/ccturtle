@@ -4,7 +4,12 @@
 function print_system_status()
     -- print the current system label, version, fuel level, and time
 
-    print("Label: " .. os.getComputerLabel())
+    local label = os.getComputerLabel()
+    if label == nil then
+        label = ""
+    end
+
+    print("Label: " .. label)
     print("Version: " .. os.version())
     if turtle then
         current = turtle.getFuelLevel()
