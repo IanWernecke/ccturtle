@@ -71,7 +71,7 @@ def main():
 
     :return: a system exit code.
     """
-    lines = ['shell.run("rm {}")'.format(pc_root)]
+    lines = ['#!/bin/lua', 'shell.run("rm {}")'.format(pc_root)]
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
         # skip git files and information
@@ -107,7 +107,7 @@ def main():
     lines_to_file(lines, 'setup')
 
     # write the new cleaner file
-    lines = []
+    lines = ['#!/bin/lua']
     for f in sorted(os.listdir(base_dir)):
         if f in turtle_ignore:
             continue

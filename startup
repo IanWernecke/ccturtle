@@ -39,6 +39,9 @@ function load_turtle_apis()
     -- requires: bore, move
     os.loadAPI("/apis/punch")
 
+    -- requires: detect, dig, punch
+    os.loadAPI("/apis/cleft")
+
     -- requires: place, seek
     os.loadAPI("/apis/fill")
 

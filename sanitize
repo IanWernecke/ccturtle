@@ -1,3 +1,4 @@
+#!/bin/lua
 shell.run("rm /README.md")
 shell.run("rm /apis")
 shell.run("rm /basic")

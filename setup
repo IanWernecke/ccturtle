@@ -1,3 +1,4 @@
+#!/bin/lua
 shell.run("rm turtle")
 shell.run("mkdir turtle/.")
 print("Retrieving: turtle/sanitize")
