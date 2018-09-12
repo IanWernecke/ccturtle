@@ -16,6 +16,8 @@ local place_logic = function(place_string, action_command)
         return true
     end
 
+    -- selection was depleted, ensure blocks are available
+    assert(0 < inventory.count(), "The inventory is empty!")
     turtle.select(inventory.first())
     return action_command()
 

@@ -16,6 +16,8 @@ end
 -- fill under and move forward
 while not detect.down() do
     fill.down()
-    move.forward()
+    if not move.forward() then
+        exit(1)
+    end
 end
 

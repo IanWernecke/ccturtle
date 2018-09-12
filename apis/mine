@@ -51,7 +51,7 @@ function vein(block, level)
 
         -- move back and check for blocks while doing so
         while distance > 0 do
-            if level < limit then
+            if level < recursion_limit then
                 count = count + vein(block, level + 1)
             end
             turtle.back()
@@ -70,7 +70,7 @@ function vein(block, level)
     if turtle.detectDown() and match.down(block) then
         dig.down()
         count = count + 1
-        if level < limit then
+        if level < recursion_limit then
             count = count + vein(block, level + 1)
         end
         turtle.up()
