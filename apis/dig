@@ -11,8 +11,10 @@ local dig_logic = function(detect, dig, move, num)
 
     for i=1,num do
 
-        if detect() then
-            dig()
+        while detect() do
+            if not dig() then
+                return i
+            end
         end
 
         if not move() then
