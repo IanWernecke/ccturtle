@@ -1,5 +1,16 @@
 #!/bin/lua
+
+-- remove old setup script
 shell.run("rm /setup")
-shell.run("/openp/github get IanWernecke/ccturtle/master/setup /setup")
+
+-- download the setup script
+local data = http.get("https://raw.github.com/IanWernecke/ccturtle/master/setup").readAll()
+
+-- write the setup script
+local f = fs.open("/setup", "w")
+f.write(data)
+f.close()
+
+-- call the setup script
 shell.run("/setup")
 

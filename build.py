@@ -71,7 +71,16 @@ def main():
 
     :return: a system exit code.
     """
-    lines = ['#!/bin/lua', 'shell.run("rm {}")'.format(pc_root)]
+    lines = [
+        '#!/bin/lua',
+        'shell.run("rm {}")'.format(pc_root),
+        'local function download(url, file)',
+        '   local data = http.get(url).readAll()',
+        '   local f = fs.open(file, "w")',
+        '   f.write(data)',
+        '   f.close()',
+        'end'
+    ]
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
         # ensure the directories and files are in alphabetical order
@@ -98,7 +107,8 @@ def main():
             # find the relative path to the directory
             rel_file = os.path.relpath(abs_file, base_dir)
             lines.append('print("Retrieving: {pc_root}/{pc_path}")'.format(pc_root=pc_root, pc_path=rel_file))
-            lines.append('shell.run("wget https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{github_path} {pc_root}/{pc_path}")'.format(
+            # lines.append('shell.run("wget https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{github_path} {pc_root}/{pc_path}")'.format(
+            lines.append('download("https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{github_path}", "{pc_root}/{pc_path}")'.format(
                 github_user=github_user,
                 github_repo=github_repo,
                 github_branch=github_branch,
