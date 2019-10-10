@@ -120,13 +120,18 @@ def main():
     lines[-1] = lines[-1][:-1]
     lines.append('}')
 
+    # # create the massive table to house our information
+    # lines.append('local paths = {')
+    # for file_name in files:
+    #     lines.append(f'  "{file_name}" = "{files[file_name]}",')
+    # # remove the comma from the last line
+    # lines[-1] = lines[-1][:-1]
+    # lines.append('}')
+
     # create the massive table to house our information
-    lines.append('local paths = {')
+    lines.append('local paths = {}')
     for file_name in files:
-        lines.append(f'  "{file_name}" = "{files[file_name]}",')
-    # remove the comma from the last line
-    lines[-1] = lines[-1][:-1]
-    lines.append('}')
+        lines.append(f'paths["{file_name}"] = "{files[file_name]}"')
 
     # create each of the directories
     lines.extend([
