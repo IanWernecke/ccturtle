@@ -1,5 +1,9 @@
 #!/bin/lua
-fs.delete("turtle")
+fs.delete("/turtle/")
+
+-- constants
+local src = "https://raw.github.com/IanWernecke/ccturtle/master/"
+local dst = "/turtle/"
 
 -- simple function to write data to files
 local function download(data, file)
@@ -9,150 +13,151 @@ local function download(data, file)
 end
 
 local directories = {
-  "turtle/.",
-  "turtle/apis",
-  "turtle/bore",
-  "turtle/build",
-  "turtle/build/signal",
-  "turtle/clear",
-  "turtle/clear/forward",
-  "turtle/clear/magnet",
-  "turtle/clear/magnet/spiral",
-  "turtle/clear/spiral",
-  "turtle/describe",
-  "turtle/dig",
-  "turtle/fill",
-  "turtle/fill/spiral",
-  "turtle/inventory",
-  "turtle/mine",
-  "turtle/mine/shelf",
-  "turtle/mine/stairs",
-  "turtle/mine/vein",
-  "turtle/move",
-  "turtle/place",
-  "turtle/punch",
-  "turtle/seek",
-  "turtle/slide",
-  "turtle/strafe",
-  "turtle/util"
+  "/turtle/.",
+  "/turtle/apis",
+  "/turtle/bore",
+  "/turtle/build",
+  "/turtle/build/signal",
+  "/turtle/clear",
+  "/turtle/clear/forward",
+  "/turtle/clear/magnet",
+  "/turtle/clear/magnet/spiral",
+  "/turtle/clear/spiral",
+  "/turtle/describe",
+  "/turtle/dig",
+  "/turtle/fill",
+  "/turtle/fill/spiral",
+  "/turtle/inventory",
+  "/turtle/mine",
+  "/turtle/mine/shelf",
+  "/turtle/mine/stairs",
+  "/turtle/mine/vein",
+  "/turtle/move",
+  "/turtle/place",
+  "/turtle/punch",
+  "/turtle/seek",
+  "/turtle/slide",
+  "/turtle/strafe",
+  "/turtle/util"
 }
 
-local paths = {}
-paths["https://raw.github.com/IanWernecke/ccturtle/master/basic"] = "turtle/basic"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/sanitize"] = "turtle/sanitize"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/setup"] = "turtle/setup"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/startup"] = "turtle/startup"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/update"] = "turtle/update"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/basic"] = "turtle/apis/basic"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/bore"] = "turtle/apis/bore"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/clear"] = "turtle/apis/clear"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/cleft"] = "turtle/apis/cleft"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/con"] = "turtle/apis/con"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/describe"] = "turtle/apis/describe"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/detect"] = "turtle/apis/detect"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/dig"] = "turtle/apis/dig"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/fill"] = "turtle/apis/fill"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/inventory"] = "turtle/apis/inventory"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/match"] = "turtle/apis/match"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/mine"] = "turtle/apis/mine"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/move"] = "turtle/apis/move"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/place"] = "turtle/apis/place"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/punch"] = "turtle/apis/punch"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/replace"] = "turtle/apis/replace"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/seek"] = "turtle/apis/seek"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/apis/slide"] = "turtle/apis/slide"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/bore/back"] = "turtle/bore/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/bore/down"] = "turtle/bore/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/bore/forward"] = "turtle/bore/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/bore/left"] = "turtle/bore/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/bore/right"] = "turtle/bore/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/bore/up"] = "turtle/bore/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/build/catwalk"] = "turtle/build/catwalk"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/build/wall"] = "turtle/build/wall"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/build/signal/home"] = "turtle/build/signal/home"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/tunnel"] = "turtle/clear/tunnel"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/forward/both"] = "turtle/clear/forward/both"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/forward/left"] = "turtle/clear/forward/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/forward/right"] = "turtle/clear/forward/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/magnet/spiral/left"] = "turtle/clear/magnet/spiral/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/magnet/spiral/right"] = "turtle/clear/magnet/spiral/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/spiral/left"] = "turtle/clear/spiral/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/clear/spiral/right"] = "turtle/clear/spiral/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/describe/back"] = "turtle/describe/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/describe/down"] = "turtle/describe/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/describe/forward"] = "turtle/describe/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/describe/left"] = "turtle/describe/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/describe/right"] = "turtle/describe/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/describe/up"] = "turtle/describe/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/dig/back"] = "turtle/dig/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/dig/down"] = "turtle/dig/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/dig/forward"] = "turtle/dig/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/dig/left"] = "turtle/dig/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/dig/right"] = "turtle/dig/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/dig/up"] = "turtle/dig/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/auto"] = "turtle/fill/auto"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/back"] = "turtle/fill/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/down"] = "turtle/fill/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/forward"] = "turtle/fill/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/gap"] = "turtle/fill/gap"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/layer"] = "turtle/fill/layer"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/left"] = "turtle/fill/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/right"] = "turtle/fill/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/up"] = "turtle/fill/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/spiral/left"] = "turtle/fill/spiral/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/fill/spiral/right"] = "turtle/fill/spiral/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/inventory/count"] = "turtle/inventory/count"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/inventory/select"] = "turtle/inventory/select"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/skylight"] = "turtle/mine/skylight"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/skystone"] = "turtle/mine/skystone"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/trench"] = "turtle/mine/trench"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/trenchSeek"] = "turtle/mine/trenchSeek"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/shelf/left"] = "turtle/mine/shelf/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/shelf/right"] = "turtle/mine/shelf/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/stairs/down"] = "turtle/mine/stairs/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/vein/back"] = "turtle/mine/vein/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/vein/down"] = "turtle/mine/vein/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/vein/forward"] = "turtle/mine/vein/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/vein/left"] = "turtle/mine/vein/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/vein/right"] = "turtle/mine/vein/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/mine/vein/up"] = "turtle/mine/vein/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/back"] = "turtle/move/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/climb"] = "turtle/move/climb"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/down"] = "turtle/move/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/forward"] = "turtle/move/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/left"] = "turtle/move/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/magnet"] = "turtle/move/magnet"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/right"] = "turtle/move/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/move/up"] = "turtle/move/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/place/back"] = "turtle/place/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/place/down"] = "turtle/place/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/place/forward"] = "turtle/place/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/place/left"] = "turtle/place/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/place/right"] = "turtle/place/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/place/up"] = "turtle/place/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/punch/back"] = "turtle/punch/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/punch/down"] = "turtle/punch/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/punch/forward"] = "turtle/punch/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/punch/left"] = "turtle/punch/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/punch/right"] = "turtle/punch/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/punch/up"] = "turtle/punch/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/seek/back"] = "turtle/seek/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/seek/down"] = "turtle/seek/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/seek/forward"] = "turtle/seek/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/seek/left"] = "turtle/seek/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/seek/right"] = "turtle/seek/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/seek/up"] = "turtle/seek/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/slide/back"] = "turtle/slide/back"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/slide/down"] = "turtle/slide/down"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/slide/forward"] = "turtle/slide/forward"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/slide/left"] = "turtle/slide/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/slide/right"] = "turtle/slide/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/slide/up"] = "turtle/slide/up"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/strafe/left"] = "turtle/strafe/left"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/strafe/right"] = "turtle/strafe/right"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/util/detail"] = "turtle/util/detail"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/util/select"] = "turtle/util/select"
-paths["https://raw.github.com/IanWernecke/ccturtle/master/util/stub"] = "turtle/util/stub"
+local files = {
+  "basic",
+  "sanitize",
+  "setup",
+  "startup",
+  "update",
+  "apis/basic",
+  "apis/bore",
+  "apis/clear",
+  "apis/cleft",
+  "apis/con",
+  "apis/describe",
+  "apis/detect",
+  "apis/dig",
+  "apis/fill",
+  "apis/inventory",
+  "apis/match",
+  "apis/mine",
+  "apis/move",
+  "apis/place",
+  "apis/punch",
+  "apis/replace",
+  "apis/seek",
+  "apis/slide",
+  "bore/back",
+  "bore/down",
+  "bore/forward",
+  "bore/left",
+  "bore/right",
+  "bore/up",
+  "build/catwalk",
+  "build/wall",
+  "build/signal/home",
+  "clear/tunnel",
+  "clear/forward/both",
+  "clear/forward/left",
+  "clear/forward/right",
+  "clear/magnet/spiral/left",
+  "clear/magnet/spiral/right",
+  "clear/spiral/left",
+  "clear/spiral/right",
+  "describe/back",
+  "describe/down",
+  "describe/forward",
+  "describe/left",
+  "describe/right",
+  "describe/up",
+  "dig/back",
+  "dig/down",
+  "dig/forward",
+  "dig/left",
+  "dig/right",
+  "dig/up",
+  "fill/auto",
+  "fill/back",
+  "fill/down",
+  "fill/forward",
+  "fill/gap",
+  "fill/layer",
+  "fill/left",
+  "fill/right",
+  "fill/up",
+  "fill/spiral/left",
+  "fill/spiral/right",
+  "inventory/count",
+  "inventory/select",
+  "mine/skylight",
+  "mine/skystone",
+  "mine/trench",
+  "mine/trenchSeek",
+  "mine/shelf/left",
+  "mine/shelf/right",
+  "mine/stairs/down",
+  "mine/vein/back",
+  "mine/vein/down",
+  "mine/vein/forward",
+  "mine/vein/left",
+  "mine/vein/right",
+  "mine/vein/up",
+  "move/back",
+  "move/climb",
+  "move/down",
+  "move/forward",
+  "move/left",
+  "move/magnet",
+  "move/right",
+  "move/up",
+  "place/back",
+  "place/down",
+  "place/forward",
+  "place/left",
+  "place/right",
+  "place/up",
+  "punch/back",
+  "punch/down",
+  "punch/forward",
+  "punch/left",
+  "punch/right",
+  "punch/up",
+  "seek/back",
+  "seek/down",
+  "seek/forward",
+  "seek/left",
+  "seek/right",
+  "seek/up",
+  "slide/back",
+  "slide/down",
+  "slide/forward",
+  "slide/left",
+  "slide/right",
+  "slide/up",
+  "strafe/left",
+  "strafe/right",
+  "util/detail",
+  "util/select",
+  "util/stub"
+}
 
 -- make each of the required directories
 for i=1,#directories do
@@ -160,8 +165,8 @@ for i=1,#directories do
 end
 
 -- request each of the files to be retrieved
-for key,value in pairs(paths) do
-   http.request(key)
+for i=1,#files do
+   http.request(src..files[i])
 end
 
 -- asynchronously download all of the files

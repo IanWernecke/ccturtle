@@ -18,9 +18,10 @@ setup_ignore = [
 github_user = 'IanWernecke'
 github_repo = 'ccturtle'
 github_branch = 'master'
+github_root = f'https://raw.github.com/{github_user}/{github_repo}/{github_branch}/'
 
 # the location to save the files on the pc
-pc_root = 'turtle'
+pc_root = '/turtle/'
 pc_setup = 'setup'
 
 # protected turtle directories
@@ -75,6 +76,10 @@ def main():
         '#!/bin/lua',
         f'fs.delete("{pc_root}")',
         '',
+        '-- constants',
+        f'local src = "{github_root}"',
+        f'local dst = "{pc_root}"',
+        '',
         '-- simple function to write data to files',
         'local function download(data, file)',
         '   local f = fs.open(file, "w")',
@@ -84,7 +89,8 @@ def main():
         ''
     ]
     directories = []
-    files = {}
+    files = []
+    # files = {}
     # request_count = 0
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
@@ -98,7 +104,7 @@ def main():
 
         # create the directory being walked
         rel_dir = os.path.relpath(walked_dir, base_dir)
-        directories.append(f'{pc_root}/{rel_dir}')
+        directories.append(f'{pc_root}{rel_dir}')
 
         # walk each file in the directory
         for sub_file in sub_files:
@@ -111,8 +117,9 @@ def main():
 
             # find the relative path to the directory
             rel_file = os.path.relpath(abs_file, base_dir)
-            url = f'https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{rel_file}'
-            files[url] = f'{pc_root}/{rel_file}'
+            files.append(rel_file)
+            # url = f'{github_root}/{rel_file}'
+            # files[url] = f'{pc_root}/{rel_file}'
 
     # create the directory table
     lines.append('local directories = {')
@@ -130,11 +137,19 @@ def main():
     # lines[-1] = lines[-1][:-1]
     # lines.append('}')
 
-    # create the massive table to house our information
-    lines.append('local paths = {}')
-    for file_name in files:
-        lines.append(f'paths["{file_name}"] = "{files[file_name]}"')
+    # create the file table
+    lines.append('local files = {')
+    for relative in files:
+        lines.append(f'  "{relative}",')
+    lines[-1] = lines[-1][:-1]
+    lines.append('}')
     lines.append('')
+
+    # create the massive table to house our information
+    # lines.append('local paths = {}')
+    # for file_name in files:
+    #     lines.append(f'paths[src .. "{files[file_name]}"] = dst .. "{files[file_name]}"')
+    # lines.append('')
 
     # create each of the directories
     lines.extend([
@@ -148,9 +163,12 @@ def main():
     # request each of the files
     lines.extend([
         '-- request each of the files to be retrieved',
-        'for key,value in pairs(paths) do',
-        '   http.request(key)',
+        'for i=1,#files do',
+        '   http.request(src..files[i])',
         'end',
+        # 'for key,value in pairs(paths) do',
+        # '   http.request(src .. key)',
+        # 'end',
         ''
     ])
 
