@@ -74,13 +74,13 @@ def main():
     lines = [
         '#!/bin/lua',
         f'fs.delete("{pc_root}")',
+        '',
+        '-- simple function to write data to files',
         'local function download(data, file)',
         '   local f = fs.open(file, "w")',
         '   f.write(data)',
         '   f.close()',
         'end',
-        'local downloaded = 0',
-        'local failed = {}',
         ''
     ]
     directories = []
@@ -154,10 +154,10 @@ def main():
         ''
     ])
 
-    # for url in files:
-    #     lines.append(f'http.request("{url}")')
-
     lines.extend([
+        '-- asynchronously download all of the files',
+        'local downloaded = 0',
+        'local failed = {}',
         f'while downloaded < {len(files)} do',
         '   local e, a, b = os.pullEvent()',
         '   if e == "http_success" then',
@@ -168,7 +168,8 @@ def main():
         '   elseif e == "timer" and failed[a] then',
         '       http.request(failed[a])',
         '   end',
-        'end'
+        'end',
+        ''
     ])
 
     # write the new setup file

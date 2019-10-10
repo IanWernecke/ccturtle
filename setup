@@ -1,12 +1,12 @@
 #!/bin/lua
 fs.delete("turtle")
+
+-- simple function to write data to files
 local function download(data, file)
    local f = fs.open(file, "w")
    f.write(data)
    f.close()
 end
-local downloaded = 0
-local failed = {}
 
 local directories = {
   "turtle/.",
@@ -164,6 +164,9 @@ for key,value in pairs(paths) do
    http.request(key)
 end
 
+-- asynchronously download all of the files
+local downloaded = 0
+local failed = {}
 while downloaded < 115 do
    local e, a, b = os.pullEvent()
    if e == "http_success" then
