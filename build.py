@@ -80,7 +80,8 @@ def main():
         '   f.close()',
         'end',
         'local downloaded = 0',
-        'local failed = {}'
+        'local failed = {}',
+        ''
     ]
     directories = []
     files = {}
@@ -119,6 +120,7 @@ def main():
         lines.append(f'  "{directory}",')
     lines[-1] = lines[-1][:-1]
     lines.append('}')
+    lines.append('')
 
     # # create the massive table to house our information
     # lines.append('local paths = {')
@@ -132,19 +134,24 @@ def main():
     lines.append('local paths = {}')
     for file_name in files:
         lines.append(f'paths["{file_name}"] = "{files[file_name]}"')
+    lines.append('')
 
     # create each of the directories
     lines.extend([
+        '-- make each of the required directories',
         'for i=1,#directories do',
         '   fs.makeDir(directories[i])',
-        'end'
+        'end',
+        ''
     ])
 
     # request each of the files
     lines.extend([
+        '-- request each of the files to be retrieved',
         'for key,value in pairs(files) do',
         '   http.request(key)',
-        'end'
+        'end',
+        ''
     ])
 
     # for url in files:
