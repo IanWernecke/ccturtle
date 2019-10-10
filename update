@@ -4,13 +4,7 @@
 shell.run("rm /setup")
 
 -- download the setup script
-local data = http.get("https://raw.github.com/IanWernecke/ccturtle/master/setup").readAll()
-
--- write the setup script
-local f = fs.open("/setup", "w")
-f.write(data)
-f.close()
+shell.run("wget https://raw.github.com/IanWernecke/ccturtle/master/setup setup")
 
 -- call the setup script
 shell.run("/setup")
-

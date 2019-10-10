@@ -73,14 +73,18 @@ def main():
     """
     lines = [
         '#!/bin/lua',
-        'shell.run("rm {}")'.format(pc_root),
-        'local function download(url, file)',
-        '   local data = http.get(url).readAll()',
+        f'fs.delete("{pc_root}")',
+        'local function download(data, file)',
         '   local f = fs.open(file, "w")',
         '   f.write(data)',
         '   f.close()',
-        'end'
+        'end',
+        'local downloaded = 0',
+        'local failed = {}'
     ]
+    directories = []
+    files = {}
+    # request_count = 0
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
         # ensure the directories and files are in alphabetical order
@@ -93,7 +97,7 @@ def main():
 
         # create the directory being walked
         rel_dir = os.path.relpath(walked_dir, base_dir)
-        lines.append('shell.run("mkdir {}/{}")'.format(pc_root, rel_dir))
+        directories.append(f'{pc_root}/{rel_dir}')
 
         # walk each file in the directory
         for sub_file in sub_files:
@@ -106,16 +110,54 @@ def main():
 
             # find the relative path to the directory
             rel_file = os.path.relpath(abs_file, base_dir)
-            lines.append('print("Retrieving: {pc_root}/{pc_path}")'.format(pc_root=pc_root, pc_path=rel_file))
-            # lines.append('shell.run("wget https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{github_path} {pc_root}/{pc_path}")'.format(
-            lines.append('download("https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{github_path}", "{pc_root}/{pc_path}")'.format(
-                github_user=github_user,
-                github_repo=github_repo,
-                github_branch=github_branch,
-                github_path=rel_file,
-                pc_root=pc_root,
-                pc_path=rel_file
-            ))
+            url = f'https://raw.github.com/{github_user}/{github_repo}/{github_branch}/{rel_file}'
+            files[url] = f'{pc_root}/{rel_file}'
+
+    # create the directory table
+    lines.append('local directories = {')
+    for directory in directories:
+        lines.append(f'  "{directory}",')
+    lines[-1] = lines[-1][:-1]
+    lines.append('}')
+
+    # create the massive table to house our information
+    lines.append('local paths = {')
+    for file_name in files:
+        lines.append(f'  "{file_name}" = "{files[file_name]}",')
+    # remove the comma from the last line
+    lines[-1] = lines[-1][:-1]
+    lines.append('}')
+
+    # create each of the directories
+    lines.extend([
+        'for i=1,#directories do',
+        '   fs.makeDir(directories[i])',
+        'end'
+    ])
+
+    # request each of the files
+    lines.extend([
+        'for key,value in pairs(files) do',
+        '   http.request(key)',
+        'end'
+    ])
+
+    # for url in files:
+    #     lines.append(f'http.request("{url}")')
+
+    lines.extend([
+        f'while downloaded < {len(files)} do',
+        '   local e, a, b = os.pullEvent()',
+        '   if e == "http_success" then',
+        '       download(b.readAll(),paths[a])',
+        '       downloaded = downloaded + 1',
+        '   elseif e == "http_failure" then',
+        '       failed[os.startTime(3)] = a',
+        '   elseif e == "timer" and failed[a] then',
+        '       http.request(failed[a])',
+        '   end',
+        'end'
+    ])
 
     # write the new setup file
     lines_to_file(lines, 'setup')
@@ -127,7 +169,7 @@ def main():
             continue
         if '.git' == f:
             continue
-        lines.append('shell.run("rm /{}")'.format(f))
+        lines.append(f'fs.delete("/{f}")')
 
     lines_to_file(lines, 'sanitize')
 
@@ -138,4 +180,3 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
-
