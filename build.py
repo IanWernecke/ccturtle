@@ -133,7 +133,7 @@ def main():
     lines.append('local files = {}')
     for file_name in files:
         lines.append(f'files[src.."{file_name}"] = dst.."{file_name}"')
-    lines[-1] = lines[-1][:-1]
+    # lines[-1] = lines[-1][:-1]
     # lines.append('}')
     lines.append('')
 

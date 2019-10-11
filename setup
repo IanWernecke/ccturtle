@@ -156,7 +156,7 @@ files[src.."strafe/left"] = dst.."strafe/left"
 files[src.."strafe/right"] = dst.."strafe/right"
 files[src.."util/detail"] = dst.."util/detail"
 files[src.."util/select"] = dst.."util/select"
-files[src.."util/stub"] = dst.."util/stub
+files[src.."util/stub"] = dst.."util/stub"
 
 -- make each of the required directories
 for i=1,#directories do
