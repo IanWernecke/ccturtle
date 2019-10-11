@@ -164,6 +164,7 @@ def main():
     lines.extend([
         '-- request each of the files to be retrieved',
         'for i=1,#files do',
+        '   print("request: " .. src .. files[i])',
         '   http.request(src..files[i])',
         'end',
         # 'for key,value in pairs(paths) do',
