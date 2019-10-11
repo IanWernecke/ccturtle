@@ -130,12 +130,21 @@ def main():
     lines.append('')
 
     # create the massive table to house our information
-    lines.append('local files = {}')
+    lines.append('local files = {')
     for file_name in files:
-        lines.append(f'files[src.."{file_name}"] = dst.."{file_name}"')
-    # lines[-1] = lines[-1][:-1]
-    # lines.append('}')
+        lines.append(f'  "{file_name}",')
+    lines[-1] = lines[-1][:-1]
+    lines.append('}')
     lines.append('')
+
+    lines.extend([
+        '-- tie each path to a request path',
+        'local requests = {}',
+        'for i=1,#files do',
+        '   requests[src..files[i]] = dst..files[i]',
+        'end',
+        ''
+    ])
 
     # # create the file table
     # lines.append('local files = {')
@@ -163,13 +172,9 @@ def main():
     # request each of the files
     lines.extend([
         '-- request each of the files to be retrieved',
-        'for i=1,#files do',
-        '   print("request: " .. src .. files[i])',
-        '   http.request(src..files[i])',
+        'for key,value in pairs(requests) do',
+        '   http.request(key)',
         'end',
-        # 'for key,value in pairs(paths) do',
-        # '   http.request(src .. key)',
-        # 'end',
         ''
     ])
 
@@ -180,7 +185,7 @@ def main():
         f'while downloaded < {len(files)} do',
         '   local event, url, handle = os.pullEvent()',
         '   if event == "http_success" then',
-        '       download(handle.readAll(),files[url])',
+        '       download(handle.readAll(), requests[url])',
         '       downloaded = downloaded + 1',
         '   elseif event == "http_failure" then',
         '       failed[os.startTime(3)] = url',
