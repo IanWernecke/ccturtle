@@ -1,7 +1,9 @@
 #!/bin/lua
 
 -- remove old setup script
-shell.run("rm /setup")
+if fs.exists("/setup") then
+  fs.delete("/setup")
+end
 
 -- download the setup script
 shell.run("wget https://raw.github.com/IanWernecke/ccturtle/master/setup setup")
