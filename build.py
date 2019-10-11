@@ -129,21 +129,21 @@ def main():
     lines.append('}')
     lines.append('')
 
-    # # create the massive table to house our information
-    # lines.append('local paths = {')
-    # for file_name in files:
-    #     lines.append(f'  "{file_name}" = "{files[file_name]}",')
-    # # remove the comma from the last line
+    # create the massive table to house our information
+    lines.append('local files = {}')
+    for file_name in files:
+        lines.append(f'files[src.."{file_name}"] = dst.."{file_name}",')
+    lines[-1] = lines[-1][:-1]
+    # lines.append('}')
+    lines.append('')
+
+    # # create the file table
+    # lines.append('local files = {')
+    # for relative in files:
+    #     lines.append(f'  "{relative}",')
     # lines[-1] = lines[-1][:-1]
     # lines.append('}')
-
-    # create the file table
-    lines.append('local files = {')
-    for relative in files:
-        lines.append(f'  "{relative}",')
-    lines[-1] = lines[-1][:-1]
-    lines.append('}')
-    lines.append('')
+    # lines.append('')
 
     # create the massive table to house our information
     # lines.append('local paths = {}')
@@ -179,7 +179,7 @@ def main():
         f'while downloaded < {len(files)} do',
         '   local e, a, b = os.pullEvent()',
         '   if e == "http_success" then',
-        '       download(b.readAll(),paths[a])',
+        '       download(b.readAll(),files[a])',
         '       downloaded = downloaded + 1',
         '   elseif e == "http_failure" then',
         '       failed[os.startTime(3)] = a',
