@@ -74,7 +74,9 @@ def main():
     """
     lines = [
         '#!/bin/lua',
-        f'fs.delete("{pc_root}")',
+        f'if fs.exists("{pc_root}") then',
+        f'  fs.delete("{pc_root}")',
+        'end',
         '',
         '-- constants',
         f'local src = "{github_root}"',
@@ -90,8 +92,6 @@ def main():
     ]
     directories = []
     files = []
-    # files = {}
-    # request_count = 0
     for walked_dir, sub_dirs, sub_files in os.walk(base_dir):
 
         # ensure the directories and files are in alphabetical order
@@ -118,25 +118,20 @@ def main():
             # find the relative path to the directory
             rel_file = os.path.relpath(abs_file, base_dir)
             files.append(rel_file)
-            # url = f'{github_root}/{rel_file}'
-            # files[url] = f'{pc_root}/{rel_file}'
 
-    # create the directory table
-    lines.append('local directories = {')
-    for directory in directories:
-        lines.append(f'  "{directory}",')
-    lines[-1] = lines[-1][:-1]
-    lines.append('}')
-    lines.append('')
+    def to_lua_list(name, items):
+        lines.append('local {} = {}'.format(name, '{'))
+        for item in items:
+            lines.append(f'  "{item}",')
+        lines[-1] = lines[-1][:-1]
+        lines.append('}')
+        lines.append('')
 
-    # create the massive table to house our information
-    lines.append('local files = {')
-    for file_name in files:
-        lines.append(f'  "{file_name}",')
-    lines[-1] = lines[-1][:-1]
-    lines.append('}')
-    lines.append('')
+    # create the directory and file lists
+    to_lua_list('directories', directories)
+    to_lua_list('files', files)
 
+    # define the requests to be performed and their output location
     lines.extend([
         '-- tie each path to a request path',
         'local requests = {}',
@@ -145,20 +140,6 @@ def main():
         'end',
         ''
     ])
-
-    # # create the file table
-    # lines.append('local files = {')
-    # for relative in files:
-    #     lines.append(f'  "{relative}",')
-    # lines[-1] = lines[-1][:-1]
-    # lines.append('}')
-    # lines.append('')
-
-    # create the massive table to house our information
-    # lines.append('local paths = {}')
-    # for file_name in files:
-    #     lines.append(f'paths[src .. "{files[file_name]}"] = dst .. "{files[file_name]}"')
-    # lines.append('')
 
     # create each of the directories
     lines.extend([

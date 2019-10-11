@@ -1,5 +1,7 @@
 #!/bin/lua
-fs.delete("/turtle/")
+if fs.exists("/turtle/") then
+  fs.delete("/turtle/")
+end
 
 -- constants
 local src = "https://raw.github.com/IanWernecke/ccturtle/master/"
