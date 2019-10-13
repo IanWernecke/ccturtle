@@ -1,7 +1,21 @@
 #!/bin/lua
 
+-- catch arguments given on command line
+local args = {...}
+local limit = nil
+
+-- check number of arguments for usage
+if #args == 1 then
+	limit = tonumber(args[1])
+else
+	print("A distance is required.")
+  return(1)
+end
+
+-- dig the tunnel
+local distance = 0
 local height = 3
-while turtle.detect() do
+while distance < limit do
 
   dig.forward()
 
@@ -11,7 +25,7 @@ while turtle.detect() do
 
   -- upwards
   clear.forward()
-  while index < height and turtle.detectUp() do
+  while index < height do
     dig.up()
     clear.forward()
     index = index + 1
@@ -31,5 +45,7 @@ while turtle.detect() do
 
   -- face forward
   turtle.turnLeft()
+
+  distance = distance + 1
 
 end

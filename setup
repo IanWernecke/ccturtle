@@ -1,11 +1,16 @@
 #!/bin/lua
-if fs.exists("/turtle/") then
-  fs.delete("/turtle/")
-end
 
 -- constants
 local src = "https://raw.github.com/IanWernecke/ccturtle/master/"
-local dst = "/turtle/"
+local dst = nil
+if turtle then
+   dst = "/"
+else
+  dst = "/turtle/"
+  if fs.exists("/turtle/") then
+      fs.delete("/turtle/")
+  end
+end
 
 -- simple function to write data to files
 local function download(data, file)
@@ -109,10 +114,12 @@ local files = {
   "fill/spiral/right",
   "inventory/count",
   "inventory/select",
+  "mine/canal",
   "mine/skylight",
   "mine/skystone",
   "mine/trench",
   "mine/trenchSeek",
+  "mine/tunnel",
   "mine/shelf/left",
   "mine/shelf/right",
   "mine/stairs/down",
@@ -180,7 +187,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 115 do
+while downloaded < 117 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])
