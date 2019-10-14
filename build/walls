@@ -8,7 +8,7 @@
 function wall()
   fill.down()
   local height = 0
-  while height < 3 do
+  while height < 4 do
     turtle.up()
     place.down()
     height = height + 1
