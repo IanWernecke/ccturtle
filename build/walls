@@ -20,7 +20,7 @@ end
 
 -- function: seek_around
 -- return: whether a new spot to build a wall was found nearby
-function seek_around
+function seek_around()
 
   turtle.turnRight()
 
