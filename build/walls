@@ -53,6 +53,13 @@ function seek_around()
   turtle.forward()
   if not detect.down() then return true end
 
+  turtle.turnLeft()
+
+  -- left mid
+  if detect.forward() then return false end
+  turtle.forward()
+  if not detect.down() then return true end
+
 end
 
 
