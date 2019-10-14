@@ -5,7 +5,7 @@
 
 -- function: wall
 -- fill below, build 3 high, and come back down
-function wall() do
+function wall()
   fill.down()
   local height = 0
   while height < 3 do
@@ -19,8 +19,8 @@ end
 
 
 -- function: seek_around
--- find the next available spot if possible
-function seek_around do
+-- return: whether a new spot to build a wall was found nearby
+function seek_around
 
   turtle.turnRight()
 
