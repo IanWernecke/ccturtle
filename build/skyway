@@ -6,7 +6,7 @@ local args = {...}
 -- check number of arguments for usage
 if #args ~= 1 then
     print("Argument required for length of run.")
-    exit()
+    return 1
 end
 
 
@@ -15,8 +15,8 @@ local build_edge = function(turn_to, turn_back)
   turn_to()
   if not detect.forward() then
     move.forward()
-    if not detect.forward() then place.forward() end
     if not detect.down() then place.down() end
+    if not detect.forward() then place.forward() end
     move.back()
   end
   turn_back()
