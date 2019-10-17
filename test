@@ -3,19 +3,20 @@
 
 function build_row(row)
 
-  for c=1,#row do
+  for column=1,#row do
 
     -- set the block below
-    if row[c] == '#' then
+    local char = row:sub(column,column)
+    if char == '#' then
       if not turtle.detectDown() then
         place.down()
       end
-    elseif row[c] == '.' then
+    elseif char == '.' then
       clear.down()
     end
 
     -- dig forward
-    if c ~= #row then dig.forward() end
+    if column ~= #row then dig.forward() end
   end
   move.back(#row - 1)
 
