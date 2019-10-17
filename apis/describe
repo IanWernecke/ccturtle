@@ -6,7 +6,6 @@ local describe_logic = function(action)
     local success, data = action()
     if success then
         print("Block name: " .. data.name)
-        print("Block metadata: " .. data.metadata)
     end
 end
 
@@ -34,4 +33,3 @@ end
 function up()
     return describe_logic(turtle.inspectUp)
 end
-
