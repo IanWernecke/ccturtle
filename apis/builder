@@ -4,7 +4,7 @@
 -- description:
 --  this api is written to provide basic building utilities
 -- requires:
---  clear, dig, move, place
+--  clear, dig, match, move, place
 
 
 -- this function creates a materials map
@@ -65,6 +65,9 @@ local build_row = function(row, materials)
             count = count + 1
           end
         else
+          if turtle.detectDown() and match.down(materials[char]) == false then
+            clear.down()
+          end
           place.down(materials[char])
           count = count + 1
         end
