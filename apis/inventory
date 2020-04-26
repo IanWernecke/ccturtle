@@ -23,7 +23,7 @@ function count(string_id)
             total = total + turtle.getItemCount(i)
         else
             data = turtle.getItemDetail(i)
-            if data.name == string_id then
+            if data ~= nil and data.name == string_id then
                 total = total + data.count
             end
         end
@@ -98,4 +98,3 @@ function select(string_id)
     return true
 
 end
-
