@@ -62,9 +62,6 @@ function build_layer(layer)
   -- for each row in the layer after the first, orient and build
   for row_index = 2, #layer do
 
-    -- if less than max, dig forward
-    if row_index ~= #layer then dig.forward() end
-
     -- if the row has something worth building, build it and reorient
     if has_content(layer[row_index]) then
       turtle.turnLeft()
