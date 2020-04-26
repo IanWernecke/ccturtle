@@ -74,6 +74,6 @@ function build(building)
   dig.forward()
   turtle.turnLeft()
   turtle.turnLeft()
-  dig.down(#layer - 1)
+  dig.down(#building)
 
 end
