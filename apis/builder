@@ -1,0 +1,79 @@
+#!/usr/bin/lua
+
+
+-- description:
+--  this api is written to provide basic building utilities
+-- requires:
+--  dig, move, place
+
+
+-- set the row of blocks in front of the turtle (and below) to
+-- contain or be empty of blocks
+function build_row(row)
+
+  local count = 0
+  for char_index=1,#row do
+
+      local char = row:sub(char_index, char_index)
+      if char == '#' then
+        if not turtle.detectDown() then
+          place.down()
+          count = count + 1
+        end
+      elseif char == '.' then
+        clear.down()
+      end
+
+      -- dig forward
+      if char_index ~= #row then dig.forward() end
+
+  end
+  move.back(#row - 1)
+  return count
+
+end
+
+
+-- given an array of strings, build each row in the grid
+function build_layer(layer)
+
+  -- for each row in the layer, orient and build
+  for row_index = 1, #layer do
+
+    -- turn to the left, build the row, and look back to the right
+    if row_index ~= 1 then
+      turtle.turnLeft()
+    end
+    build_row(layer[row_index])
+    turtle.turnRight()
+
+    -- if less than max, dig forward
+    if row_index ~= #layer then dig.forward() end
+
+  end
+
+  # move back to the starting position
+  move.back(#layer - 1)
+  turtle.turnLeft()
+
+end
+
+
+-- given an array of an array of strings, print an entire building like a 3d printer
+function build(building)
+
+  -- for each layer in the building
+  for layer = 1, #building do
+    dig.up()
+    build_layer(building[layer])
+  end
+
+  -- all finished building, return to one space behind starting position
+  turtle.turnLeft()
+  turtle.turnLeft()
+  dig.forward()
+  turtle.turnLeft()
+  turtle.turnLeft()
+  dig.down(#layer - 1)
+
+end
