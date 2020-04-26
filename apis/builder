@@ -52,7 +52,7 @@ function build_layer(layer)
 
   end
 
-  # move back to the starting position
+  -- move back to the starting position
   move.back(#layer - 1)
   turtle.turnLeft()
 
