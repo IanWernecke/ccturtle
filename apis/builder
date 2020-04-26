@@ -4,7 +4,42 @@
 -- description:
 --  this api is written to provide basic building utilities
 -- requires:
---  dig, move, place
+--  clear, dig, move, place
+
+
+-- this function creates a materials map
+local count_materials = function(building)
+
+  materials = {}
+
+  -- if the building has no layers, return the empty table
+  if #building == 0 then return materials end
+
+  -- count each of the materials needed in the building
+  for layer_index = 1, #building do
+    local layer = #building[layer_index]
+    for row_index = 1, #layer do
+      local row = #layer[row_index]
+      for char_index = 1, #row do
+
+        -- increment the found character value by one if it is not "."
+        local char = row:sub(char_index, char_index)
+        if char ~= "." then
+          if materials[char] then
+            materials[char] = materials[char] + 1
+          else
+            materials[char] = 1
+          end
+        end
+
+      end
+    end
+  end
+
+  -- return the table of our counted values
+  return materials
+
+end
 
 
 -- this function determines if a row has nothing to build
@@ -15,19 +50,24 @@ end
 
 -- set the row of blocks in front of the turtle (and below) to
 -- contain or be empty of blocks
-function build_row(row)
+local build_row = function(row, materials)
 
   local count = 0
   for char_index = 1, #row do
 
       local char = row:sub(char_index, char_index)
-      if char == '#' then
-        if not turtle.detectDown() then
-          place.down()
+      if char == "." then
+        clear.down()
+      else
+        if materials == nil then
+          if not turtle.detectDown() then
+            place.down()
+            count = count + 1
+          end
+        else
+          place.down(materials[char])
           count = count + 1
         end
-      elseif char == '.' then
-        clear.down()
       end
 
       -- dig forward
@@ -41,7 +81,9 @@ end
 
 
 -- given an array of strings, build each row in the layer
-function build_layer(layer)
+local build_layer = function(layer, materials)
+
+  dig.up()
 
   -- if the layer has no rows, return 0
   if #layer == 0 then return 0 end
@@ -50,7 +92,7 @@ function build_layer(layer)
 
   -- if the first row has content, build it
   if has_content(layer[1]) then
-    build_row(layer[1])
+    build_row(layer[1], materials)
   end
 
   -- if there is only one row, return now
@@ -67,7 +109,7 @@ function build_layer(layer)
     -- if the row has something worth building, build it and reorient
     if has_content(layer[row_index]) then
       turtle.turnLeft()
-      layer_count = layer_count + build_row(layer[row_index])
+      layer_count = layer_count + build_row(layer[row_index], materials)
       turtle.turnRight()
     end
 
@@ -82,20 +124,42 @@ end
 
 
 -- given an array of an array of strings, print an entire building like a 3d printer
-function build(building)
+function build(building, materials)
 
-  -- ensure the turtle has something to build with
-  if inventory.count() == 0 then
-    error("No items in inventory!")
+  -- if a materials map was not given, simply ensure there are enough materials in the inventory
+  if materials == nil then
+
+    -- count the materials in the inventory and sum the values
+    local total = 0
+    for key, value in pairs(count_materials(building)) do
+      total = total + value
+    end
+
+    -- count all of the items in the inventory and ensure we have more than the total required
+    local count = inventory.count()
+    if count < total then
+      error(string.format("Insufficient materials! [%d/%d]", count, total))
+    end
+
+  -- ensure there are enough materials of each type for the print
+  else
+
+    for key, value in pairs(count_materials(building)) do
+      local count = inventory.count(materials[key])
+      if count < materials[value] then
+        error(string.format("Insufficient materials! %s [%d/%d]", key, count, materials[value]))
+      end
+    end
+
   end
 
   -- for each layer in the building
+  local build_count = 0
   for layer = 1, #building do
-    dig.up()
-    build_layer(building[layer])
+    build_count = build_count + build_layer(building[layer], materials)
   end
 
-  -- all finished building, return to one space behind starting position
+  -- all finished building, return to one space behind starting position, if possible
   turtle.turnLeft()
   turtle.turnLeft()
   if detect.forward() == false then
@@ -104,5 +168,8 @@ function build(building)
   turtle.turnLeft()
   turtle.turnLeft()
   move.down(#building)
+
+  -- return the total number of blocks placed
+  return build_count
 
 end
