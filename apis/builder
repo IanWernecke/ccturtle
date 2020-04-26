@@ -40,12 +40,17 @@ function build_layer(layer)
   -- for each row in the layer, orient and build
   for row_index = 1, #layer do
 
-    -- turn to the left, build the row, and look back to the right
-    if row_index ~= 1 then
-      turtle.turnLeft()
+    -- if there is something in the row besides ".", do the work
+    if build_row[row_index]:match("^\.+$") ~= nil then
+
+      -- turn to the left, build the row, and look back to the right
+      if row_index ~= 1 then
+        turtle.turnLeft()
+      end
+      build_row(layer[row_index])
+      turtle.turnRight()
+
     end
-    build_row(layer[row_index])
-    turtle.turnRight()
 
     -- if less than max, dig forward
     if row_index ~= #layer then dig.forward() end
