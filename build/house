@@ -1,3 +1,4 @@
+-- costs 640 fuel
 builder.build({
   {"sssssss", "swwwwws", "swwwwws", "swwwwws", "swwwwws", "swwwwws", "sssssss"},
   {"sssssss", "s.....s", "s.....s", "......s", "s.....s", "s.....s", "sssssss"},
