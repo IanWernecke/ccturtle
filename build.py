@@ -177,7 +177,7 @@ def main():
         '       download(handle.readAll(), requests[url])',
         '       downloaded = downloaded + 1',
         '   elseif event == "http_failure" then',
-        '       failed[os.startTime(3)] = url',
+        '       failed[os.startTimer(3)] = url',
         '   elseif event == "timer" and failed[url] then',
         '       print("fail: "..url)',
         '       http.request(failed[url])',
