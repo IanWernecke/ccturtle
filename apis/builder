@@ -144,9 +144,10 @@ function build(building, materials)
   -- ensure there are enough materials of each type for the print
   else
 
-    for key, value in pairs(count_materials(building)) do
+    local counts = count_materials(building)
+    for key, value in pairs(counts) do
       local count = inventory.count(materials[key])
-      if count < materials[value] then
+      if count < counts[value] then
         error(string.format("Insufficient materials! %s [%d/%d]", key, count, materials[value]))
       end
     end
