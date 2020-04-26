@@ -7,12 +7,18 @@
 --  dig, move, place
 
 
+-- this function determines if a row has nothing to build
+local has_content = function(row)
+  return #row > 0 and row:match("%.+") ~= row
+end
+
+
 -- set the row of blocks in front of the turtle (and below) to
 -- contain or be empty of blocks
 function build_row(row)
 
   local count = 0
-  for char_index=1,#row do
+  for char_index = 1, #row do
 
       local char = row:sub(char_index, char_index)
       if char == '#' then
@@ -34,30 +40,44 @@ function build_row(row)
 end
 
 
--- given an array of strings, build each row in the grid
+-- given an array of strings, build each row in the layer
 function build_layer(layer)
 
-  -- turn towards the right
+  -- if the layer has no rows, return 0
+  if #layer == 0 then return 0 end
+
+  local layer_count = 0
+
+  -- if the first row has content, build it
+  if has_content(layer[1]) then
+    build_row(layer[1])
+  end
+
+  -- if there is only one row, return now
+  if #layer == 1 then return layer_count end
+
+  -- turn to the right
   turtle.turnRight()
 
-  -- for each row in the layer, orient and build
-  for row_index = 1, #layer do
-
-    -- if the row is not entirely ".", do the work
-    if #layer[row_index]:match("%.+") ~= #layer[row_index] then
-      turtle.turnLeft()
-      build_row(layer[row_index])
-      turtle.turnRight()
-    end
+  -- for each row in the layer after the first, orient and build
+  for row_index = 2, #layer do
 
     -- if less than max, dig forward
     if row_index ~= #layer then dig.forward() end
+
+    -- if the row has something worth building, build it and reorient
+    if has_content(layer[row_index]) then
+      turtle.turnLeft()
+      layer_count = layer_count + build_row(layer[row_index])
+      turtle.turnRight()
+    end
 
   end
 
   -- move back to the starting position
   move.back(#layer - 1)
   turtle.turnLeft()
+  return layer_count
 
 end
 
@@ -80,7 +100,7 @@ function build(building)
   turtle.turnLeft()
   turtle.turnLeft()
   if detect.forward() == false then
-    dig.forward()
+    move.forward()
   end
   turtle.turnLeft()
   turtle.turnLeft()
