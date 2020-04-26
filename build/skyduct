@@ -1,12 +1,13 @@
 #!/bin/lua
 
+
 -- catch arguments given on command line
 local args = {...}
 
+
 -- check number of arguments for usage
 if #args ~= 1 then
-    print("Argument required for length of run.")
-    return 1
+    error("Argument required for length of run.")
 end
 
 

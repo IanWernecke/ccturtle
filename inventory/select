@@ -6,9 +6,7 @@ local args = {...}
 
 -- Check number of arguments for usage
 if #args ~= 1 then
-    print( "Argument required for length of run." )
-    exit()
+    error( "Argument required for length of run." )
 end
 
 inventory.select(args[1])
-

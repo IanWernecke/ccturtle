@@ -1,7 +1,7 @@
 #!/bin/lua
 
 -- program:
---   mine/shelf/right
+--   mine/shelf/left
 -- description:
 --   clear a shelf on a hillside by removing
 --   blocks to the front, the right, and upwards
@@ -24,4 +24,3 @@ while detect.forward() do
     turn_back()
 
 end
-

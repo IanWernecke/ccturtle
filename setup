@@ -53,9 +53,11 @@ local files = {
   "sanitize",
   "setup",
   "startup",
+  "test",
   "update",
   "apis/basic",
   "apis/bore",
+  "apis/builder",
   "apis/clear",
   "apis/cleft",
   "apis/con",
@@ -190,7 +192,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 120 do
+while downloaded < 122 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])

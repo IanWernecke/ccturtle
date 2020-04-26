@@ -65,8 +65,7 @@ end
 
 -- ensure building material
 if not inventory.count() then
-  print("Out of supplies!")
-  return 1
+  error("Out of supplies!")
 end
 
 
@@ -81,8 +80,7 @@ while seek_around() do
 
   -- ensure building material
   if not inventory.count() then
-    print("Out of supplies.")
-    return 1
+    error("Out of supplies.")
   end
 
 end

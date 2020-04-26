@@ -18,8 +18,7 @@ local y = seek.right()
 
 -- ensure enough blocks exist to fill the area
 if inventory.count() < x * y then
-    print("Not enough blocks.")
-    return false
+    error("Not enough blocks.")
 end
 
 -- fill in the area
@@ -34,8 +33,7 @@ while placed do
         if place.forward() then
             placed = true
         else
-            print("Out of blocks! Exiting ...")
-            return false
+            error("Out of blocks! Exiting ...")
         end
 
         -- fill under, if the bottom of the pit was missed
@@ -56,4 +54,3 @@ place.down()
 if 0 < sank then
     move.up(sank - 1)
 end
-

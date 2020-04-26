@@ -1,5 +1,4 @@
 #!/bin/lua
 
-local count = mine.vein("appliedenergistics2:tile.BlockSkyStone")
+local count = mine.vein("appliedenergistics2:sky_stone_block")
 print("Mined: " .. tostring(count) .. " skystone blocks.")
-
