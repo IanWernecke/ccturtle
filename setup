@@ -81,6 +81,7 @@ local files = {
   "bore/right",
   "bore/up",
   "build/catwalk",
+  "build/frame",
   "build/skyduct",
   "build/skyway",
   "build/wall",
@@ -192,7 +193,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 122 do
+while downloaded < 123 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])
