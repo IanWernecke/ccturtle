@@ -145,10 +145,10 @@ function build(building, materials)
   else
 
     local counts = count_materials(building)
-    for key, value in pairs(counts) do
-      local count = inventory.count(materials[key])
-      if count < counts[value] then
-        error(string.format("Insufficient materials! %s [%d/%d]", key, count, materials[value]))
+    for key, req_count in pairs(counts) do
+      local inv_count = inventory.count(materials[key])
+      if inv_count < req_count then
+        error(string.format("Insufficient materials! %s [%d/%d]", materials[value], inv_count, req_count))
       end
     end
 
