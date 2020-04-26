@@ -37,19 +37,17 @@ end
 -- given an array of strings, build each row in the grid
 function build_layer(layer)
 
+  -- turn towards the right
+  turtle.turnRight()
+
   -- for each row in the layer, orient and build
   for row_index = 1, #layer do
 
     -- if the row is not entirely ".", do the work
     if layer[row_index]:match("^\.+$") == nil then
-
-      -- turn to the left, build the row, and look back to the right
-      if row_index ~= 1 then
-        turtle.turnLeft()
-      end
+      turtle.turnLeft()
       build_row(layer[row_index])
       turtle.turnRight()
-
     end
 
     -- if less than max, dig forward
