@@ -67,6 +67,11 @@ end
 -- given an array of an array of strings, print an entire building like a 3d printer
 function build(building)
 
+  -- ensure the turtle has something to build with
+  if inventory.count() == 0 then
+    error("No items in inventory!")
+  end
+
   -- for each layer in the building
   for layer = 1, #building do
     dig.up()
@@ -76,9 +81,11 @@ function build(building)
   -- all finished building, return to one space behind starting position
   turtle.turnLeft()
   turtle.turnLeft()
-  dig.forward()
+  if detect.forward() == false then
+    dig.forward()
+  end
   turtle.turnLeft()
   turtle.turnLeft()
-  dig.down(#building)
+  move.down(#building)
 
 end
