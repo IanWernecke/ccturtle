@@ -44,7 +44,7 @@ function build_layer(layer)
   for row_index = 1, #layer do
 
     -- if the row is not entirely ".", do the work
-    if layer[row_index]:match("%.+") ~= #layer[row_index] then
+    if #layer[row_index]:match("%.+") ~= #layer[row_index] then
       turtle.turnLeft()
       build_row(layer[row_index])
       turtle.turnRight()
