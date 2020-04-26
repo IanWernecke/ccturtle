@@ -41,7 +41,7 @@ function build_layer(layer)
   for row_index = 1, #layer do
 
     -- if there is something in the row besides ".", do the work
-    if build_row[row_index]:match("^\.+$") ~= nil then
+    if layer[row_index]:match("^\.+$") ~= nil then
 
       -- turn to the left, build the row, and look back to the right
       if row_index ~= 1 then
