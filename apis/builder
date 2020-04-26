@@ -40,8 +40,8 @@ function build_layer(layer)
   -- for each row in the layer, orient and build
   for row_index = 1, #layer do
 
-    -- if there is something in the row besides ".", do the work
-    if layer[row_index]:match("^\.+$") ~= nil then
+    -- if the row is not entirely ".", do the work
+    if layer[row_index]:match("^\.+$") == nil then
 
       -- turn to the left, build the row, and look back to the right
       if row_index ~= 1 then
