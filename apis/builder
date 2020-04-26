@@ -17,9 +17,9 @@ local count_materials = function(building)
 
   -- count each of the materials needed in the building
   for layer_index = 1, #building do
-    local layer = #building[layer_index]
+    local layer = building[layer_index]
     for row_index = 1, #layer do
-      local row = #layer[row_index]
+      local row = layer[row_index]
       for char_index = 1, #row do
 
         -- increment the found character value by one if it is not "."
