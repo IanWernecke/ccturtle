@@ -35,6 +35,7 @@ function load_turtle_apis()
     os.loadAPI("/apis/inventory")
     os.loadAPI("/apis/match")
     os.loadAPI("/apis/move")
+    os.loadAPI("/apis/ore")
     os.loadAPI("/apis/seek")
     os.loadAPI("/apis/slide")
 

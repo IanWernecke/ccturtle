@@ -36,4 +36,3 @@ end
 function up(string_id)
     return match_logic(string_id, turtle.inspectUp)
 end
-
