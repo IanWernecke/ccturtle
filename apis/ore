@@ -7,7 +7,7 @@ local ORE_NAME_REGEX = "[^\w][Oo]re$"
 -- api core logic
 -- logic to match the block using inspection
 local is_ore_logic = function(inspect_action)
-    local success, data = action()
+    local success, data = inspect_action()
     if success then
         return string.match(data.name, ORE_NAME_REGEX) ~= nil
     else
