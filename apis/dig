@@ -5,21 +5,17 @@
 local dig_logic = function(detect, dig, move, num)
 
     -- optional arg fix
-    if num == nil then
-        num = 1
-    end
+    if num == nil then num = 1 end
 
-    for i=1,num do
+    for i = 1, num do
 
         while detect() do
-            if not dig() then
-                return i
-            end
+            -- dig or return
+            if not dig() then return i end
         end
 
-        if not move() then
-            return i
-        end
+        -- move or return
+        if not move() then return i end
 
     end
     return num
@@ -34,7 +30,7 @@ function back(num)
     return forward(num)
 end
 function down(num)
-    return dig_logic(turtle.detectDown, turtle.digDown, turtle.down, num) 
+    return dig_logic(turtle.detectDown, turtle.digDown, turtle.down, num)
 end
 function forward(num)
     return dig_logic(turtle.detect, turtle.dig, turtle.forward, num)
@@ -48,6 +44,5 @@ function right(num)
     return forward(num)
 end
 function up(num)
-    return dig_logic(turtle.detectUp, turtle.digUp, turtle.up, num) 
+    return dig_logic(turtle.detectUp, turtle.digUp, turtle.up, num)
 end
-

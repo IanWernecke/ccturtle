@@ -4,6 +4,7 @@
 -- old: "[^\w][Oo]re$"
 -- "bigreactors:oreyellorite" (KO)
 -- "mekanism:oreblock" (KO)
+-- "mysticalagriculture:prosperity_ore" (KO)
 -- "thermalfoundation:ore" (OK)
 local ORE_NAME_REGEX = "[^\w][Oo]re"
 

@@ -6,15 +6,11 @@
 local move_logic = function(movement, num)
 
     -- basic fixer for null parameter
-    if num==nil then
-        num=1
-    end
+    if num == nil then num = 1 end
 
     -- perform the movements
-    for i=1,num do
-        if not movement() then
-            return i
-        end
+    for i = 1, num do
+        if not movement() then return i end
     end
     return num
 
@@ -25,16 +21,14 @@ end
 --
 -- note: back uses turtle.back() instead of turning,
 --      which is against traditional schema
--- 
+--
 function back(num)
 
     -- null argument fixer
-    if num == nil then
-        num = 1
-    end
+    if num == nil then num = 1 end
 
     local count = 0
-    for i=1,num do
+    for i = 1, num do
         turtle.back()
         count = count + 1
     end
@@ -69,4 +63,3 @@ function magnet()
         turtle.back()
     end
 end
-

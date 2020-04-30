@@ -5,6 +5,75 @@
 local recursion_limit = 250
 
 
+-- mine any blocks around that are ores
+function ore_veins(level)
+
+  -- a way to keep track of the recursion level, and not
+  -- call ourselves if we're in deep
+  if level == nil then level = 1 end
+
+  local count = 0
+  local moved = 0
+
+  -- up
+  -- checking up first should mean that we float first and
+  -- encounter fewer recursion errors, probably
+  while ore.up() do
+    dig.up()
+    count = count + 1
+    moved = moved + 1
+  end
+  while moved > 0 do
+    if level < recursion_limit then
+      count = count + ore_veins(level + 1)
+    end
+    turtle.down()
+    moved = moved - 1
+  end
+
+  -- loop and look in all four directions
+  for _ = 1, 4 do
+
+    while ore.forward() do
+      dig.forward()
+      count = count + 1
+      moved = moved + 1
+    end
+    while moved > 0 do
+      if level < recursion_limit then
+        count = count + ore_veins(level + 1)
+      end
+      turtle.back()
+      moved = moved - 1
+    end
+
+    -- turn to check all directions
+    turtle.turnLeft()
+
+  end
+
+  -- down
+  -- this used to be done second but that means there is
+  -- a risk of lots of ups and downs at the corners of
+  -- the spheres. up-middle-down hopefully is sane
+  while ore.down() do
+    dig.down()
+    count = count + 1
+    moved = moved + 1
+  end
+  while moved > 0 do
+    if level < recursion_limit then
+      count = count + ore_veins(level + 1)
+    end
+    turtle.up()
+    moved = moved - 1
+  end
+
+  return count
+
+end
+
+
 -- mine all blocks that match the given block id
 -- TODO: determine a fix for java exception error after
 -- arbitrary limit of 256 recursion
@@ -58,7 +127,7 @@ function vein(block, level)
             distance = distance - 1
         end
 
-        -- turn to check all directions        
+        -- turn to check all directions
         turtle.turnLeft()
 
     end
@@ -74,10 +143,8 @@ function vein(block, level)
             count = count + vein(block, level + 1)
         end
         turtle.up()
-    end 
+    end
 
     return count
 
 end
-
-
