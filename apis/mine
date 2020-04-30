@@ -5,6 +5,20 @@
 local recursion_limit = 250
 
 
+-- mine a vertical shaft all the way to bedrock,
+-- mining any ore veins along the way
+function ore_shaft()
+  local count = 0
+  local depth = 0
+  while dig.down() do
+    depth = depth + 1
+    count = count + ore_veins()
+  end
+  move.up(depth)
+  return count
+end
+
+
 -- mine any blocks around that are ores
 function ore_veins(level)
 
