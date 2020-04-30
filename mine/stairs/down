@@ -8,11 +8,10 @@ local usage = function()
   print("  DEPTH: the depth of the staircase to mine.")
   print("  WIDTH: the width of the staircase to mine.")
   print("    (default: 1)")
+  print("  HEIGHT: the height of the staircase to mine.")
+  print("    (default: 5)")
   error()
 end
-
-
-STAIR_HEIGHT = 6
 
 
 -- collect the arguments from the command line
@@ -20,43 +19,37 @@ local args = {...}
 
 
 -- check the number of arguments
-if #args == 0 or #args > 2 then
+if #args == 0 or #args > 3 then
   usage()
 end
 
 
--- determine the max depth and the width of the stairs
-local max_depth = tonumber(args[1])
-if #args > 1 then
-  max_width = tonumber(args[2])
-else
-  max_width = 1
-end
+-- set the global values for the staircase
+SC_DEPTH = (#args > 0 and tonumber(args[1]) or 1)
+SC_WIDTH = (#args > 1 and tonumber(args[2]) or 1)
+SC_HEIGHT = (#args > 2 and tonumber(args[3]) or 5)
 
 
 -- dig a section of rock
-function dig_stair_level(width)
-
-  -- fix up incoming width if not given
-  if width == nil then width = 1 end
+function dig_stair_level()
 
   -- init locals and begin work
   local count = 0
-  local res = dig.forward(STAIR_HEIGHT)
+  local res = dig.forward(SC_HEIGHT)
   count = count + res
 
   -- ensure success of the dig
-  if res ~= STAIR_HEIGHT then
+  if res ~= SC_HEIGHT then
     dig.back(res)
     return count
   end
 
-  dig.back(STAIR_HEIGHT)
+  dig.back(SC_HEIGHT)
   turtle.turnLeft()
 
   -- if there is a width to be dug
-  if width > 1 then
-    for level_width = 2, width do
+  if SC_WIDTH > 1 then
+    for width = 2, WC_WIDTH do
 
       -- ensure we can dig forward 1
       res = dig.forward()
@@ -66,21 +59,21 @@ function dig_stair_level(width)
       count = count + 1
 
       -- ensure we can dig left 6
-      res = dig.left(STAIR_HEIGHT)
+      res = dig.left(SC_HEIGHT)
       count = count + res
-      if res ~= STAIR_HEIGHT then
+      if res ~= SC_HEIGHT then
         dig.back(res)
         return count
       end
 
-      dig.back(STAIR_HEIGHT)
+      dig.back(SC_HEIGHT)
       turtle.turnLeft()
 
     end
 
     -- return to the starting row
     -- (position before width > 1 movement)
-    dig.back(width - 1)
+    dig.back(SC_WIDTH - 1)
     turtle.turnLeft()
     turtle.turnLeft()
 
@@ -93,16 +86,16 @@ end
 
 -- keep track of the total amount dug
 local count = 0
-for depth = 1, max_depth do
+for depth = 1, SC_DEPTH do
 
   -- if this loop is being entered after the first iter, move forward
   if depth > 1 then dig.forward() end
 
   dig.down()
-  local res = dig_stair_level(max_width)
+  local res = dig_stair_level(SC_WIDTH)
   count = count + res
-  if res ~= STAIR_HEIGHT * max_width then
-    error(string.format("Failed to completely dig level! [%d/%d]", res, STAIR_HEIGHT * max_width))
+  if res ~= SC_HEIGHT * SC_WIDTH then
+    error(string.format("Failed to completely dig level! [%d/%d]", res, SC_HEIGHT * SC_WIDTH))
   end
 
 end
