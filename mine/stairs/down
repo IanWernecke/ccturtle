@@ -40,7 +40,7 @@ function dig_stair_level()
     return count
   end
 
-  -- turn halfway around before determining whether to dig more rows
+  -- face right before determining whether to dig more rows
   turtle.turnLeft()
 
   -- if there is a width to be dug
@@ -71,11 +71,12 @@ function dig_stair_level()
     -- return to the starting row
     -- (position before width > 1 movement)
     dig.back(SC_WIDTH - 1)
-    turtle.turnLeft()
-    turtle.turnLeft()
+    turtle.turnRight()
 
+  else
+    turtle.turnLeft()
   end
-  turtle.turnLeft()
+
   return count
 
 end
@@ -86,16 +87,15 @@ local count = 0
 local level_expect = (SC_HEIGHT * SC_WIDTH) - 1
 for depth = 1, SC_DEPTH do
 
-  -- if this loop is being entered after the first iter, move forward
-  if depth > 1 then dig.forward() end
-
-  res = dig.down()
-  if res == 0 then
-    error("Failed to progress to lower level.")
+  -- ensure we can dig forwards and down
+  if dig.forward() == 0 or dig.down() == 0 then
     dig.back()
     turtle.turnLeft()
     turtle.turnLeft()
+    error("Failed to progress to next level of staircase.")
   end
+
+  -- increment the count for the down layer movement
   count = count + 1
 
   local res = dig_stair_level()

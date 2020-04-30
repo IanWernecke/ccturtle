@@ -26,18 +26,21 @@ function load_turtle_apis()
 
     -- simple api loads
     -- requires: nil
+    os.loadAPI("/apis/opt")
     os.loadAPI("/apis/bore")
     os.loadAPI("/apis/clear")
     os.loadAPI("/apis/con")
     os.loadAPI("/apis/describe")
     os.loadAPI("/apis/detect")
-    os.loadAPI("/apis/dig")
     os.loadAPI("/apis/inventory")
     os.loadAPI("/apis/match")
-    os.loadAPI("/apis/move")
     os.loadAPI("/apis/ore")
     os.loadAPI("/apis/seek")
     os.loadAPI("/apis/slide")
+
+    -- requires: opt
+    os.loadAPI("/apis/dig")
+    os.loadAPI("/apis/move")
 
     -- requires: inventory
     os.loadAPI("/apis/place")
@@ -54,7 +57,7 @@ function load_turtle_apis()
     -- requires: place, seek
     os.loadAPI("/apis/fill")
 
-    -- requires: match, dig
+    -- requires: dig, match, opt
     os.loadAPI("/apis/mine")
 
     -- requires: seek, match, dig, place, move

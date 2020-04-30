@@ -24,7 +24,7 @@ function ore_veins(level)
 
   -- a way to keep track of the recursion level, and not
   -- call ourselves if we're in deep
-  if level == nil then level = 1 end
+  level = opt.get(level, 1)
 
   local count = 0
   local moved = 0
@@ -108,7 +108,7 @@ function vein(block, level)
 
   -- a way to keep track of the recursion level, and not
   -- call ourselves if we're in deep
-  if level == nil then level = 1 end
+  level = opt.get(level, 1)
 
   local count = 0
 

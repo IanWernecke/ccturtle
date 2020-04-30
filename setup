@@ -69,6 +69,7 @@ local files = {
   "apis/match",
   "apis/mine",
   "apis/move",
+  "apis/opt",
   "apis/ore",
   "apis/place",
   "apis/punch",
@@ -196,7 +197,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 126 do
+while downloaded < 127 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])

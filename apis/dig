@@ -4,8 +4,7 @@
 -- api core logic
 local dig_logic = function(detect, dig, move, num)
 
-  -- optional arg fix
-  if num == nil then num = 1 end
+  num = opt.get(num, 1)
 
   -- attempt to dig and move the number of times requested (or one)
   local count = 0
