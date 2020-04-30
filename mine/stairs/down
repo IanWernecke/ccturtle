@@ -49,7 +49,7 @@ function dig_stair_level()
 
   -- if there is a width to be dug
   if SC_WIDTH > 1 then
-    for width = 2, WC_WIDTH do
+    for width = 2, SC_WIDTH do
 
       -- ensure we can dig forward 1
       res = dig.forward()
