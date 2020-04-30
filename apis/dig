@@ -4,21 +4,19 @@
 -- api core logic
 local dig_logic = function(detect, dig, move, num)
 
-    -- optional arg fix
-    if num == nil then num = 1 end
+  -- optional arg fix
+  if num == nil then num = 1 end
 
-    for i = 1, num do
-
-        while detect() do
-            -- dig or return
-            if not dig() then return i end
-        end
-
-        -- move or return
-        if not move() then return i end
-
+  -- attempt to dig and move the number of times requested (or one)
+  local count = 0
+  while count < num do
+    if detect() then
+      if not dig() then return count end
     end
-    return num
+    if not move() then return count end
+    count = count + 1
+  end
+  return count
 
 end
 

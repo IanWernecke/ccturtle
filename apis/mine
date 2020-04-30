@@ -10,7 +10,7 @@ local recursion_limit = 250
 function ore_shaft()
   local count = 0
   local depth = 0
-  while dig.down() do
+  while dig.down() > 0 do
     depth = depth + 1
     count = count + ore_veins()
   end
@@ -41,7 +41,7 @@ function ore_veins(level)
     if level < recursion_limit then
       count = count + ore_veins(level + 1)
     end
-    turtle.down()
+    dig.down()
     moved = moved - 1
   end
 
@@ -57,6 +57,9 @@ function ore_veins(level)
       if level < recursion_limit then
         count = count + ore_veins(level + 1)
       end
+      -- warning: if the area behind the turtle has filled in with
+      --  something like cobblestone from lava and water, this could be
+      --  a potential issue/failure
       turtle.back()
       moved = moved - 1
     end
@@ -79,7 +82,7 @@ function ore_veins(level)
     if level < recursion_limit then
       count = count + ore_veins(level + 1)
     end
-    turtle.up()
+    dig.up()
     moved = moved - 1
   end
 
