@@ -37,18 +37,21 @@ end
 -- dig a section of rock
 function dig_stair_level(width)
 
+  -- fix up incoming width if not given
+  if width == nil then width = 1 end
+
   -- init locals and begin work
   local count = 0
-  local res = dig.forward(6)
+  local res = dig.forward(STAIR_HEIGHT)
   count = count + res
 
   -- ensure success of the dig
-  if res ~= 6 then
+  if res ~= STAIR_HEIGHT then
     dig.back(res)
     return count
   end
 
-  count = count + dig.back(6)
+  dig.back(STAIR_HEIGHT)
   turtle.turnLeft()
 
   -- if there is a width to be dug
@@ -63,17 +66,17 @@ function dig_stair_level(width)
       count = count + 1
 
       -- ensure we can dig left 6
-      res = dig.left(6)
+      res = dig.left(STAIR_HEIGHT)
       count = count + res
-      if res ~= 6 then
+      if res ~= STAIR_HEIGHT then
         dig.back(res)
         return count
       end
 
-      dig.back(6)
+      dig.back(STAIR_HEIGHT)
       turtle.turnLeft()
 
-    done
+    end
 
     -- return to the starting row
     -- (position before width > 1 movement)
@@ -83,22 +86,23 @@ function dig_stair_level(width)
 
   end
   turtle.turnLeft()
+  return count
 
 end
 
 
 -- keep track of the total amount dug
 local count = 0
-for depth = 1, max_depth
+for depth = 1, max_depth do
 
   -- if this loop is being entered after the first iter, move forward
   if depth > 1 then dig.forward() end
 
   dig.down()
-  res = dig_stair_level(width)
+  local res = dig_stair_level(max_width)
   count = count + res
-  if res ~= STAIR_HEIGHT * width then
-    error(string.format("Failed to completely dig level! [%d/%d]", res, STAIR_HEIGHT * width))
+  if res ~= STAIR_HEIGHT * max_width then
+    error(string.format("Failed to completely dig level! [%d/%d]", res, STAIR_HEIGHT * max_width))
   end
 
 end
