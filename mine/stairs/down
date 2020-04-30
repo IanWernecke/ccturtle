@@ -88,7 +88,7 @@ for depth = 1, SC_DEPTH do
   local res = dig_stair_level()
   count = count + res
   if res ~= level_expect then
-    error(string.format("Failed to completely dig level! [%d/%d]", res, level_expect)
+    error(string.format("Failed to completely dig level! [%d/%d]", res, level_expect))
   end
 
 end
