@@ -35,16 +35,12 @@ function dig_stair_level()
 
   -- init locals and begin work
   local count = 0
-  local res = dig.forward(SC_HEIGHT)
+  local res = dig.back(dig.forward(SC_HEIGHT - 1))
   count = count + res
 
   -- ensure success of the dig
-  if res ~= SC_HEIGHT then
-    dig.back(res)
-    return count
-  end
+  if res ~= SC_HEIGHT - 1 then return count end
 
-  dig.back(SC_HEIGHT)
   turtle.turnLeft()
 
   -- if there is a width to be dug
@@ -53,20 +49,16 @@ function dig_stair_level()
 
       -- ensure we can dig forward 1
       res = dig.forward()
-      if res ~= 1 then
-        return count
-      end
+      if res ~= 1 then return count end
       count = count + 1
 
       -- ensure we can dig left 6
-      res = dig.left(SC_HEIGHT)
+      res = dig.back(dig.left(SC_HEIGHT - 1))
       count = count + res
-      if res ~= SC_HEIGHT then
-        dig.back(res)
+      if res ~= SC_HEIGHT - 1 then
         return count
       end
 
-      dig.back(SC_HEIGHT)
       turtle.turnLeft()
 
     end
@@ -86,16 +78,17 @@ end
 
 -- keep track of the total amount dug
 local count = 0
+local level_expect = (SC_HEIGHT * SC_WIDTH) - 1
 for depth = 1, SC_DEPTH do
 
   -- if this loop is being entered after the first iter, move forward
   if depth > 1 then dig.forward() end
 
   dig.down()
-  local res = dig_stair_level(SC_WIDTH)
+  local res = dig_stair_level()
   count = count + res
-  if res ~= SC_HEIGHT * SC_WIDTH then
-    error(string.format("Failed to completely dig level! [%d/%d]", res, SC_HEIGHT * SC_WIDTH))
+  if res ~= level_expect then
+    error(string.format("Failed to completely dig level! [%d/%d]", res, level_expect)
   end
 
 end
