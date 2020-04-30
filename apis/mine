@@ -57,10 +57,16 @@ function ore_veins(level)
       if level < recursion_limit then
         count = count + ore_veins(level + 1)
       end
-      -- warning: if the area behind the turtle has filled in with
-      --  something like cobblestone from lava and water, this could be
-      --  a potential issue/failure
-      turtle.back()
+      -- this is attempting to solve the problem where a block becomes
+      -- solid after a turtle has already mined through it,
+      -- like cobblestone appearing where lava meets water
+      if not turtle.back() then
+        turtle.turnLeft()
+        turtle.turnLeft()
+        dig.forward()
+        turtle.turnLeft()
+        turtle.turnLeft()
+      end
       moved = moved - 1
     end
 
