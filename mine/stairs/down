@@ -4,12 +4,7 @@
 
 
 local usage = function()
-  print("Usage: DEPTH [WIDTH]")
-  print("  DEPTH: the depth of the staircase to mine.")
-  print("  WIDTH: the width of the staircase to mine.")
-  print("    (default: 1)")
-  print("  HEIGHT: the height of the staircase to mine.")
-  print("    (default: 5)")
+  print("Usage: DEPTH [WIDTH=1] [HEIGHT=5]")
   error()
 end
 
