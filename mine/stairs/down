@@ -2,31 +2,104 @@
 
 -- mine/stairs/down program
 
+
+local usage = function()
+  print("Usage: DEPTH [WIDTH]")
+  print("  DEPTH: the depth of the staircase to mine.")
+  print("  WIDTH: the width of the staircase to mine.")
+  print("    (default: 1)")
+  error()
+end
+
+
+STAIR_HEIGHT = 6
+
+
 -- collect the arguments from the command line
 local args = {...}
 
 
--- Check number of arguments for usage
-if #args ~= 1 then
-    error( "Argument required for depth of staircase." )
+-- check the number of arguments
+if #args == 0 or #args > 2 then
+  usage()
 end
 
 
--- number of levels down we wish to go down
-local MAX = tonumber(args[1])
-local depth = 0
-while depth < MAX do
+-- determine the max depth and the width of the stairs
+local max_depth = tonumber(args[1])
+if #args > 1 then
+  max_width = tonumber(args[2])
+else
+  max_width = 1
+end
 
-    dig.forward(6)
 
-    -- move back five (off by one so we don't make a wall)
-    move.back(5)
+-- dig a section of rock
+function dig_stair_level(width)
 
-    -- move down one
-    if turtle.detectDown() and depth < MAX -1 then
-        dig.down()
-    end
+  -- init locals and begin work
+  local count = 0
+  local res = dig.forward(6)
+  count = count + res
 
-    depth = depth + 1
+  -- ensure success of the dig
+  if res ~= 6 then
+    dig.back(res)
+    return count
+  end
+
+  count = count + dig.back(6)
+  turtle.turnLeft()
+
+  -- if there is a width to be dug
+  if width > 1 then
+    for level_width = 2, width do
+
+      -- ensure we can dig forward 1
+      res = dig.forward()
+      if res ~= 1 then
+        return count
+      end
+      count = count + 1
+
+      -- ensure we can dig left 6
+      res = dig.left(6)
+      count = count + res
+      if res ~= 6 then
+        dig.back(res)
+        return count
+      end
+
+      dig.back(6)
+      turtle.turnLeft()
+
+    done
+
+    -- return to the starting row
+    -- (position before width > 1 movement)
+    dig.back(#width - 1)
+    turtle.turnLeft()
+    turtle.turnLeft()
+
+  end
+  turtle.turnLeft()
 
 end
+
+
+-- keep track of the total amount dug
+local count = 0
+for depth = 1, max_depth
+
+  -- if this loop is being entered after the first iter, move forward
+  if depth > 1 then dig.forward() end
+
+  dig.down()
+  res = dig_stair_level(width)
+  count = count + res
+  if res ~= STAIR_HEIGHT * width then
+    error(string.format("Failed to completely dig level! [%d/%d]", res, STAIR_HEIGHT * width))
+  end
+
+end
+print(string.format('Dug %d blocks!', count))
