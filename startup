@@ -41,6 +41,7 @@ function load_turtle_apis()
     -- requires: opt
     os.loadAPI("/apis/dig")
     os.loadAPI("/apis/move")
+    os.loadAPI("/apis/turn")
 
     -- requires: inventory
     os.loadAPI("/apis/place")

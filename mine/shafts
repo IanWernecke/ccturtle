@@ -1,5 +1,6 @@
 #!/bin/lua
 
+-- requires: dig, mine, turn
 
 -- print the usage and exit
 local usage = function()
@@ -37,21 +38,20 @@ local shaft_count, x, y = 0, 0, 0
 while shaft_count < SHAFTS do
 
   -- move forward and right the x amounts
-  move.forward(x)
-  move.right(y)
+  dig.forward(x)
+  dig.right(y)
 
   -- mine the ore shaft and record it
   mine.ore_shaft()
   shaft_count = shaft_count + 1
 
   -- return to the starting position to dump goods
-  move.back(y)
-  move.left(x)
+  dig.back(y)
+  dig.left(x)
 
   -- dump goods and prepare to begin again
   inventory.drop()
-  turtle.turnLeft()
-  turtle.turnLeft()
+  turn.back()
 
   -- find the next coordinates in case there are more shafts to be dug
   x, y = find_next_shaft_position(x, y)
