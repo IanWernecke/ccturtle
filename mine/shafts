@@ -41,6 +41,15 @@ while shaft_count < SHAFTS do
   dig.forward(x)
   dig.right(y)
 
+  -- if the shaft has already been dug, find next
+  while match.down(con.COBBLESTONE) do
+    local next_x, next_y = find_next_shaft_position(x, y)
+    dig.back(y)
+    dig.right(next_x - x)
+    dig.right(next_y)
+    x, y = next_x, next_y
+  end
+
   -- mine the ore shaft and record it
   mine.ore_shaft()
   shaft_count = shaft_count + 1
