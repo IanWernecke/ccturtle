@@ -44,9 +44,19 @@ while shaft_count < SHAFTS do
   -- if the shaft has already been dug, find next
   while match.down(con.COBBLESTONE) do
     local next_x, next_y = find_next_shaft_position(x, y)
-    dig.back(y)
-    dig.right(next_x - x)
-    dig.right(next_y)
+    if next_y > y then
+      dig.left()
+      dig.right(next_y - y)
+    else
+      dig.left()
+      dig.left(y - next_y)
+      turn.back()
+
+    end
+    -- this method returns all the way to the beginning
+    -- dig.back(y)
+    -- dig.right(next_x - x)
+    -- dig.right(next_y)
     x, y = next_x, next_y
   end
 
