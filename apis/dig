@@ -9,9 +9,16 @@ local dig_logic = function(detect, dig, move, num)
   -- attempt to dig and move the number of times requested (or one)
   local count = 0
   while count < num do
-    if detect() then
-      if not dig() then return count end
+
+    -- allows blocks affected by gravity to be dug
+    while detect() do
+      if dig() then
+        sleep(con.DIG_INTERVAL)
+      else
+        return count
+      end
     end
+
     if not move() then return count end
     count = count + 1
   end

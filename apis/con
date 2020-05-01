@@ -1,5 +1,7 @@
 #!/bin/lua
 
+DIG_INTERVAL = 0.5
+
 ANDESITE = "chisel:andesite"
 COAL_ORE = "minecraft:coal_ore"
 COBBLESTONE = "minecraft:cobblestone"
