@@ -54,6 +54,11 @@ while shaft_count < SHAFTS do
   mine.ore_shaft()
   shaft_count = shaft_count + 1
 
+  -- place a cobblestone down if possible
+  if inventory.contains(con.COBBLESTONE) then
+    place.down(con.COBBLESTONE)
+  end
+
   -- return to the starting position to dump goods
   dig.back(y)
   dig.left(x)
