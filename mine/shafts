@@ -1,0 +1,59 @@
+#!/bin/lua
+
+
+-- print the usage and exit
+local usage = function()
+  print("Usage: [SHAFTS=5]")
+  error()
+end
+
+
+-- collect the arguments from the command line
+local args = {...}
+
+-- check the number of arguments
+if #args > 1 then
+  usage()
+end
+
+
+-- set the global values
+SHAFTS = (#args > 0 and tonumber(args[1]) or 5)
+
+
+function find_next_shaft_position(x, y)
+
+  local new_x, new_y = x, y
+  new_x = new_x + 1
+  while (new_x + (new_y * 2)) % 5 ~= 0 then
+    new_y = new_y + 1
+  end
+  return new_x, new_y
+
+end
+
+
+local shaft_count, x, y = 0, 0, 0
+while shaft_count < SHAFTS do
+
+  -- move forward and right the x amounts
+  move.forward(x)
+  move.right(y)
+
+  -- mine the ore shaft and record it
+  mine.ore_shaft()
+  shaft_count = shaft_count + 1
+
+  -- return to the starting position to dump goods
+  move.back(y)
+  move.left(x)
+
+  -- dump goods and prepare to begin again
+  inventory.drop()
+  turtle.turnLeft()
+  turtle.turnLeft()
+
+  -- find the next coordinates in case there are more shafts to be dug
+  x, y = find_next_shaft_position(x, y)
+
+end

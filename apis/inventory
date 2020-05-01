@@ -18,7 +18,7 @@ function count(string_id)
 
     local data
     local total = 0
-    for i=1,16 do
+    for i = 1,16 do
         if string_id == nil then
             total = total + turtle.getItemCount(i)
         else
@@ -43,6 +43,36 @@ function current()
     else
         return nil
     end
+
+end
+
+
+-- function: drop
+-- param slot: the slot number to drop forward
+-- return: bool success
+function drop(slot, turtle_drop)
+
+  -- set the default drop direction to forwards
+  turtle_drop = opt.get(turtle_drop, turtle.drop)
+
+  -- if a slot was given, drop only that one and return
+  if slot ~= nil then return turtle_drop(slot) end
+
+  -- store this for later
+  starting_slot = turtle.getSelectedSlot()
+
+  -- drop all of the items in the inventory
+  for slot = 1, 16 do
+    data = turtle.getItemDetail(slot)
+    if data ~= nil then
+      turtle.select(slot)
+      turtle_drop()
+    end
+  end
+
+  -- select the original slot and return true
+  turtle.select(starting_slot)
+  return true
 
 end
 
