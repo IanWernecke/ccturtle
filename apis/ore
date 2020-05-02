@@ -14,7 +14,9 @@ local ORE_NAME_REGEX = "[^\w][Oo]re"
 local is_ore_logic = function(inspect_action)
     local success, data = inspect_action()
     if success then
-        return string.match(data.name, ORE_NAME_REGEX) ~= nil
+        return string.match(data.name, ORE_NAME_REGEX) ~= nil or (
+          data.state and data.state.type and string.match(data.state.type, ORE_NAME_REGEX)
+        ) ~= nil
     else
         return false
     end

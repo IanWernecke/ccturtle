@@ -1,7 +1,7 @@
 #!/bin/lua
 
 -- program:
---   mine/shelf/left
+--   clear/shelf/left
 -- description:
 --   clear a shelf on a hillside by removing
 --   blocks to the front, the right, and upwards
