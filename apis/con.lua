@@ -29,7 +29,7 @@ BLOCK_STONEBRICK = {name=MOD_MINECRAFT .. ":stonebrick"}
 
 -- item details are obtained via:
 --  turtle.getItemDetails(slot)
-ITEM_CUTTER = {name=INDUSTRIAL_CRAFT .. ":cutter"}
+ITEM_CUTTER = {name=MOD_INDUSTRIAL_CRAFT .. ":cutter"}
 ITEM_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
 ITEM_COPPER_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=128}
 ITEM_COPPER_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=320}
