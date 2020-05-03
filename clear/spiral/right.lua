@@ -1,0 +1,1 @@
+clear.spiral_right()

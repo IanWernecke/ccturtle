@@ -73,11 +73,11 @@ def main():
     :return: a system exit code.
     """
     lines = [
-        '#!/bin/lua',
+        # '#!/bin/lua',
         # f'if fs.exists("{pc_root}") then',
         # f'  fs.delete("{pc_root}")',
         # 'end',
-        '',
+        # '',
         '-- constants',
         f'local src = "{github_root}"',
         f'local dst = nil',
@@ -207,3 +207,4 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+

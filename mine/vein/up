@@ -1,8 +1,0 @@
-#!/bin/lua
-
-local ins = turtle.inspectUp
-local data = ins()
-local count = mine.vein(data.name)
-
-print("Mined " .. tostring(count) .. " " .. data.name)
-

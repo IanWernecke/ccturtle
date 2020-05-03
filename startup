@@ -21,59 +21,55 @@ function print_system_status()
 end
 
 
+-- load apis to be used by a turtle
 function load_turtle_apis()
-    -- load apis to be used by a turtle
 
-    -- simple api loads
-    -- requires: nil
-    os.loadAPI("/apis/opt")
-    os.loadAPI("/apis/bore")
-    os.loadAPI("/apis/clear")
-    os.loadAPI("/apis/con")
-    os.loadAPI("/apis/describe")
-    os.loadAPI("/apis/detect")
-    os.loadAPI("/apis/inventory")
-    os.loadAPI("/apis/match")
-    os.loadAPI("/apis/ore")
-    os.loadAPI("/apis/seek")
-    os.loadAPI("/apis/slide")
+  -- simple api loads
+  -- requires: nil
+  os.loadAPI("/apis/opt.lua")
 
-    -- requires: opt
-    os.loadAPI("/apis/dig")
-    os.loadAPI("/apis/move")
-    os.loadAPI("/apis/turn")
+  os.loadAPI("/apis/bore.lua")
+  os.loadAPI("/apis/clear.lua")
+  os.loadAPI("/apis/con.lua")
+  os.loadAPI("/apis/describe.lua")
+  os.loadAPI("/apis/detect.lua")
+  os.loadAPI("/apis/inventory.lua")
+  os.loadAPI("/apis/match.lua")
+  os.loadAPI("/apis/ore.lua")
+  os.loadAPI("/apis/seek.lua")
+  os.loadAPI("/apis/slide.lua")
 
-    -- requires: inventory
-    os.loadAPI("/apis/place")
+  -- requires: opt
+  os.loadAPI("/apis/dig.lua")
+  os.loadAPI("/apis/move.lua")
+  os.loadAPI("/apis/turn.lua")
 
-    -- requires: dig, move, place
-    os.loadAPI("/apis/builder")
+  -- requires: inventory
+  os.loadAPI("/apis/place.lua")
 
-    -- requires: bore, move
-    os.loadAPI("/apis/punch")
+  -- requires: dig, move, place
+  os.loadAPI("/apis/builder.lua")
 
-    -- requires: detect, dig, punch
-    os.loadAPI("/apis/cleft")
+  -- requires: bore, move
+  os.loadAPI("/apis/punch.lua")
 
-    -- requires: place, seek
-    os.loadAPI("/apis/fill")
+  -- requires: detect, dig, punch
+  os.loadAPI("/apis/cleft.lua")
 
-    -- requires: dig, match, opt
-    os.loadAPI("/apis/mine")
+  -- requires: place, seek
+  os.loadAPI("/apis/fill.lua")
 
-    -- requires: seek, match, dig, place, move
-    os.loadAPI("/apis/replace")
+  -- requires: dig, match, opt
+  os.loadAPI("/apis/mine.lua")
 
-end
-
-
-function main()
-    -- print the system status and load any required apis
-
-    print_system_status()
-    if turtle then
-        load_turtle_apis()
-    end
+  -- requires: seek, match, dig, place, move
+  -- os.loadAPI("/apis/replace.lua")
 
 end
-main()
+
+
+-- print the system status and load any required apis
+print_system_status()
+if turtle then
+    load_turtle_apis()
+end
