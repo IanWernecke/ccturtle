@@ -1,12 +1,15 @@
 #!/bin/lua
 
+local setup_lua = "setup.lua"
+local root_setup_lua = "/" .. setup_lua
+
 -- remove old setup script
-if fs.exists("/setup") then
-  fs.delete("/setup")
+if fs.exists(root_setup_lua) then
+  fs.delete(root_setup_lua)
 end
 
 -- download the setup script
-shell.run("wget https://raw.github.com/IanWernecke/ccturtle/master/setup setup")
+shell.run("wget https://raw.github.com/IanWernecke/ccturtle/master/" .. setup_lua .. " " .. setup_lua)
 
 -- call the setup script
-shell.run("/setup")
+shell.run(root_setup_lua)
