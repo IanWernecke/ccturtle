@@ -5,7 +5,9 @@ local place_logic = function(resource, action_command)
   -- select the specific place string if it is not already selected
   if not inventory.match(resource) then
     local res = inventory.find(resource)
-    assert(res ~= nil, "Inventory does not contain: " .. resource)
+    if res == nil then
+      return false
+    end
     turtle.select(res)
   end
 
