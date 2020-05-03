@@ -47,9 +47,11 @@ local directories = {
 
 local files = {
   "basic.lua",
+  "sanitize.lua",
   "setup.lua",
   "startup",
   "update.lua",
+  "apis/arg.lua",
   "apis/basic.lua",
   "apis/bore.lua",
   "apis/builder.lua",
@@ -197,7 +199,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 130 do
+while downloaded < 132 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])

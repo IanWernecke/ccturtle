@@ -1,28 +1,3 @@
--- look for an exact match for a given resource in the inventory
--- parameter resources: table that describes the required items details
-local find = function(resource)
-  for index = 1, 16 do
-
-    -- get the detail of the item in slot(index)
-    local detail = turtle.getItemDetail(index)
-    local match = true
-
-    -- compare each key in the resource to the detail found on the index
-    for key, value in pairs(resource) do
-      if not detail[key] or detail[key] ~= value then
-        match = false
-        break
-      end
-    end
-
-    -- if all of the values matched, return the index
-    if match then return index end
-
-  end
-  return nil
-end
-
-
 function craft(recipe, num)
 
   -- ensure a chest is in front of the turtle

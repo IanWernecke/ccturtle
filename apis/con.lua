@@ -34,11 +34,30 @@ ITEM_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
 ITEM_COPPER_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=128}
 ITEM_COPPER_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=320}
 ITEM_FORGE_HAMMER = {name=MOD_INDUSTRIAL_CRAFT .. ":forge_hammer"}
+ITEM_IRON_INGOT = {name=MOD_MINECRAFT .. ":iron_ingot"}
+ITEM_IRON_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=32}
+ITEM_LOG = {name=MOD_MINECRAFT .. ":log"}
 ITEM_PLANKS = {name=BLOCK_PLANKS}
+ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
 
 
 -- recipes
 --  these should only use ITEM_* constants, for consistency
 RECIPE_COPPER_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_COPPER_INGOT}}
 RECIPE_COPPER_WIRE = {{"cp"}, {c=ITEM_CUTTER, p=ITEM_COPPER_PLATE}}
+RECIPE_CUTTER = {{"p.p", ".p", "i.i"}, {p=ITEM_IRON_PLATE, i=ITEM_IRON_INGOT}}
+RECIPE_FORGE_HAMMER = {{"ii", "iss", "ii"}, {i=ITEM_IRON_INGOT, s=ITEM_STICK}}
+RECIPE_PLANKS = {{"w"}, {w=ITEM_LOG}}
 RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
+
+
+-- recipe map
+--  for creating items required for other recipes
+RECIPES = {
+  ITEM_COPPER_PLATE=RECIPE_COPPER_PLATE,
+  ITEM_COPPER_WIRE=RECIPE_COPPER_WIRE,
+  ITEM_CUTTER=RECIPE_CUTTER,
+  ITEM_FORGE_HAMMER=RECIPE_FORGE_HAMMER,
+  ITEM_PLANKS=RECIPE_PLANKS,
+  ITEM_STICK=RECIPE_STICK
+}

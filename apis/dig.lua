@@ -1,5 +1,5 @@
 -- api core logic
-local dig_logic = function(detect, dig, move, num)
+local dig_logic = function(detect, dig, attack, move, num)
 
   num = opt.get(num, 1)
 
@@ -9,7 +9,7 @@ local dig_logic = function(detect, dig, move, num)
 
     -- allows blocks affected by gravity to be dug
     while detect() do
-      if dig() then
+      if dig() or attack() then
         sleep(con.DIG_INTERVAL)
       else
         return count
@@ -31,10 +31,10 @@ function back(num)
     return forward(num)
 end
 function down(num)
-    return dig_logic(turtle.detectDown, turtle.digDown, turtle.down, num)
+    return dig_logic(turtle.detectDown, turtle.digDown, turtle.attackDown, turtle.down, num)
 end
 function forward(num)
-    return dig_logic(turtle.detect, turtle.dig, turtle.forward, num)
+    return dig_logic(turtle.detect, turtle.dig, turtle.attack, turtle.forward, num)
 end
 function left(num)
     turtle.turnLeft()
@@ -45,5 +45,5 @@ function right(num)
     return forward(num)
 end
 function up(num)
-    return dig_logic(turtle.detectUp, turtle.digUp, turtle.up, num)
+    return dig_logic(turtle.detectUp, turtle.digUp, turtle.attackUp, turtle.up, num)
 end

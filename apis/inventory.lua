@@ -114,28 +114,6 @@ function find(resource)
 end
 
 
--- -- function: find
--- -- param string_id: the name of an item to seek
--- -- return: a slot number that matches the string_id
--- function find(string_id)
---
---     assert(string_id, 'string_id must be given')
---
---     -- search for an item that matches a given string_id
---     local data
---     for i=1,16 do
---         data = turtle.getItemDetail(i)
---         if data ~= nil and data.name == string_id then
---             return i
---         end
---     end
---     return nil
---
--- end
-
-
-
-
 -- function: first
 -- return: returns the first inventory slot with items in it
 function first()
@@ -158,7 +136,7 @@ function match(resource, slot)
 
   -- if not data was obtained, the call was empty -- never match
   if detail == nil then return false end
-  
+
   resource = to_resource(resource)
 
   -- compare each key in the resource to the detail found on the index
@@ -169,6 +147,40 @@ function match(resource, slot)
   end
 
   return true
+
+end
+
+
+-- determine whether one of the given resources matches the slot (or current if nil)
+-- return: boolean
+function matches(resources, slot)
+
+  slot = opt.get(slot, nil)
+
+  local detail = turtle.getItemDetail(slot)
+
+  -- nothing found, return false
+  if detail == nil then return false end
+
+  -- walk each resource given
+  for index = 1, #resources do
+    local resource = to_resource(resources[index])
+
+    -- compare each key value against the details, set result to false if no match
+    local result = true
+    for key, value in pairs(resource) do
+      if not detail[key] or detail[key] ~= value then
+        result = false
+        break
+      end
+    end
+
+    -- if the details matched the resource
+    if result then return true end
+
+  end
+
+  return false
 
 end
 
