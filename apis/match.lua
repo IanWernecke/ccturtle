@@ -1,31 +1,46 @@
 -- api core logic
 -- logic to match the block using inspection
-local match_logic = function(string_id, action)
-    local success, data = action()
-    return success and data.name and string_id == data.name or false
+local match_logic = function(resource, action)
+
+  local success, data = action()
+
+  -- if failed to inspect, no match
+  if not success then
+    return false
+  end
+    
+  -- compare each key in the resource to the detail found on the index
+  for key, value in pairs(resource) do
+    if not data[key] or data[key] ~= value then
+      return false
+    end
+  end
+
+  return true
+
 end
 
 
 -- series of commands to test strings against connected blocks
-function back(string_id)
+function back(resource)
     turtle.turnLeft()
     turtle.turnLeft()
-    return forward(string_id)
+    return forward(resource)
 end
-function forward(string_id)
-    return match_logic(string_id, turtle.inspect)
+function forward(resource)
+    return match_logic(resource, turtle.inspect)
 end
-function down(string_id)
-    return match_logic(string_id, turtle.inspectDown)
+function down(resource)
+    return match_logic(resource, turtle.inspectDown)
 end
-function left(string_id)
+function left(resource)
     turtle.turnLeft()
-    return forward(string_id)
+    return forward(resource)
 end
-function right(string_id)
+function right(resource)
     turtle.turnRight()
-    return forward(string_id)
+    return forward(resource)
 end
-function up(string_id)
-    return match_logic(string_id, turtle.inspectUp)
+function up(resource)
+    return match_logic(resource, turtle.inspectUp)
 end
