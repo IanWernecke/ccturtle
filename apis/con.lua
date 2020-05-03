@@ -39,6 +39,6 @@ ITEM_PLANKS = {name=BLOCK_PLANKS}
 
 -- recipes
 --  these should only use ITEM_* constants, for consistency
-RECIPE_COPPER_PLATE = {{"hi"}, {h=con.ITEM_FORGE_HAMMER, i=con.ITEM_COPPER_INGOT}}
-RECIPE_COPPER_WIRE = {{"cp"}, {c=con.ITEM_CUTTER, p=con.ITEM_COPPER_PLATE}}
-RECIPE_STICK = {{"p", "p"}, {p=con.ITEM_PLANKS}}
+RECIPE_COPPER_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_COPPER_INGOT}}
+RECIPE_COPPER_WIRE = {{"cp"}, {c=ITEM_CUTTER, p=ITEM_COPPER_PLATE}}
+RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
