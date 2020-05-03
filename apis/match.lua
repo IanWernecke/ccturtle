@@ -8,7 +8,12 @@ local match_logic = function(resource, action)
   if not success then
     return false
   end
-    
+
+  -- convert the variable to a table if it is a string
+  if type(resource) == "string" then
+    resource = {name=resource}
+  end
+
   -- compare each key in the resource to the detail found on the index
   for key, value in pairs(resource) do
     if not data[key] or data[key] ~= value then
