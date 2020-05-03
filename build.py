@@ -22,10 +22,10 @@ github_root = f'https://raw.github.com/{github_user}/{github_repo}/{github_branc
 
 # the location to save the files on the pc
 pc_root = '/turtle/'
-pc_setup = 'setup'
+pc_setup = 'setup.lua'
 
 # protected turtle directories
-turtle_sanitize = 'sanitize'
+turtle_sanitize = 'sanitize.lua'
 turtle_ignore = [
     'disk',
     'openp',
@@ -187,7 +187,7 @@ def main():
     ])
 
     # write the new setup file
-    lines_to_file(lines, 'setup')
+    lines_to_file(lines, pc_setup)
 
     # write the new cleaner file
     lines = ['#!/bin/lua']
@@ -198,9 +198,9 @@ def main():
             continue
         lines.append(f'fs.delete("/{f}")')
 
-    lines_to_file(lines, 'sanitize')
+    lines_to_file(lines, turtle_sanitize)
 
-    execute(['git', 'add', 'setup', 'sanitize'])
+    execute(['git', 'add', pc_setup, turtle_sanitize])
 
     return 0
 
