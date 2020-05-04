@@ -1,3 +1,17 @@
+
+-- compare a table with another table
+local compare_resource_map_value_to_resource = function(resource_map_value, resource)
+
+  for key, value in pairs(resource_map_value) then
+    if not resource[key] or resource_map_value[key] ~= resource[key] then
+      return false
+    end
+  end
+  return true
+
+end
+
+
 -- print a table that describes a resource
 local print_resource = function(resource)
 
@@ -82,8 +96,11 @@ function resource_slots(layout, resource_map, resource)
     local row = layout[row_index]
     for column_index = 1, #row do
 
+      -- get the character from the string
       local char = row.sub(column_index, column_index)
-      if resource_map[char] and resource_map[char] == resource then
+
+      -- compare the resource map value to the given resource
+      if resource_map[char] and compare_resource_map_value_to_resource(resource_map[char], resource) then
         table.insert(slots, ((row_index - 1) * 4) + column_index)
       end
 
@@ -113,7 +130,7 @@ function craft(recipe, num)
 
   -- create the list of resources from the resource map
   resources = {}
-  for _, value in resource_map do
+  for _, value in pairs(resource_map) do
     table.insert(resources, value)
   end
 
@@ -128,6 +145,7 @@ function craft(recipe, num)
     while turtle.suck() do
       if inventory.matches(resources, index) then
         index = index + 1
+        turtle.select(index)
       else
         turtle.dropUp()
       end
@@ -167,15 +185,20 @@ function craft(recipe, num)
     -- move all of the resource to the end of the inventory
     local first_source_slot = inventory.find(resources[index])
     local last_empty_slot = inventory.find_last_empty_slot()
-    while first_source_slot < last_empty_slot do
+    while true do
+
+      local first_source_slot = inventory.find(resources[index])
+      local last_empty_slot = inventory.find_last_empty_slot()
+
+      -- break out if we are done moving items to the rear
+      if first_source_slot > last_empty_slot then
+        break
+      end
 
       local result = inventory.move(first_source_slot, last_empty_slot)
       if not result then
           error(string.format("Failed to move resource from slot %d to slot %d", first_source_slot, last_empty_slot))
       end
-
-      local first_source_slot = inventory.find(resources[index])
-      local last_empty_slot = inventory.find_last_empty_slot()
 
     end
 
