@@ -6,8 +6,44 @@
 -- function: contains
 -- param string_id: the name of the block to search for in inventory
 -- return: boolean
-function contains(string_id)
-    return find(string_id) ~= nil
+function contains(string_id, number)
+
+  number = opt.get(number, 1)
+
+  -- find the slot that contains the resource
+  local slot = find(string_id)
+  if slot == nil then
+    return false
+  end
+
+  -- slot is not nil, if count == 1, then return true
+  if count == 1 then
+    return true
+  end
+
+  -- ensure the slot contains the required amount
+  return (count(string_id) >= number and true or false)
+
+end
+
+
+-- determine whether the inventory contains the required amount
+-- of each resource given in resources
+-- return: boolean
+function contains_all(resources, number)
+
+  number = opt.get(number, 1)
+
+  -- search for each of the resources given and ensure they have the requires amount
+  for index = 1, #resources do
+    if number == 1 then
+      if find(resources[index]) == nil then return false end
+    else
+      if count(resources[index]) < number then return false end
+    end
+  end
+  return true
+
 end
 
 
@@ -114,6 +150,34 @@ function find(resource)
 end
 
 
+-- find all of the slots that match the specified resource
+-- return: table (list)
+function find_all(resource)
+
+  -- ensure we are working with a table
+  resource = to_resource(resource)
+
+  local result = {}
+  for index = 1, 16 do
+    if match(resource, index) then table.insert(result, index) end
+  end
+  return result
+
+end
+
+
+-- find the last empty slot in the inventory
+-- return: int | nil
+function find_last_empty_slot()
+
+  for index = 16, 1, -1 do
+    if turtle.getItemCount(index) == 0 then return index end
+  end
+  return nil
+
+end
+
+
 -- function: first
 -- return: returns the first inventory slot with items in it
 function first()
@@ -187,11 +251,11 @@ end
 
 -- move items from one slot to another
 -- return: boolean success
-function move(source, destination)
+function move(source, destination, number)
 
   local position = turtle.getSelectedSlot()
   turtle.select(source)
-  local result = turtle.transferTo(destination)
+  local result = turtle.transferTo(destination, number)
   turtle.select(position)
   return result
 
