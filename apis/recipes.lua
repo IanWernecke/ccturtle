@@ -1,3 +1,4 @@
+-- print a table that describes a resource
 local print_resource = function(resource)
 
   print('Resource:')
@@ -119,7 +120,8 @@ function craft(recipe, num)
   -- calculate how many of each item is required
   materials = count_required_materials(layout, resource_map, num)
 
-  do
+  -- while the inventory does not contain all of the resources
+  while not inventory.contains_all(resources, num) do
 
     -- filter objects from the chest in front to the chest above
     index = 1
@@ -129,11 +131,6 @@ function craft(recipe, num)
       else
         turtle.dropUp()
       end
-    end
-
-    -- if the inventory contains all of the required resources, break out of the do loop
-    if inventory.contains_all(resources, num) then
-      break
     end
 
     -- if the inventory does not contain the required resources,
@@ -168,19 +165,17 @@ function craft(recipe, num)
   for index = 1, #resources do
 
     -- move all of the resource to the end of the inventory
-    do
-
-      local last_empty_slot = inventory.find_last_empty_slot()
-      local first_source_slot = inventory.find(resources[index])
-
-      if first_source_slot > last_empty_slot then
-        break
-      end
+    local first_source_slot = inventory.find(resources[index])
+    local last_empty_slot = inventory.find_last_empty_slot()
+    while first_source_slot < last_empty_slot do
 
       local result = inventory.move(first_source_slot, last_empty_slot)
       if not result then
           error(string.format("Failed to move resource from slot %d to slot %d", first_source_slot, last_empty_slot))
       end
+
+      local first_source_slot = inventory.find(resources[index])
+      local last_empty_slot = inventory.find_last_empty_slot()
 
     end
 
