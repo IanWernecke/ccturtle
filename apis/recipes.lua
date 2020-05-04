@@ -219,6 +219,8 @@ function craft(recipe, num)
         inventory.drop(resource_src_slot)
       end
       resource_src_slot = table.remove(resource_src_slots)
+    end
+
   end
 
   return turtle.craft()
