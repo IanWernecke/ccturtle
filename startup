@@ -66,6 +66,11 @@ function load_turtle_apis()
   -- requires: seek, match, dig, place, move
   -- os.loadAPI("/apis/replace.lua")
 
+  -- if the turtle can craft, load the recipes api
+  if turtle.craft then
+    os.loadAPI("/apis/recipes.lua")
+  end
+
 end
 
 
