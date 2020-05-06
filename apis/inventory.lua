@@ -294,16 +294,7 @@ function limit_materials(materials, drop_action)
         -- we require some more, determine how many to keep
         local item_count = turtle.getItemCount(slot)
 
-        -- if the items in the stack are fewer than those required, drop some
-        if item_count < require_count then
-          local starting_slot = turtle.getSelectedSlot()
-          turtle.select(slot)
-          drop_action(item_count - require_count)
-          keep[resource] = 0
-          turtle.select(starting_slot)
-        end
-
-        -- if we need all of them, lower the score by that many and move on
+        -- if we need all of them, reduce the required count by the item count and break
         if require_count >= item_count then
           keep[resource] = require_count - item_count
           break
