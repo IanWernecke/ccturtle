@@ -2,7 +2,7 @@
 -- compare a table with another table
 local compare_resource_map_value_to_resource = function(resource_map_value, resource)
 
-  for key, value in pairs(resource_map_value) then
+  for key, value in pairs(resource_map_value) do
     if not resource[key] or resource_map_value[key] ~= resource[key] then
       return false
     end
@@ -73,7 +73,7 @@ function count_required_materials(layout, resource_map, number)
         if materials[material] then
           materials[material] = materials[material] + number
         else
-          materials[char] = number
+          materials[material] = number
         end
       end
 
@@ -138,7 +138,9 @@ function craft(recipe, num)
   materials = count_required_materials(layout, resource_map, num)
 
   -- while the inventory does not contain all of the resources
-  while not inventory.contains_all(resources, num) do
+  -- there is a bug in this in that some resources will be required multiple times
+  -- something should be done with the materials
+  while not inventory.contains_materials(materials) do
 
     -- filter objects from the chest in front to the chest above
     index = 1
@@ -153,9 +155,9 @@ function craft(recipe, num)
 
     -- if the inventory does not contain the required resources,
     -- determine which are missing and try to craft them
-    for index = 1, #resources do
-      local resource = resources[index]
-      if not inventory.contains(resource) then
+    for req_resource, req_count in pairs(materials) do
+      local inv_count = inventory.count(req_resource)
+      if inv_count < req_count then
 
         -- if there is no recipe for the missing item, error
         if not con.RECIPES[resource] then
@@ -167,7 +169,7 @@ function craft(recipe, num)
 
         -- try to create the sub component (giving the number of times the resource is needed)
         -- note, as count of items is not yet accounted for, this will over-produce simple components
-        if not craft(con.RECIPES[resource], materials[resource]) then
+        if not craft(con.RECIPES[resource], inv_count - req_count) then
           print("Failed to create required sub-component!")
           print_resource(resource)
           return false
@@ -178,29 +180,16 @@ function craft(recipe, num)
 
   end
 
-  -- all of the subcomponents exist or have been created, lay out the required and create the primary reciep
+  -- limit the resources to only those required for the recipe
+  inventory.limit_materials(materials)
+
+  -- sort all of the items in the inventory towards the end for ease of movement
+  -- note: this does not do any degragging at this time (count 1 will sit next to count 1)
+  inventory.pack_bottom()
+
+  -- all of the subcomponents exist or have been created, lay out the required and create the primary recipe
   -- at this point, the inventory should only contain items that can go into the recipe
   for index = 1, #resources do
-
-    -- move all of the resource to the end of the inventory
-    local first_source_slot = inventory.find(resources[index])
-    local last_empty_slot = inventory.find_last_empty_slot()
-    while true do
-
-      local first_source_slot = inventory.find(resources[index])
-      local last_empty_slot = inventory.find_last_empty_slot()
-
-      -- break out if we are done moving items to the rear
-      if first_source_slot > last_empty_slot then
-        break
-      end
-
-      local result = inventory.move(first_source_slot, last_empty_slot)
-      if not result then
-          error(string.format("Failed to move resource from slot %d to slot %d", first_source_slot, last_empty_slot))
-      end
-
-    end
 
     -- find the destination slots for the resource
     local resource_src_slots = inventory.find_all(resources[index])
@@ -236,13 +225,13 @@ function craft(recipe, num)
 
     end
 
-    -- drop the current resource src slots
-    while #resource_src_slots > 0 do
-      if turtle.getItemCount(resource_src_slot) > 0 then
-        inventory.drop(resource_src_slot)
-      end
-      resource_src_slot = table.remove(resource_src_slots)
-    end
+    -- -- drop the current resource src slots
+    -- while #resource_src_slots > 0 do
+    --   if turtle.getItemCount(resource_src_slot) > 0 then
+    --     inventory.drop(resource_src_slot)
+    --   end
+    --   resource_src_slot = table.remove(resource_src_slots)
+    -- end
 
   end
 

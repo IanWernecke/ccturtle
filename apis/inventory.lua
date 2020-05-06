@@ -47,6 +47,50 @@ function contains_all(resources, number)
 end
 
 
+-- determine whether the inventory contains at least the given
+-- number of materials specified
+-- example:
+--  contains_materials({con.ITEM_LOG=2})
+-- should result in true for a turtle with a count of logs equal or
+-- greater than 2 in the turtle's inventory
+-- return: boolean
+function contains_materials(materials)
+
+  -- make a copy of the given materials table so we can modify
+  -- it without destroying the original
+  local missing = {}
+  for k, v in pairs(materials) do missing[k] = v end
+
+  -- for each slot which contains anything
+  for _, slot in pairs(find_all()) do
+
+    -- walk each resource and determine if it matches
+    for resource, missing_count in pairs(missing) do
+      if match(resource, slot) then
+
+          -- reduce the missing count towards 0
+          item_count = turtle.getItemCount(slot)
+          if item_count > missing_count then
+            missing[resource] = 0
+          else
+            missing[resource] = missing_count - item_count
+          end
+          break
+
+      end
+    end
+
+  end
+
+  -- if all of the values in the missing table are 0, return true
+  for _, missing_count in pairs(missing) do
+    if missing_count > 0 then return false end
+  end
+  return true
+
+end
+
+
 -- count all of the items in the inventory that match the given
 -- resource details table, or all of nil is given
 function count(resource)
@@ -76,7 +120,9 @@ function drop(slot, turtle_drop)
   turtle_drop = opt.get(turtle_drop, turtle.drop)
 
   -- if a slot was given, drop only that one and return
-  if slot ~= nil then return turtle_drop(slot) end
+  if slot ~= nil then
+    return turtle_drop(slot)
+  end
 
   -- store this for later
   starting_slot = turtle.getSelectedSlot()
@@ -190,6 +236,107 @@ function first()
 end
 
 
+-- find the last instance of the given resource
+-- (or the first that has something)
+-- return: number | nil
+function last(resource)
+
+  -- ensure we are working with a table
+  resource = to_resource(resource)
+
+  -- walk each inventory slot backwards and attempt to match
+  for slot = 16, 1, -1 do
+    if match(resource, slot) then
+      return slot
+    end
+  end
+
+  -- no slot that matches found, return nil
+  return nil
+
+end
+
+
+-- limit the items in the inventory to the specific amounts
+-- specified in the materials table
+-- example:
+--  limit_materials({con.ITEM_LOG=2})
+-- should drop all items from the inventory except 2 logs
+-- return: (bool) success
+function limit_materials(materials, drop_action)
+
+  -- optional parameters
+  drop_action = opt.get(drop_action, turtle.drop)
+
+  -- make a copy of the given materials table so we can modify
+  -- it without destroying the original
+  local keep = {}
+  for k,v in pairs(materials) do keep[k] = v end
+
+  -- walk all of the slots that have anything in them
+  for _, slot in pairs(find_all()) do
+
+    -- keep track of whether the slot matched any of the resources
+    local slot_matched = false
+
+    -- try to match each resource against the slot being walked
+    for resource, require_count in pairs(keep) do
+      if match(resource, slot) then
+
+        -- if we do not require any more of this resource, pretend it matches nothing
+        if require_count == 0 then
+          break
+        end
+
+        -- keep track of whether the slot matched anything
+        slot_matched = true
+
+        -- we require some more, determine how many to keep
+        local item_count = turtle.getItemCount(slot)
+
+        -- if the items in the stack are fewer than those required, drop some
+        if item_count < require_count then
+          local starting_slot = turtle.getSelectedSlot()
+          turtle.select(slot)
+          drop_action(item_count - require_count)
+          keep[resource] = 0
+          turtle.select(starting_slot)
+        end
+
+        -- if we need all of them, lower the score by that many and move on
+        if require_count >= item_count then
+          keep[resource] = require_count - item_count
+          break
+        end
+
+        -- if the items in the stack are fewer than those required, drop some
+        local starting_slot = turtle.getSelectedSlot()
+        turtle.select(slot)
+        drop_action(item_count - require_count)
+        keep[resource] = 0
+        turtle.select(starting_slot)
+        break
+
+      end
+    end
+
+    -- if the slot did not match anything, drop it
+    if not slot_matched then
+      drop(slot, drop_action)
+    end
+
+  end
+
+  -- determine whether all of the materials required were found
+  for _, count in pairs(keep) do
+    if count > 0 then return false end
+  end
+  return true
+
+
+end
+
+
 -- determine whether a given slot matches a given resource table
 -- return: boolean
 function match(resource, slot)
@@ -262,18 +409,59 @@ function move(source, destination, number)
 end
 
 
+-- move all inventory items above the given slot towards the end of the inventory
+function pack_bottom(first_slot)
+
+  first_slot = opt.get(first_slot, 1)
+
+  -- keep track of the number of slots moved and where the last empty slot appears to be
+  local moved = 0
+  local last_empty_slot = inventory.find_last_empty_slot()
+
+  -- walk from the first slot given to the end (inclusive of 16)
+  for slot = first_slot, 16 do
+
+    -- break out if the pack is complete
+    if slot > last_empty_slot then
+      break
+    end
+
+    -- slot is before the last empty slot
+    if turtle.getItemCount(slot) > 0 then
+      local result = inventory.move(slot, last_empty_slot)
+      if not result then
+        error(string.format("Failed to move resource from slot %d to slot %d", slot, last_empty_slot))
+      end
+      moved = moved + 1
+      last_empty_slot = inventory.find_last_empty_slot()
+    end
+
+  end
+
+  -- return the number of slots moved
+  return moved
+
+end
+
+
 -- convert the given input to table if it is a string,
 -- otherwise,
 function to_resource(resource)
 
   -- check for table first, for fewer comparisons
-  if type(resource) == "table" then return resource end
+  if type(resource) == "table" then
+    return resource
+  end
 
   -- convert a nil value to an empty table
-  if resource == nil then return {} end
+  if resource == nil then
+    return {}
+  end
 
   -- convert a string value to a simple table (old fashion)
-  if type(resource) == "string" then return {name=resource} end
+  if type(resource) == "string" then
+    return {name=resource}
+  end
 
   print(resource)
   error("Unrecognized resource!")
