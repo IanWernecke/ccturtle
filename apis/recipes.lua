@@ -19,7 +19,7 @@ local print_resource = function(resource)
   for key, value in pairs(resource) do
     if type(value) == "string" then
       print(string.format("  %s: %s", key, value))
-    elseif type(value) == "int" then
+    elseif type(value) == "number" then
       print(string.format("  %s: %d", key, value))
     else
       error(string.format("Unhandled value type: %s", type(value)))
@@ -155,7 +155,7 @@ function craft(recipe, num)
     if resource ~= nil then print_resource(resource) end
     return false
   end
-  
+
   return result
 
 end
