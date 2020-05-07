@@ -54,6 +54,18 @@ local reset = function()
 end
 
 
+-- converty a recipe to an item if possible, for display purposese
+-- return: table (item)
+local to_item = function(recipe)
+
+  for item_key, recipe_value in pairs(con.RECIPES) do
+    if recipe_value == recipe then return item_key end
+  end
+  return nil
+
+end
+
+
 -- Attempt to craft a given recipe, using a pair of chests.
 -- return: boolean success
 function craft(recipe, num)
@@ -103,18 +115,18 @@ function craft(recipe, num)
       if inv_count < req_count then
 
         -- if there is no recipe for the missing item, error
-        if not con.RECIPES[resource] then
+        if not con.RECIPES[req_resource] then
           reset()
           print("No recipe found for resource!")
-          print_resource(resource)
+          print_resource(req_resource)
           return false
         end
 
         -- try to create the sub component (giving the number of times the resource is needed)
         -- note, as count of items is not yet accounted for, this will over-produce simple components
-        if not craft(con.RECIPES[resource], inv_count - req_count) then
+        if not craft(con.RECIPES[req_resource], inv_count - req_count) then
           print("Failed to create required sub-component!")
-          print_resource(resource)
+          print_resource(req_resource)
           return false
         end
 
@@ -133,6 +145,17 @@ function craft(recipe, num)
   -- distribute the materials for the recipe
   inventory.distribute_materials(recipe, num)
 
-  return turtle.craft()
+  local result = turtle.craft()
+  reset()
+
+  -- if the result failed, print some information for debugging
+  if not result then
+    print("Failed to craft recipe!")
+    local resource = to_item(recipe)
+    if resource ~= nil then print_resource(resource) end
+    return false
+  end
+  
+  return result
 
 end
