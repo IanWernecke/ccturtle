@@ -38,7 +38,7 @@ function calculate_materials(recipe, number)
     if materials[resource] then
       materials[resource] = materials[resource] + number
     else
-      materials[material] = number
+      materials[resource] = number
     end
   end
 
