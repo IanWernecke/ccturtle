@@ -57,6 +57,7 @@ local files = {
   "apis/builder.lua",
   "apis/clear.lua",
   "apis/cleft.lua",
+  "apis/common.lua",
   "apis/con.lua",
   "apis/describe.lua",
   "apis/detect.lua",
@@ -199,7 +200,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 132 do
+while downloaded < 133 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])

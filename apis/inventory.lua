@@ -295,15 +295,23 @@ function find_all(resource)
 end
 
 
--- find the last empty slot in the inventory
--- return: int | nil
-function find_last_empty_slot()
+-- find the first empty slot in the inventory
+-- return: number | nil
+function find_first_empty_slot()
+  for slot = 1, 16 then
+    if turtle.getItemCount(slot) == 0 then return index end
+  end
+  return nil
+end
 
+
+-- find the last empty slot in the inventory
+-- return: number | nil
+function find_last_empty_slot()
   for index = 16, 1, -1 do
     if turtle.getItemCount(index) == 0 then return index end
   end
   return nil
-
 end
 
 

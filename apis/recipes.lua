@@ -1,4 +1,4 @@
-
+resource
 -- compare a table with another table
 local compare_resource_map_value_to_resource = function(resource_map_value, resource)
 
@@ -59,7 +59,20 @@ end
 local to_item = function(recipe)
 
   for item_key, recipe_value in pairs(con.RECIPES) do
-    if recipe_value == recipe then return item_key end
+    if common.tables_equal(recipe_value, recipe) then
+      return item_key
+    end
+  end
+  return nil
+
+end
+
+local to_recipe = function(item)
+
+  for item_key, recipe_value in pairs(con.RECIPES) do
+    if common.tables_equal(item, item_key) then
+      return recipe_value
+    end
   end
   return nil
 
@@ -98,11 +111,11 @@ function craft(recipe, num)
   while not inventory.contains_materials(materials) do
 
     -- filter objects from the chest in front to the chest above
-    index = 1
     while turtle.suck() do
       if inventory.matches(resources, index) then
-        index = index + 1
-        turtle.select(index)
+        -- keep the inventory objects to a minimum
+        inventory.limit_materials(materials, turtle.dropUp)
+        turtle.select(inventory.find_first_empty_slot())
       else
         turtle.dropUp()
       end
@@ -110,23 +123,24 @@ function craft(recipe, num)
 
     -- if the inventory does not contain the required resources,
     -- determine which are missing and try to craft them
-    for req_resource, req_count in pairs(materials) do
-      local inv_count = inventory.count(req_resource)
+    for resource, req_count in pairs(materials) do
+      local inv_count = inventory.count(resource)
       if inv_count < req_count then
 
         -- if there is no recipe for the missing item, error
-        if not con.RECIPES[req_resource] then
+        local item_recipe = to_recipe(resource)
+        if item_recipe == nil then
           reset()
           print("No recipe found for resource!")
-          print_resource(req_resource)
+          print_resource(resource)
           return false
         end
 
         -- try to create the sub component (giving the number of times the resource is needed)
         -- note, as count of items is not yet accounted for, this will over-produce simple components
-        if not craft(con.RECIPES[req_resource], inv_count - req_count) then
+        if not craft(item_recipe, inv_count - req_count) then
           print("Failed to create required sub-component!")
-          print_resource(req_resource)
+          print_resource(resource)
           return false
         end
 

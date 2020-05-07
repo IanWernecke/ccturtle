@@ -28,6 +28,7 @@ function load_turtle_apis()
   -- requires: nil
   os.loadAPI("/apis/arg.lua")
   os.loadAPI("/apis/opt.lua")
+  os.loadAPI("/apis/common.lua")
 
   os.loadAPI("/apis/bore.lua")
   os.loadAPI("/apis/clear.lua")
