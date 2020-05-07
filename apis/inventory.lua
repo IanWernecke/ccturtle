@@ -3,6 +3,50 @@
 --    against inventory item details
 
 
+-- walk the recipe and determine where the destinations are for the resources
+-- return: table {slot=resource[, slot=resource]}
+local recipe_walk = function(recipe)
+
+  local slot_resource_table = {}
+  for row_index = 1, #recipe[1] do
+    local row = recipe[0][row_index]
+    for char_index = 1, #row do
+
+      local char = row:sub(char_index, char_index)
+      if char ~= "." then
+        slot_resource_table[((row_index - 1) * 4) + char_index] = recipe[2][char]
+      end
+
+    end
+  end
+  return slot_resource_table
+
+end
+
+
+-- calculate how many of each item is required
+-- return: table (dict) {item: number}
+function calculate_materials(recipe, number)
+
+  number = opt.get(number, 1)
+
+  -- calculate how many of each item is required
+  materials = {}
+
+  -- calculate how many of each item is required
+  for _, resource in pairs(recipe_walk(recipe)) do
+    if materials[resource] then
+      materials[resource] = materials[resource] + number
+    else
+      materials[material] = number
+    end
+  end
+
+  return materials
+
+end
+
+
 -- function: contains
 -- param string_id: the name of the block to search for in inventory
 -- return: boolean
@@ -107,6 +151,45 @@ function count(resource)
     end
   end
   return total
+
+end
+
+
+-- distribute $num resources to each slot in the recipe
+-- return: boolean success
+function distribute_materials(recipe, num)
+
+  num = opt.get(num, 1)
+
+  -- walk each slot and resource in the recipe
+  for slot, resource in pairs(recipe_walk(recipe)) do
+
+    -- stock the slot that requires the resource
+    local item_count = turtle.getItemCount(slot)
+    while item_count < num do
+
+      -- find the last inventory slot with the resource for the resource source
+      local last_slot = last(resource)
+      if slot == last_slot then
+        print(string.format("Out of materials while distributing to slot: %d", slot))
+        return false
+      end
+
+      -- move the required number of items to the slot
+      result = move(last_slot, slot, num - item_count)
+      if not result then
+        print(string.format("Failed to move resources from slot %d to slot %d", last_slot, slot))
+        return false
+      end
+      item_count = turtle.getItemCount(slot)
+
+    end
+
+    -- pack all items down after the current slot
+    inventory.pack_bottom(slot + 1)
+
+  end
+  return true
 
 end
 
