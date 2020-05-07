@@ -9,7 +9,7 @@ local recipe_walk = function(recipe)
 
   local slot_resource_table = {}
   for row_index = 1, #recipe[1] do
-    local row = recipe[0][row_index]
+    local row = recipe[1][row_index]
     for char_index = 1, #row do
 
       local char = row:sub(char_index, char_index)
