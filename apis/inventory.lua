@@ -298,8 +298,8 @@ end
 -- find the first empty slot in the inventory
 -- return: number | nil
 function find_first_empty_slot()
-  for slot = 1, 16 then
-    if turtle.getItemCount(slot) == 0 then return index end
+  for slot = 1, 16 do
+    if turtle.getItemCount(slot) == 0 then return slot end
   end
   return nil
 end

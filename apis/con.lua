@@ -58,6 +58,7 @@ RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
 
 -- recipe map
 --  for creating items required for other recipes
+-- WARNING: the keys here are strings because of how lua handles key assignment
 RECIPES = {
   ITEM_COPPER_CABLE=RECIPE_COPPER_CABLE,
   ITEM_COPPER_PLATE=RECIPE_COPPER_PLATE,

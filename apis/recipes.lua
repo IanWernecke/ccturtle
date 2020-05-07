@@ -1,4 +1,3 @@
-resource
 -- compare a table with another table
 local compare_resource_map_value_to_resource = function(resource_map_value, resource)
 
@@ -59,8 +58,8 @@ end
 local to_item = function(recipe)
 
   for item_key, recipe_value in pairs(con.RECIPES) do
-    if common.tables_equal(recipe_value, recipe) then
-      return item_key
+    if con[item_key] and common.tables_equal(recipe_value, recipe) then
+      return con[item_key]
     end
   end
   return nil
@@ -70,8 +69,10 @@ end
 local to_recipe = function(item)
 
   for item_key, recipe_value in pairs(con.RECIPES) do
-    if common.tables_equal(item, item_key) then
-      return recipe_value
+    if con[item_key] then
+      if common.tables_equal(item, con[item_table]) then
+        return recipe_value
+      end
     end
   end
   return nil

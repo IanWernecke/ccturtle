@@ -16,9 +16,9 @@ end
 
 -- obtain the number of keys in a table
 -- return: number
-function table_length(t)
+function table_length(table)
   local length = 0
-  for k,v in pairs(table_name) do
+  for k,v in pairs(table) do
     length = length + 1
   end
   return length
@@ -34,4 +34,33 @@ function table_match(sub_table, super_table)
     end
   end
   return true
+end
+
+
+-- print a table for visibility
+function table_print(table)
+  for key, value in pairs(table) do
+
+    -- determine the key format string
+    if type(key) == "string" then
+      key_fmt = '"%s"'
+    elseif type(key) == "number" then
+      key_fmt = "%d"
+    else
+      error(string.format("Unhandled value type: %s", type(key)))
+    end
+
+    -- determine the value format string
+    if type(value) == "string" then
+      value_fmt = '"%s"'
+    elseif type(value) == "number" then
+      value_fmt = "%d"
+    else
+      error(string.format("Unhandled value type: %s", type(value)))
+    end
+
+    -- print the string that will display our values
+    print(string.format("  " .. key_fmt .. ":" .. value_fmt, key, value))
+
+  end
 end
