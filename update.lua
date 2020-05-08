@@ -11,5 +11,6 @@ end
 -- download the setup script
 shell.run("wget https://raw.github.com/IanWernecke/ccturtle/master/" .. setup_lua .. " " .. setup_lua)
 
--- call the setup script
+-- call the setup script and reboot
 shell.run(root_setup_lua)
+shell.run("reboot")
