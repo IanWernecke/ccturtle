@@ -3,6 +3,36 @@
 --    against inventory item details
 
 
+-- determine what recipe should go in a give slot according to the given recipe
+-- return: table (ITEM_*)
+local recipe_resource = function(recipe, slot)
+  local row_index = math.floor(slot / 4)
+  local col_index = math.mod(slot, 4)
+  return recipe[2][
+    recipe[1][row_index]:sub(col_index, col_index)
+  ]
+end
+
+
+-- return an array of the slots that require resources
+-- return: table {slot[, slot[, slot]]}
+local recipe_slots = function(recipe)
+
+  local slots = {}
+  for row_index = 1, #recipe[1] do
+    local row = recipe[1][row_index]
+    for char_index = 1, #row do
+      local char = row:sub(char_index, char_index)
+      if char ~= "." then
+          slots.insert(slots, ((row_index - 1) * 4) + char_index)
+      end
+    end
+  end
+  return slots
+
+end
+
+
 -- walk the recipe and determine where the destinations are for the resources
 -- return: table {slot=resource[, slot=resource]}
 local recipe_walk = function(recipe)
@@ -162,7 +192,13 @@ function distribute_materials(recipe, num)
   num = opt.get(num, 1)
 
   -- walk each slot and resource in the recipe
-  for slot, resource in pairs(recipe_walk(recipe)) do
+  -- for slot, resource in pairs(recipe_walk(recipe)) do
+  local slots = recipe_slots(recipe)
+  for slot_index = 1, #slots do
+
+    -- convenient references for the places to move around
+    local slot = slots[slot_index]
+    local resource = recipe_resource(recipe, slot)
 
     -- stock the slot that requires the resource
     local item_count = turtle.getItemCount(slot)
