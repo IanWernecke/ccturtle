@@ -42,9 +42,9 @@ function table_format(table, prefix)
 
   -- default the prefix to an empty string
   prefix = opt.get(prefix, "")
-  prefix_during = prefix .. "  "
+  local = prefix_during = prefix .. "  "
 
-  result = "{\n"
+  local result = "{\n"
 
   -- for each key and value in the table
   for key, value in pairs(table) do
