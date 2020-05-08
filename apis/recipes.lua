@@ -129,7 +129,7 @@ function craft(recipe, num)
         if inventory.contains_materials(materials) then
           break
         end
-        
+
       else
         turtle.dropUp()
       end
@@ -162,6 +162,10 @@ function craft(recipe, num)
         end
 
         print("Successfully created sub-component(s)!")
+
+        -- do this so that each component is not crafted at least once, because the inventory
+        -- will be empty and therefore not "have" the resource, and try to create it
+        break
 
       end
     end
