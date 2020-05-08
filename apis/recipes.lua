@@ -105,13 +105,13 @@ function craft(recipe, num)
   if resource_map == nil then error("Recipe resource map not found.") end
 
   -- create the list of resources from the resource map
-  resources = {}
+  local resources = {}
   for _, value in pairs(resource_map) do
     table.insert(resources, value)
   end
 
   -- calculate how many of each item is required
-  materials = inventory.calculate_materials(recipe, num)
+  local materials = inventory.calculate_materials(recipe, num)
 
   -- while the inventory does not contain all of the resources
   -- there is a bug in this in that some resources will be required multiple times
@@ -131,9 +131,8 @@ function craft(recipe, num)
 
     -- if the inventory does not contain the required resources,
     -- determine which are missing and try to craft them
-    for resource, req_count in pairs(materials) do
-      local inv_count = inventory.count(resource)
-      if inv_count < req_count then
+    for resource, resource_count in pairs(materials) do
+      if inventory.count(resource) < resource_count then
 
         -- local missing_count = req_count - inv_count
         -- common.table_print(string.format("Missing %d resource(s)", missing_count), resource)
@@ -142,8 +141,7 @@ function craft(recipe, num)
         local item_recipe = to_recipe(resource)
         if item_recipe == nil then
           reset()
-          print("No recipe found for resource!")
-          print_resource(resource)
+          common.print_table("No recipe found for resource", resource)
           return false
         end
 
@@ -153,8 +151,7 @@ function craft(recipe, num)
         --  count of number of items produced by a recipe and determining required ingredients when
         --  some ingredients take damage instead of being used (like hammers, cutters)
         if not craft(item_recipe) then
-          print("Failed to create required sub-component!")
-          print_resource(resource)
+          common.table_print("Failed to create required sub-component", resource)
           return false
         end
 
