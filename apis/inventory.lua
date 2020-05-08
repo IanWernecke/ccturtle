@@ -202,18 +202,22 @@ end
 -- function: drop
 -- param slot: the slot number to drop forward
 -- return: bool success
-function drop(slot, turtle_drop)
+function drop(slot, turtle_drop, count)
 
-  -- set the default drop direction to forwards
+  -- set the default drop direction to forwards and the number of items to drop
   turtle_drop = opt.get(turtle_drop, turtle.drop)
-
-  -- if a slot was given, drop only that one and return
-  if slot ~= nil then
-    return turtle_drop(slot)
-  end
+  count = opt.get(count, nil)
 
   -- store this for later
   starting_slot = turtle.getSelectedSlot()
+
+  -- if a slot was given, drop only that one and return
+  if slot ~= nil then
+    turtle.select(slot)
+    local result = turtle_drop(count)
+    turtle.select(starting_slot)
+    return result
+  end
 
   -- drop all of the items in the inventory
   for slot = 1, 16 do
@@ -232,7 +236,7 @@ end
 
 -- empty a slot in the inventory
 -- return: the number of items removed from the position
-function empty(slot, drop_action)
+function empty_slot(slot, drop_action)
 
   -- optional parameters
   drop_action = opt.get(drop_action, turtle.drop)
@@ -241,7 +245,9 @@ function empty(slot, drop_action)
   local count = turtle.getItemCount(slot)
 
   -- if the position is already empty, return true
-  if count == 0 then return true end
+  if count == 0 then
+    return true
+  end
 
   -- prefer moving items to an empty slot over dropping
   local next_empty_slot = find_empty_slot()
@@ -366,8 +372,7 @@ function limit_materials(materials, drop_action)
 
   -- make a copy of the given materials table so we can modify
   -- it without destroying the original
-  local keep = {}
-  for k,v in pairs(materials) do keep[k] = v end
+  local keep = common.table_copy(materials)
 
   -- walk all of the slots that have anything in them
   for _, slot in pairs(find_all()) do
@@ -409,7 +414,10 @@ function limit_materials(materials, drop_action)
 
     -- if the slot did not match anything, drop it
     if not slot_matched then
-      drop(slot, drop_action)
+      local starting_slot = turtle.getSelectedSlot()
+      turtle.select(slot)
+      drop_action()
+      turtle.select(starting_slot)
     end
 
   end

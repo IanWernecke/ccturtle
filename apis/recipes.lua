@@ -155,7 +155,7 @@ function craft(recipe, num)
           return false
         end
 
-        print("Successfully created %d sub-component(s)!")
+        print("Successfully created sub-component(s)!")
 
       end
     end

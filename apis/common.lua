@@ -7,6 +7,17 @@
 --
 
 
+-- create a copy of a given table for modification
+-- return: table
+function table_copy(table)
+  local result = {}
+  for k,v in pairs(table) do
+    result[k] = v
+  end
+  return result
+end
+
+  
 -- determine whether the two tables are identical
 -- return: (boolean)
 function tables_equal(first_table, second_table)
@@ -42,9 +53,10 @@ function table_format(table, prefix)
 
   -- default the prefix to an empty string
   prefix = opt.get(prefix, "")
-  local = prefix_during = prefix .. "  "
-
+  local prefix_during = prefix .. "  "
   local result = "{\n"
+  local key_fmt = nil
+  local value_fmt = nil
 
   -- for each key and value in the table
   for key, value in pairs(table) do
