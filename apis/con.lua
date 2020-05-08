@@ -29,26 +29,35 @@ BLOCK_STONEBRICK = {name=MOD_MINECRAFT .. ":stonebrick"}
 
 -- item details are obtained via:
 --  turtle.getItemDetails(slot)
-ITEM_BATTERY = {name=MOD_INDUSTRIAL_CRAFT .. ":re_battery"}
+
+
+-- items: minecraft items
 ITEM_COBBLESTONE = {name=MOD_MINECRAFT .. ":cobblestone"}
-ITEM_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
-ITEM_COPPER_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=128}
-ITEM_COPPER_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=320}
-ITEM_CUTTER = {name=MOD_INDUSTRIAL_CRAFT .. ":cutter"}
-ITEM_FORGE_HAMMER = {name=MOD_INDUSTRIAL_CRAFT .. ":forge_hammer"}
 ITEM_FURNACE = {name=MOD_MINECRAFT .. ":furnace"}
-ITEM_INSULATED_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
-ITEM_INSULATED_TIN_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=4}
--- ITEM_IRON_FURNACE = {name="UNKNOWN"}
 ITEM_IRON_INGOT = {name=MOD_MINECRAFT .. ":iron_ingot"}
-ITEM_IRON_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=32}
 ITEM_LOG = {name=MOD_MINECRAFT .. ":log"}
 ITEM_PLANKS = {name=MOD_MINECRAFT .. ":planks"}
-ITEM_PULVERIZED_COAL={name=MOD_THERMAL_FOUNDATION .. ":material", damage=768}
 ITEM_REDSTONE = {name=MOD_MINECRAFT .. ":redstone"}
-ITEM_RUBBER = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=0}
 ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
+
+
+-- items: industrial craft items
+ITEM_BATTERY = {name=MOD_INDUSTRIAL_CRAFT .. ":re_battery"}
+ITEM_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
+ITEM_CUTTER = {name=MOD_INDUSTRIAL_CRAFT .. ":cutter"}
+ITEM_FORGE_HAMMER = {name=MOD_INDUSTRIAL_CRAFT .. ":forge_hammer"}
+ITEM_INSULATED_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
+ITEM_INSULATED_TIN_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=4}
+ITEM_IRON_FURNACE = {name=MOD_INDUSTRIAL_CRAFT .. ":te", damage=46}
+ITEM_RUBBER = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=0}
 ITEM_TIN_CASING = {name=MOD_INDUSTRIAL_CRAFT .. ":casing", damage=6}
+
+
+-- items: thermal foundation
+ITEM_COPPER_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=128}
+ITEM_COPPER_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=320}
+ITEM_IRON_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=32}
+ITEM_PULVERIZED_COAL={name=MOD_THERMAL_FOUNDATION .. ":material", damage=768}
 ITEM_TIN_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=129}
 ITEM_TIN_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=321}
 
@@ -56,14 +65,17 @@ ITEM_TIN_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=321}
 -- recipes
 --  these should only use ITEM_* constants, for consistency
 
---  minecraft recipes
+
+-- recipes: minecraft recipes
 RECIPE_FURNACE = {{"ccc", "c.c", "ccc"}, {c=ITEM_COBBLESTONE}}
 RECIPE_PLANKS = {{"w"}, {w=ITEM_LOG}}
 RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
 
---  industrial craft recipes
+
+-- recipes: industrial craft recipes
+--  note: cables cannot be automatically crafted at this time because of how getItemDetail() does not
+--    manage to return enough information about items
 RECIPE_BATTERY = {{".w", "crc", "crc"}, {w=ITEM_INSULATED_TIN_CABLE, c=ITEM_TIN_CASING, r=ITEM_REDSTONE}}
-RECIPE_COPPER_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_COPPER_INGOT}}
 RECIPE_COPPER_CABLE = {{"cp"}, {c=ITEM_CUTTER, p=ITEM_COPPER_PLATE}}
 RECIPE_CIRCUIT = {{"ccc", "rpr", "ccc"}, {c=ITEM_INSULATED_COPPER_CABLE, r=ITEM_REDSTONE, p=ITEM_IRON_PLATE}}
 RECIPE_CUTTER = {{"p.p", ".p", "i.i"}, {p=ITEM_IRON_PLATE, i=ITEM_IRON_INGOT}}
@@ -71,6 +83,10 @@ RECIPE_FORGE_HAMMER = {{"ii", "iss", "ii"}, {i=ITEM_IRON_INGOT, s=ITEM_STICK}}
 RECIPE_GENERATOR = {{".b", "ppp", ".f"}, {b=ITEM_BATTERY, p=ITEM_IRON_PLATE, f=ITEM_IRON_FURNACE}}
 -- RECIPE_INSULATED_COPPER_CABLE = {{"rw"}, {r=ITEM_RUBBER, w=ITEM_COPPER_CABLE}}
 RECIPE_IRON_FURNACE = {{".p", "p.p", "pfp"}, {p=ITEM_IRON_PLATE, f=ITEM_FURNACE}}
+
+
+-- recipes: thermal foundation
+RECIPE_COPPER_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_COPPER_INGOT}}
 RECIPE_IRON_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_IRON_INGOT}}
 RECIPE_TIN_CASING = {{"hp"}, {h=ITEM_FORGE_HAMMER, p=ITEM_TIN_PLATE}}
 RECIPE_TIN_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_TIN_INGOT}}
@@ -89,11 +105,13 @@ RECIPES = {
   -- industrial craft item recipes
   ITEM_BATTERY=RECIPE_BATTERY,
   ITEM_COPPER_CABLE=RECIPE_COPPER_CABLE,
-  ITEM_COPPER_PLATE=RECIPE_COPPER_PLATE,
   ITEM_CUTTER=RECIPE_CUTTER,
   ITEM_FORGE_HAMMER=RECIPE_FORGE_HAMMER,
   ITEM_INSULATED_COPPER_CABLE=RECIPE_INSULATED_COPPER_CABLE,
-  ITEM_IRON_FURANCE=RECIPE_IRON_FURNACE,
+  ITEM_IRON_FURNACE=RECIPE_IRON_FURNACE,
+
+  -- thermal foundation
+  ITEM_COPPER_PLATE=RECIPE_COPPER_PLATE,
   ITEM_IRON_PLATE=RECIPE_IRON_PLATE,
   ITEM_TIN_CASING=RECIPE_TIN_CASING,
   ITEM_TIN_PLATE=RECIPE_TIN_PLATE
