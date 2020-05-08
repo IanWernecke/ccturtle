@@ -123,7 +123,7 @@ function craft(recipe, num)
       if inventory.matches(resources, index) then
         -- keep the inventory objects to a minimum
         inventory.limit_materials(materials, turtle.dropUp)
-        turtle.select(inventory.find_first_empty_slot())
+        inventory.select_first_empty()
       else
         turtle.dropUp()
       end
@@ -134,6 +134,9 @@ function craft(recipe, num)
     for resource, req_count in pairs(materials) do
       local inv_count = inventory.count(resource)
       if inv_count < req_count then
+
+        local missing_count = req_count - inv_count
+        common.table_print(string.format("Missing %d resource(s)", missing_count), resource)
 
         -- if there is no recipe for the missing item, error
         local item_recipe = to_recipe(resource)
@@ -152,10 +155,15 @@ function craft(recipe, num)
           return false
         end
 
+        print("Successfully created %d sub-component(s)!")
+
       end
     end
 
   end
+
+  -- debugging
+  common.table_print("Resources obtained for recipe", recipe)
 
   -- limit the resources to only those required for the recipe
   inventory.limit_materials(materials)

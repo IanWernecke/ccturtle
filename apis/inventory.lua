@@ -531,6 +531,29 @@ function pack_bottom(first_slot)
 end
 
 
+-- try to select the first empty slot
+-- return: boolean success
+function select_first_empty()
+
+  -- try to find the first empty slot
+  local empty_slot = inventory.find_first_empty_slot()
+  if empty_slot == nil then
+    print("Failed to find empty slot!")
+    return false
+  end
+
+  -- try to select the slot
+  local result = turtle.select(empty_slot)
+  if result == false then
+    print(string.format("Failed to select slot: %d!", empty_slot))
+    return false
+  end
+
+  return true
+
+end
+
+
 -- convert the given input to table if it is a string,
 -- otherwise,
 function to_resource(resource)
