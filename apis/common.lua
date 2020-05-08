@@ -7,6 +7,34 @@
 --
 
 
+-- obtain a string from the command line, or the default value given if not present
+-- return: string
+--
+-- examples:
+--  > $command a b
+--    local args = {...}
+--    common.arg_get(1, "x") --> "a"
+--    common.arg_get(args, 2, "x") --> "b"
+--    common.arg_get(args, 3, "x") --> "x"
+--    common.arg_get(args, 100, "x") --> "x"
+--    common.arg_get(args, 100) --> nil
+function arg_get(index, default)
+  for i,v in ipairs(arg) do
+    if index == i then
+      return v
+    end
+  end
+  return default
+end
+
+
+-- obtain a number from the command line, or the default if a value is not present
+-- return: number
+function arg_get_number(index, default)
+  return tonumber(arg_get(index, default))
+end
+
+
 -- create a copy of a given table for modification
 -- return: table
 function table_copy(table)
@@ -17,7 +45,7 @@ function table_copy(table)
   return result
 end
 
-  
+
 -- determine whether the two tables are identical
 -- return: (boolean)
 function tables_equal(first_table, second_table)

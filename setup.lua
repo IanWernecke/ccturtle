@@ -51,7 +51,7 @@ local files = {
   "setup.lua",
   "startup",
   "update.lua",
-  "apis/arg.lua",
+  "apis/args.lua",
   "apis/basic.lua",
   "apis/bore.lua",
   "apis/builder.lua",
