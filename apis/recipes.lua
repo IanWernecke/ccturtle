@@ -124,6 +124,12 @@ function craft(recipe, num)
         -- keep the inventory objects to a minimum
         inventory.limit_materials(materials, turtle.dropUp)
         inventory.select_first_empty()
+
+        -- break out early if the materials are all present
+        if inventory.contains_materials(materials) then
+          break
+        end
+        
       else
         turtle.dropUp()
       end
