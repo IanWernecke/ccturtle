@@ -87,6 +87,13 @@ function craft(recipe, num)
   -- get the number of times to craft the recipe
   num = opt.get(num, 1)
 
+  local debug_item = to_item(recipe)
+  if debug_item == nil then
+    print(string.format("Trying to craft recipe (%d): %s", num, recipe))
+  else
+    print(string.format("Trying to craft item (%d): %s", num, common.table_format(debug_item)))
+  end
+
   -- begin getting a handle on the recipe requirements
   -- local layout = arg.get(recipe, 1, nil)
   local resource_map = arg.get(recipe, 2, nil)
@@ -165,7 +172,9 @@ function craft(recipe, num)
   if not result then
     print("Failed to craft recipe!")
     local resource = to_item(recipe)
-    if resource ~= nil then print_resource(resource) end
+    if resource ~= nil then
+      print_resource(resource)
+    end
     return false
   end
 

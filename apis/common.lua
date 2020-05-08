@@ -62,8 +62,8 @@ function table_format(table, prefix)
     end
 
     -- if the value type is table
-    if type(value) == "table"
-      result = result + string.format(prefix .. key_fmt .. ": %s", key, table_format(value, prefix))
+    if type(value) == "table" then
+      result = result .. string.format(prefix .. key_fmt .. ": %s", key, table_format(value, prefix))
     else
 
       -- if the value type is anything other than table
@@ -74,7 +74,7 @@ function table_format(table, prefix)
       else
         error(string.format("Unhandled value type: %s", type(value)))
       end
-      result = result + string.format(prefix .. key_fmt .. ":" .. value_fmt .. "\n", key, value)
+      result = result .. string.format(prefix .. key_fmt .. ":" .. value_fmt .. "\n", key, value)
 
     end
 
