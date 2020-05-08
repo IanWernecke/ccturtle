@@ -40,12 +40,9 @@ end
 -- print a table for visibility
 function table_format(table, prefix)
 
-  -- if the prefix was given, increase the prefix by 2 spaces
-  if prefix == nil then
-    prefix = "  "
-  else
-    prefix = prefix .. "  "
-  end
+  -- default the prefix to an empty string
+  prefix = opt.get(prefix, "")
+  prefix_during = prefix .. "  "
 
   result = "{\n"
 
@@ -63,7 +60,7 @@ function table_format(table, prefix)
 
     -- if the value type is table
     if type(value) == "table" then
-      result = result .. string.format(prefix .. key_fmt .. ": %s", key, table_format(value, prefix))
+      result = result .. string.format(prefix_during .. key_fmt .. ": %s", key, table_format(value, prefix_during))
     else
 
       -- if the value type is anything other than table
@@ -74,7 +71,7 @@ function table_format(table, prefix)
       else
         error(string.format("Unhandled value type: %s", type(value)))
       end
-      result = result .. string.format(prefix .. key_fmt .. ":" .. value_fmt .. "\n", key, value)
+      result = result .. string.format(prefix_during .. key_fmt .. ": " .. value_fmt .. "\n", key, value)
 
     end
 
@@ -87,8 +84,8 @@ end
 
 -- print out the string representation of a table
 -- return: nil
-function table_print(table)
+function table_print(message, table)
 
-  print(table_format(table))
+  print(string.format("%s: %s", message, table_format(table)))
 
 end

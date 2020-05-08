@@ -89,9 +89,11 @@ function craft(recipe, num)
 
   local debug_item = to_item(recipe)
   if debug_item == nil then
-    print(string.format("Trying to craft recipe (%d): %s", num, recipe))
+    common.table_print(string.format("Trying to craft recipe (%d)", num), recipe)
+    -- print(string.format("Trying to craft recipe (%d): %s", num, common.table_format(recipe))))
   else
-    print(string.format("Trying to craft item (%d): %s", num, common.table_format(debug_item)))
+    common.table_print(string.format("Trying to craft item (%d)", num), recipe)
+    -- print(string.format("Trying to craft item (%d): %s", num, common.table_format(debug_item)))
   end
 
   -- begin getting a handle on the recipe requirements
