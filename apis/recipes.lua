@@ -141,7 +141,7 @@ function craft(recipe, num)
         local item_recipe = to_recipe(resource)
         if item_recipe == nil then
           reset()
-          common.print_table("No recipe found for resource", resource)
+          common.table_print("No recipe found for resource", resource)
           return false
         end
 

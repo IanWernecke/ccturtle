@@ -45,8 +45,8 @@ ITEM_REDSTONE = {name=MOD_MINECRAFT .. ":redstone"}
 ITEM_RUBBER = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=0}
 ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
 ITEM_TIN_CASING = {name=MOD_INDUSTRIAL_CRAFT .. ":casing", damage=6}
-ITEM_TIN_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", 129}
-ITEM_TIN_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", 321}
+ITEM_TIN_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=129}
+ITEM_TIN_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=321}
 
 
 -- recipes
