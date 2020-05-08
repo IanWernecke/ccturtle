@@ -76,7 +76,7 @@ function table_format(table, prefix)
     end
 
   end
-  result = result .. prefix .. "}"
+  result = result .. prefix .. "}\n"
   return result
 
 end
