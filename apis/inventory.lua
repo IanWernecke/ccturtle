@@ -6,7 +6,7 @@
 -- determine what recipe should go in a give slot according to the given recipe
 -- return: table (ITEM_*)
 local recipe_resource = function(recipe, slot)
-  local row_index = math.floor(slot / 4)
+  local row_index = math.floor(slot / 4) + 1
   local col_index = math.mod(slot, 4)
   return recipe[2][
     recipe[1][row_index]:sub(col_index, col_index)
@@ -24,7 +24,7 @@ local recipe_slots = function(recipe)
     for char_index = 1, #row do
       local char = row:sub(char_index, char_index)
       if char ~= "." then
-          slots.insert(slots, ((row_index - 1) * 4) + char_index)
+          table.insert(slots, ((row_index - 1) * 4) + char_index)
       end
     end
   end
