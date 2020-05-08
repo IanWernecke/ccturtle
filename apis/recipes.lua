@@ -135,8 +135,8 @@ function craft(recipe, num)
       local inv_count = inventory.count(resource)
       if inv_count < req_count then
 
-        local missing_count = req_count - inv_count
-        common.table_print(string.format("Missing %d resource(s)", missing_count), resource)
+        -- local missing_count = req_count - inv_count
+        -- common.table_print(string.format("Missing %d resource(s)", missing_count), resource)
 
         -- if there is no recipe for the missing item, error
         local item_recipe = to_recipe(resource)
@@ -149,7 +149,10 @@ function craft(recipe, num)
 
         -- try to create the sub component (giving the number of times the resource is needed)
         -- note, as count of items is not yet accounted for, this will over-produce simple components
-        if not craft(item_recipe, req_count - inv_count) then
+        -- WARNING: crafting multiple at a time has been disabled due to complexity of determining
+        --  count of number of items produced by a recipe and determining required ingredients when
+        --  some ingredients take damage instead of being used (like hammers, cutters)
+        if not craft(item_recipe) then
           print("Failed to create required sub-component!")
           print_resource(resource)
           return false
