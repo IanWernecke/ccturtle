@@ -37,7 +37,7 @@ ITEM_FORGE_HAMMER = {name=MOD_INDUSTRIAL_CRAFT .. ":forge_hammer"}
 ITEM_IRON_INGOT = {name=MOD_MINECRAFT .. ":iron_ingot"}
 ITEM_IRON_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=32}
 ITEM_LOG = {name=MOD_MINECRAFT .. ":log"}
-ITEM_PLANKS = {name=BLOCK_PLANKS}
+ITEM_PLANKS = {name=MOD_MINECRAFT .. ":planks"}
 ITEM_REDSTONE = {name=MOD_MINECRAFT .. ":redstone"}
 ITEM_RUBBER = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=0}
 ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}

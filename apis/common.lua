@@ -38,7 +38,18 @@ end
 
 
 -- print a table for visibility
-function table_print(table)
+function table_format(table, prefix)
+
+  -- if the prefix was given, increase the prefix by 2 spaces
+  if prefix == nil then
+    prefix = "  "
+  else
+    prefix = prefix .. "  "
+  end
+
+  result = "{\n"
+
+  -- for each key and value in the table
   for key, value in pairs(table) do
 
     -- determine the key format string
@@ -50,17 +61,34 @@ function table_print(table)
       error(string.format("Unhandled value type: %s", type(key)))
     end
 
-    -- determine the value format string
-    if type(value) == "string" then
-      value_fmt = '"%s"'
-    elseif type(value) == "number" then
-      value_fmt = "%d"
+    -- if the value type is table
+    if type(value) == "table"
+      result = result + string.format(prefix .. key_fmt .. ": %s", key, table_format(value, prefix))
     else
-      error(string.format("Unhandled value type: %s", type(value)))
+
+      -- if the value type is anything other than table
+      if type(value) == "string" then
+        value_fmt = '"%s"'
+      elseif type(value) == "number" then
+        value_fmt = "%d"
+      else
+        error(string.format("Unhandled value type: %s", type(value)))
+      end
+      result = result + string.format(prefix .. key_fmt .. ":" .. value_fmt .. "\n", key, value)
+
     end
 
-    -- print the string that will display our values
-    print(string.format("  " .. key_fmt .. ":" .. value_fmt, key, value))
-
   end
+  result = result .. prefix .. "}"
+  return result
+
+end
+
+
+-- print out the string representation of a table
+-- return: nil
+function table_print(table)
+
+  print(table_format(table))
+
 end

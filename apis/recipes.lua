@@ -58,7 +58,7 @@ end
 local to_item = function(recipe)
 
   for item_key, recipe_value in pairs(con.RECIPES) do
-    if con[item_key] and common.tables_equal(recipe_value, recipe) then
+    if con[item_key] ~= nil and common.tables_equal(recipe_value, recipe) then
       return con[item_key]
     end
   end
@@ -69,10 +69,8 @@ end
 local to_recipe = function(item)
 
   for item_key, recipe_value in pairs(con.RECIPES) do
-    if con[item_key] then
-      if common.tables_equal(item, con[item_table]) then
-        return recipe_value
-      end
+    if con[item_key] ~= nil and common.tables_equal(item, con[item_key]) then
+      return recipe_value
     end
   end
   return nil
@@ -139,7 +137,7 @@ function craft(recipe, num)
 
         -- try to create the sub component (giving the number of times the resource is needed)
         -- note, as count of items is not yet accounted for, this will over-produce simple components
-        if not craft(item_recipe, inv_count - req_count) then
+        if not craft(item_recipe, req_count - inv_count) then
           print("Failed to create required sub-component!")
           print_resource(resource)
           return false

@@ -170,6 +170,11 @@ function distribute_materials(recipe, num)
 
       -- find the last inventory slot with the resource for the resource source
       local last_slot = last(resource)
+      if last_slot == nil then
+        print(string.format("Failed to find last slot of resource: %s", common.table_format(resource)))
+        return false
+      end
+
       if slot == last_slot then
         print(string.format("Out of materials while distributing to slot: %d", slot))
         return false
