@@ -121,13 +121,18 @@ function craft(recipe, num)
     -- filter objects from the chest in front to the chest above
     while turtle.suck() do
       if inventory.matches(resources, index) then
-        -- keep the inventory objects to a minimum
-        inventory.limit_materials(materials, turtle.dropUp)
-        inventory.select_first_empty()
 
         -- break out early if the materials are all present
         if inventory.contains_materials(materials) then
+          -- dropping forward should give us a shortcut if we need to craft
+          -- multiple of the same object, as they will be higher in the chest
+          inventory.limit_materials(materials, turtle.drop)
+          inventory.select_first_empty()
           break
+        else
+          -- keep the inventory objects to a minimum
+          inventory.limit_materials(materials, turtle.dropUp)
+          inventory.select_first_empty()
         end
 
       else
