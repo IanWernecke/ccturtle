@@ -205,7 +205,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 137 do
+while downloaded < #files do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])
