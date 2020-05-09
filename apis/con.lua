@@ -43,6 +43,7 @@ ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
 
 
 -- items: industrial craft items
+ITEM_BATBOX = {name=MOD_INDUSTRIAL_CRAFT .. ":te", damage=72}
 ITEM_BATTERY = {name=MOD_INDUSTRIAL_CRAFT .. ":re_battery"}
 ITEM_CIRCUIT = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=1}
 ITEM_COIL = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=5}
@@ -81,6 +82,7 @@ RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
 -- recipes: industrial craft recipes
 --  note: cables cannot be automatically crafted at this time because of how getItemDetail() does not
 --    manage to return enough information about items
+RECIPE_BATBOX = {{"pcp", "bbb", "ppp"}, {p=ITEM_PLANKS, c=ITEM_INSULATED_TIN_CABLE, b=ITEM_BATTERY}}
 RECIPE_BATTERY = {{".w", "crc", "crc"}, {w=ITEM_INSULATED_TIN_CABLE, c=ITEM_TIN_CASING, r=ITEM_REDSTONE}}
 RECIPE_COPPER_CABLE = {{"cp"}, {c=ITEM_CUTTER, p=ITEM_COPPER_PLATE}}
 RECIPE_CIRCUIT = {{"ccc", "rpr", "ccc"}, {c=ITEM_INSULATED_COPPER_CABLE, r=ITEM_REDSTONE, p=ITEM_IRON_PLATE}}
@@ -114,6 +116,7 @@ RECIPES = {
   ITEM_STICK=RECIPE_STICK,
 
   -- industrial craft item recipes
+  ITEM_BATBOX=RECIPE_BATBOX,
   ITEM_BATTERY=RECIPE_BATTERY,
   ITEM_CIRCUIT=RECIPE_CIRCUIT,
   ITEM_COPPER_CABLE=RECIPE_COPPER_CABLE,
