@@ -140,5 +140,6 @@ end
 -- global function assignments
 _G.arg_get = arg_get
 _G.arg_getn = arg_get_number
+_G.detail = turtle.getItemDetail
 _G.get = table_get
 _G.deepcopy = table_copy
