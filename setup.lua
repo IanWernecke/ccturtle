@@ -100,6 +100,9 @@ local files = {
   "clear/shelf/right.lua",
   "clear/spiral/left.lua",
   "clear/spiral/right.lua",
+  "craft/batbox.lua",
+  "craft/generator.lua",
+  "craft/hammer.lua",
   "craft/solar-panel.lua",
   "describe/back.lua",
   "describe/down.lua",
@@ -202,7 +205,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 134 do
+while downloaded < 137 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])
