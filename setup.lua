@@ -28,6 +28,7 @@ local directories = {
   "/turtle/clear/magnet/spiral",
   "/turtle/clear/shelf",
   "/turtle/clear/spiral",
+  "/turtle/craft",
   "/turtle/describe",
   "/turtle/dig",
   "/turtle/fill",
@@ -99,6 +100,7 @@ local files = {
   "clear/shelf/right.lua",
   "clear/spiral/left.lua",
   "clear/spiral/right.lua",
+  "craft/solar-panel.lua",
   "describe/back.lua",
   "describe/down.lua",
   "describe/forward.lua",
@@ -200,7 +202,7 @@ end
 -- asynchronously download all of the files
 local downloaded = 0
 local failed = {}
-while downloaded < 133 do
+while downloaded < 134 do
    local event, url, handle = os.pullEvent()
    if event == "http_success" then
        download(handle.readAll(), requests[url])
