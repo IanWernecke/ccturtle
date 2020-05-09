@@ -98,7 +98,7 @@ function craft(recipe, num)
 
   -- begin getting a handle on the recipe requirements
   -- local layout = arg.get(recipe, 1, nil)
-  local resource_map = arg.get(recipe, 2, nil)
+  local resource_map = args.get(recipe, 2, nil)
 
   -- ensure the recipe layout and the resource map were found in the recipe
   -- if layout == nil then error("Recipe layout not found.") end

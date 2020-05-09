@@ -19,12 +19,7 @@
 --    common.arg_get(args, 100, "x") --> "x"
 --    common.arg_get(args, 100) --> nil
 function arg_get(index, default)
-  for i,v in ipairs(arg) do
-    if index == i then
-      return v
-    end
-  end
-  return default
+  table_get(arg, index, default)
 end
 
 
@@ -50,6 +45,17 @@ end
 -- return: (boolean)
 function tables_equal(first_table, second_table)
   return table_length(first_table) == table_length(second_table) and table_match(first_table, second_table)
+end
+
+
+-- obtain a value if it exists in the given table, or return the default value given
+function table_get(table, index, default)
+  for i,v in ipairs(table) do
+    if index == i then
+      return v
+    end
+  end
+  return default
 end
 
 
@@ -129,3 +135,10 @@ function table_print(message, table)
   print(string.format("%s: %s", message, table_format(table)))
 
 end
+
+
+-- global function assignments
+_G.arg_get = arg_get
+_G.arg_getn = arg_get_number
+_G.get = table_get
+_G.deepcopy = table_copy
