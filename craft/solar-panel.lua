@@ -1,1 +1,1 @@
-recipes.craft(con.RECIPE_SOLAR_PANEL, get(arg, 1, 1))
+recipes.craft(con.RECIPE_SOLAR_PANEL, arg_getn(1, 1))

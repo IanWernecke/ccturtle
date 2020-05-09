@@ -1,1 +1,1 @@
-recipes.craft(con.RECIPE_GENERATOR, get(arg, 1, 1))
+recipes.craft(con.RECIPE_GENERATOR, arg_getn(1, 1))

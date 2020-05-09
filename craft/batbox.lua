@@ -1,1 +1,1 @@
-recipes.craft(con.RECIPE_BATBOX, get(arg, 1, 1))
+recipes.craft(con.RECIPE_BATBOX, arg_getn(1, 1))
