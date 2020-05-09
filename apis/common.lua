@@ -86,7 +86,7 @@ end
 function table_format(table, prefix)
 
   -- default the prefix to an empty string
-  prefix = opt.get(prefix, "")
+  prefix = opt_get(prefix, "")
   local prefix_during = prefix .. "  "
   local result = "{\n"
   local key_fmt = nil
@@ -140,7 +140,9 @@ end
 -- global function assignments
 _G.arg_get = arg_get
 _G.arg_getn = arg_get_number
+_G.copy = table_copy
 _G.detail = turtle.getItemDetail
 _G.get = table_get
-_G.deepcopy = table_copy
+_G.getc = function(data, index) return data:sub(index, index) end
+_G.opt_get = function(value, default) return (value == nil and default or value) end
 _G.teq = tables_equal

@@ -58,7 +58,7 @@ end
 -- return: table (dict) {item: number}
 function calculate_materials(recipe, number)
 
-  number = opt.get(number, 1)
+  number = opt_get(number, 1)
 
   -- calculate how many of each item is required
   materials = {}
@@ -82,7 +82,7 @@ end
 -- return: boolean
 function contains(string_id, number)
 
-  number = opt.get(number, 1)
+  number = opt_get(number, 1)
 
   -- find the slot that contains the resource
   local slot = find(string_id)
@@ -106,7 +106,7 @@ end
 -- return: boolean
 function contains_all(resources, number)
 
-  number = opt.get(number, 1)
+  number = opt_get(number, 1)
 
   -- search for each of the resources given and ensure they have the requires amount
   for index = 1, #resources do
@@ -185,11 +185,28 @@ function count(resource)
 end
 
 
+-- create the given recipe from the items in the inventory
+-- note: there must be an exact amount of items in the inventory for this to work
+-- return: (boolean) success
+function craft(recipe, num)
+
+    -- sort all of the items in the inventory towards the end for ease of movement
+    -- note: this does not do any defragging at this time (count 1 will sit next to count 1)
+    inventory.pack_bottom()
+
+    -- distribute the materials for the recipe
+    inventory.distribute_materials(recipe, num)
+
+    return turtle.craft(num)
+
+end
+
+
 -- distribute $num resources to each slot in the recipe
 -- return: boolean success
 function distribute_materials(recipe, num)
 
-  num = opt.get(num, 1)
+  num = opt_get(num, 1)
 
   -- walk each slot and resource in the recipe
   -- for slot, resource in pairs(recipe_walk(recipe)) do
@@ -241,8 +258,8 @@ end
 function drop(slot, turtle_drop, count)
 
   -- set the default drop direction to forwards and the number of items to drop
-  turtle_drop = opt.get(turtle_drop, turtle.drop)
-  count = opt.get(count, nil)
+  turtle_drop = opt_get(turtle_drop, turtle.drop)
+  count = opt_get(count, nil)
 
   -- store this for later
   starting_slot = turtle.getSelectedSlot()
@@ -275,7 +292,7 @@ end
 function empty_slot(slot, drop_action)
 
   -- optional parameters
-  drop_action = opt.get(drop_action, turtle.drop)
+  drop_action = opt_get(drop_action, turtle.drop)
 
   -- get the result value
   local count = turtle.getItemCount(slot)
@@ -404,7 +421,7 @@ end
 function limit_materials(materials, drop_action)
 
   -- optional parameters
-  drop_action = opt.get(drop_action, turtle.drop)
+  drop_action = opt_get(drop_action, turtle.drop)
 
   -- make a copy of the given materials table so we can modify
   -- it without destroying the original
@@ -497,7 +514,7 @@ end
 -- return: boolean
 function matches(resources, slot)
 
-  slot = opt.get(slot, nil)
+  slot = opt_get(slot, nil)
 
   local detail = turtle.getItemDetail(slot)
 
@@ -543,7 +560,7 @@ end
 -- move all inventory items above the given slot towards the end of the inventory
 function pack_bottom(first_slot)
 
-  first_slot = opt.get(first_slot, 1)
+  first_slot = opt_get(first_slot, 1)
 
   -- keep track of the number of slots moved and where the last empty slot appears to be
   local moved = 0

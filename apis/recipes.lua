@@ -1,33 +1,3 @@
--- compare a table with another table
-local compare_resource_map_value_to_resource = function(resource_map_value, resource)
-
-  for key, value in pairs(resource_map_value) do
-    if not resource[key] or resource_map_value[key] ~= resource[key] then
-      return false
-    end
-  end
-  return true
-
-end
-
-
--- print a table that describes a resource
-local print_resource = function(resource)
-
-  print('Resource:')
-  for key, value in pairs(resource) do
-    if type(value) == "string" then
-      print(string.format("  %s: %s", key, value))
-    elseif type(value) == "number" then
-      print(string.format("  %s: %d", key, value))
-    else
-      error(string.format("Unhandled value type: %s", type(value)))
-    end
-  end
-
-end
-
-
 -- move all of the materials from the inventory to the chest in front and
 -- the items from the above chest to the chest forwards
 -- return: nil
@@ -85,15 +55,13 @@ function craft(recipe, num)
   reset()
 
   -- get the number of times to craft the recipe
-  num = opt.get(num, 1)
+  num = opt_get(num, 1)
 
   local debug_item = to_item(recipe)
   if debug_item == nil then
     common.table_print(string.format("Trying to craft recipe (%d)", num), recipe)
-    -- print(string.format("Trying to craft recipe (%d): %s", num, common.table_format(recipe))))
   else
     common.table_print(string.format("Trying to craft item (%d)", num), recipe)
-    -- print(string.format("Trying to craft item (%d): %s", num, common.table_format(debug_item)))
   end
 
   -- begin getting a handle on the recipe requirements
@@ -183,14 +151,14 @@ function craft(recipe, num)
   -- limit the resources to only those required for the recipe
   inventory.limit_materials(materials)
 
-  -- sort all of the items in the inventory towards the end for ease of movement
-  -- note: this does not do any degragging at this time (count 1 will sit next to count 1)
-  inventory.pack_bottom()
+  -- -- sort all of the items in the inventory towards the end for ease of movement
+  -- -- note: this does not do any degragging at this time (count 1 will sit next to count 1)
+  -- inventory.pack_bottom()
+  --
+  -- -- distribute the materials for the recipe
+  -- inventory.distribute_materials(recipe, num)
 
-  -- distribute the materials for the recipe
-  inventory.distribute_materials(recipe, num)
-
-  local result = turtle.craft()
+  local result = inventory.craft(recipe, num)
   reset()
 
   -- if the result failed, print some information for debugging
@@ -198,7 +166,8 @@ function craft(recipe, num)
     print("Failed to craft recipe!")
     local resource = to_item(recipe)
     if resource ~= nil then
-      print_resource(resource)
+      print("Resource:")
+      common.table_print(resource)
     end
     return false
   end
