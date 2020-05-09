@@ -46,9 +46,6 @@ ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
 
 
 -- items: buildcraft
--- ITEM_DIAMOND_GEAR
--- ITEM_GOLD_GEAR
--- ITEM_IRON_GEAR
 -- ITEM_QUARRY
 
 
@@ -100,9 +97,9 @@ RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
 RECIPE_DIAMOND_GEAR = {{".d", "d.d", ".d"}, {d=ITEM_DIAMOND}}
 RECIPE_GOLD_GEAR = {{".g", "g.g", ".g"}, {g=ITEM_GOLD_INGOT}}
 RECIPE_IRON_GEAR = {{".i", "i.i", ".i"}, {i=ITEM_IRON_INGOT}}
--- RECIPE_QUARRY = {{"iri", "gig", "dpd"}, {
---   i=ITEM_IRON_INGOT, r=ITEM_REDSTONE, g=ITEM_GOLD_INGOT, d=ITEM_DIAMOND_GEAR, p=ITEM_DIAMOND_PICKAXE
--- }}
+RECIPE_QUARRY = {{"iri", "gig", "dpd"}, {
+  i=ITEM_IRON_GEAR, r=ITEM_REDSTONE, g=ITEM_GOLD_GEAR, d=ITEM_DIAMOND_GEAR, p=ITEM_DIAMOND_PICKAXE
+}}
 
 
 -- recipes: industrial craft recipes
