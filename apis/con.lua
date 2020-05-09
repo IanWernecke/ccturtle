@@ -33,13 +33,23 @@ BLOCK_STONEBRICK = {name=MOD_MINECRAFT .. ":stonebrick"}
 
 -- items: minecraft items
 ITEM_COBBLESTONE = {name=MOD_MINECRAFT .. ":cobblestone"}
+ITEM_DIAMOND = {name=MOD_MINECRAFT .. ":diamond"}
+ITEM_DIAMOND_PICKAXE = {name=MOD_MINECRAFT .. ":diamond_pickaxe"}
 ITEM_FURNACE = {name=MOD_MINECRAFT .. ":furnace"}
 ITEM_GLASS = {name=MOD_MINECRAFT .. ":glass"}
+ITEM_GOLD_INGOT = {name=MOD_MINECRAFT .. ":gold_ingot"}
 ITEM_IRON_INGOT = {name=MOD_MINECRAFT .. ":iron_ingot"}
 ITEM_LOG = {name=MOD_MINECRAFT .. ":log"}
 ITEM_PLANKS = {name=MOD_MINECRAFT .. ":planks"}
 ITEM_REDSTONE = {name=MOD_MINECRAFT .. ":redstone"}
 ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
+
+
+-- items: buildcraft
+-- ITEM_DIAMOND_GEAR
+-- ITEM_GOLD_GEAR
+-- ITEM_IRON_GEAR
+-- ITEM_QUARRY
 
 
 -- items: industrial craft items
@@ -61,10 +71,16 @@ ITEM_TIN_CASING = {name=MOD_INDUSTRIAL_CRAFT .. ":casing", damage=6}
 
 
 -- items: thermal foundation
+ITEM_BRONZE_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=163}
+ITEM_COPPER_DUST = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=64}
 ITEM_COPPER_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=128}
 ITEM_COPPER_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=320}
+ITEM_DIAMOND_GEAR = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=26}
+ITEM_GOLD_GEAR = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=25}
+ITEM_IRON_GEAR = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=24}
 ITEM_IRON_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=32}
 ITEM_PULVERIZED_COAL={name=MOD_THERMAL_FOUNDATION .. ":material", damage=768}
+ITEM_TIN_DUST = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=65}
 ITEM_TIN_INGOT = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=129}
 ITEM_TIN_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=321}
 
@@ -74,9 +90,19 @@ ITEM_TIN_PLATE = {name=MOD_THERMAL_FOUNDATION .. ":material", damage=321}
 
 
 -- recipes: minecraft recipes
+RECIPE_DIAMOND_PICKAXE = {{"ddd", ".s", ".s"}, {d=ITEM_DIAMOND, s=ITEM_STICK}}
 RECIPE_FURNACE = {{"ccc", "c.c", "ccc"}, {c=ITEM_COBBLESTONE}}
 RECIPE_PLANKS = {{"w"}, {w=ITEM_LOG}}
 RECIPE_STICK = {{"p", "p"}, {p=ITEM_PLANKS}}
+
+
+-- recipes: buildcraft recipes
+RECIPE_DIAMOND_GEAR = {{".d", "d.d", ".d"}, {d=ITEM_DIAMOND}}
+RECIPE_GOLD_GEAR = {{".g", "g.g", ".g"}, {g=ITEM_GOLD_INGOT}}
+RECIPE_IRON_GEAR = {{".i", "i.i", ".i"}, {i=ITEM_IRON_INGOT}}
+-- RECIPE_QUARRY = {{"iri", "gig", "dpd"}, {
+--   i=ITEM_IRON_INGOT, r=ITEM_REDSTONE, g=ITEM_GOLD_INGOT, d=ITEM_DIAMOND_GEAR, p=ITEM_DIAMOND_PICKAXE
+-- }}
 
 
 -- recipes: industrial craft recipes
@@ -111,9 +137,15 @@ RECIPE_TIN_PLATE = {{"hi"}, {h=ITEM_FORGE_HAMMER, i=ITEM_TIN_INGOT}}
 RECIPES = {
 
   -- minecraft item recipes
+  ITEM_DIAMOND_PICKAXE=RECIPE_DIAMOND_PICKAXE,
   ITEM_FURNACE=RECIPE_FURNACE,
   ITEM_PLANKS=RECIPE_PLANKS,
   ITEM_STICK=RECIPE_STICK,
+
+  -- buildcraft item recipes
+  ITEM_DIAMOND_GEAR=RECIPE_DIAMOND_GEAR,
+  ITEM_GOLD_GEAR=RECIPE_GOLD_GEAR,
+  ITEM_IRON_GEAR=RECIPE_IRON_GEAR,
 
   -- industrial craft item recipes
   ITEM_BATBOX=RECIPE_BATBOX,

@@ -59,6 +59,13 @@ function table_get(table, index, default)
 end
 
 
+-- obtain a numerical value from a table
+-- return: number
+function table_get_number(table, index, default)
+  return tonumber(table_get(table, index, default))
+end
+
+
 -- obtain the number of keys in a table
 -- return: number
 function table_length(table)
@@ -144,5 +151,6 @@ _G.copy = table_copy
 _G.detail = turtle.getItemDetail
 _G.get = table_get
 _G.getc = function(data, index) return data:sub(index, index) end
+_G.getn = table_get_number
 _G.opt_get = function(value, default) return (value == nil and default or value) end
 _G.teq = tables_equal
