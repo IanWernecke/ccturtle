@@ -45,6 +45,7 @@ ITEM_STICK = {name=MOD_MINECRAFT .. ":stick"}
 -- items: industrial craft items
 ITEM_BATTERY = {name=MOD_INDUSTRIAL_CRAFT .. ":re_battery"}
 ITEM_CIRCUIT = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=1}
+ITEM_COIL = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=5}
 ITEM_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
 ITEM_CUTTER = {name=MOD_INDUSTRIAL_CRAFT .. ":cutter"}
 ITEM_FORGE_HAMMER = {name=MOD_INDUSTRIAL_CRAFT .. ":forge_hammer"}
@@ -53,6 +54,7 @@ ITEM_INSULATED_COPPER_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=0}
 ITEM_INSULATED_TIN_CABLE = {name=MOD_INDUSTRIAL_CRAFT .. ":cable", damage=4}
 ITEM_IRON_FURNACE = {name=MOD_INDUSTRIAL_CRAFT .. ":te", damage=46}
 ITEM_RUBBER = {name=MOD_INDUSTRIAL_CRAFT .. ":crafting", damage=0}
+ITEM_SOLAR_PANEL = {name=MOD_INDUSTRIAL_CRAFT .. ":te", damage=8}
 ITEM_TIN_CASING = {name=MOD_INDUSTRIAL_CRAFT .. ":casing", damage=6}
 
 
@@ -86,6 +88,8 @@ RECIPE_FORGE_HAMMER = {{"ii", "iss", "ii"}, {i=ITEM_IRON_INGOT, s=ITEM_STICK}}
 RECIPE_GENERATOR = {{".b", "ppp", ".f"}, {b=ITEM_BATTERY, p=ITEM_IRON_PLATE, f=ITEM_IRON_FURNACE}}
 -- RECIPE_INSULATED_COPPER_CABLE = {{"rw"}, {r=ITEM_RUBBER, w=ITEM_COPPER_CABLE}}
 RECIPE_IRON_FURNACE = {{".p", "p.p", "pfp"}, {p=ITEM_IRON_PLATE, f=ITEM_FURNACE}}
+RECIPE_LV_TRANSFORMER = {{"ptp", "pcp", "ptp"}, {p=ITEM_PLANKS, t=ITEM_INSULATED_TIN_CABLE, c=ITEM_COIL}}
+-- RECIPE_SOLAR_ARRAY = {{"ppp", "ptp", "ppp"}, {p=ITEM_SOLAR_PANEL, t=ITEM_LV_TRANSFORMER}}
 RECIPE_SOLAR_PANEL = {{"pgp", "gpg", "cGc"}, {
   p=ITEM_PULVERIZED_COAL, g=ITEM_GLASS, c=ITEM_CIRCUIT, G=ITEM_GENERATOR
 }}
