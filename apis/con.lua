@@ -5,6 +5,8 @@ DIG_INTERVAL = 0.5
 -- mod prefixes for block and item details
 MOD_APPLIED_ENERGISTICS = "appliedenergistics2"
 MOD_BUILDCRAFT_BUILDERS = "buildcraftbuilders"
+MOD_BUILDCRAFT_CORE = "buildcraftcore"
+MOD_BUILDCRAFT_TRANSPORT = "buildcrafttransport"
 MOD_CHISEL = "chisel"
 MOD_ENERGY_CONVERTERS = 'energyconverters'
 MOD_INDUSTRIAL_CRAFT = "ic2"
@@ -51,13 +53,14 @@ ITEM_STONE = {name=MOD_MINECRAFT .. ":stone"}
 
 -- items: buildcraft/buildcraftbuilders
 ITEM_QUARRY = {name=MOD_BUILDCRAFT_BUILDERS .. ":quarry"} -- damage=0
--- ITEM_STIRLING_ENGINE = {name=}
+ITEM_STIRLING_ENGINE = {name=MOD_BUILDCRAFT_CORE .. ":engine", damage=1}
+ITEM_WOODEN_PIPE = {name=MOD_BUILDCRAFT_TRANSPORT .. ":pipe_wood_item", damage=0} -- damage=0; unconfirmed
 
 
 -- items: energy converters
 ITEM_ENERGY_BRIDGE = {name=MOD_ENERGY_CONVERTERS .. ":energy_bridge"} -- damage=0
 ITEM_ENERGY_CONSUMER_EU_LV = {name=MOD_ENERGY_CONVERTERS .. ":energy_consumer_eu", damage=0} -- damage=4
-ITEM_ENERGY_PRODUCER_EU_LV {name=MOD_ENERGY_CONVERTERS .. ":energy_producer_eu", damage=0} -- guess
+ITEM_ENERGY_PRODUCER_EU_LV = {name=MOD_ENERGY_CONVERTERS .. ":energy_producer_eu", damage=0} -- guess
 ITEM_ENERGY_PRODUCER_MJ = {name=MOD_ENERGY_CONVERTERS .. ":energy_producer_mj", damage=0}
 
 
@@ -116,9 +119,10 @@ RECIPE_IRON_GEAR = {{".i", "i.i", ".i"}, {i=ITEM_IRON_INGOT}}
 RECIPE_QUARRY = {{"iri", "gig", "dpd"}, {
   i=ITEM_IRON_GEAR, r=ITEM_REDSTONE, g=ITEM_GOLD_GEAR, d=ITEM_DIAMOND_GEAR, p=ITEM_DIAMOND_PICKAXE
 }}
-RECIPE_STIRLING_ENGINE = {{"sss", ".g", "GpG"}, {s=ITEM_STONE, g=ITEM_GLASS, G=ITEM_STONE_GEAR, p=ITEM_PISTON}}
-RECIPE_STONE_GEAR = {{".s", "sgs", ".s"}, {s=ITEM_STICK, g=ITEM_WOODEN_GEAR}}
+RECIPE_STIRLING_ENGINE = {{"sss", ".g", "GpG"}, {s=ITEM_COBBLESTONE, g=ITEM_GLASS, G=ITEM_STONE_GEAR, p=ITEM_PISTON}}
+RECIPE_STONE_GEAR = {{".s", "sgs", ".s"}, {s=ITEM_STONE, g=ITEM_WOODEN_GEAR}}
 RECIPE_WOODEN_GEAR = {{".s", "s.s", ".s"}, {s=ITEM_STICK}}
+RECIPE_WOODEN_PIPE = {{"pgp"}, {p=ITEM_PLANKS, g=ITEM_GLASS}}
 
 
 -- recipes: energy converters
@@ -127,7 +131,10 @@ RECIPE_ENERGY_PRODUCER_EU_LV = {{"scs", "tmg", "sCs"}, {
   s=ITEM_STONE, c=ITEM_INSULATED_TIN_CABLE, t=ITEM_LV_TRANSFORMER,
   i=ITEM_BASIC_MACHINE_CASING, g=ITEM_GOLD_INGOT, C=ITEM_COIL
 }}
-
+RECIPE_ENERGY_PRODUCER_MJ = {{"sis", "epg", "sis"}, {
+  s=ITEM_STONE, i=ITEM_IRON_GEAR,
+  e=ITEM_STIRLING_ENGINE, p=ITEM_WOODEN_PIPE, g=ITEM_GOLD_INGOT
+}}
 
 -- recipes: industrial craft recipes
 --  note: cables cannot be automatically crafted at this time because of how getItemDetail() does not
@@ -170,8 +177,10 @@ RECIPES = {
 
   -- buildcraft item recipes
   ITEM_QUARRY=RECIPE_QUARRY,
+  ITEM_STIRLING_ENGINE=RECIPE_STIRLING_ENGINE,
   ITEM_STONE_GEAR=RECIPE_STONE_GEAR,
   ITEM_WOODEN_GEAR=RECIPE_WOODEN_GEAR,
+  ITEM_WOODEN_PIPE=RECIPE_WOODEN_PIPE,
 
   -- energy converter recipes
   ITEM_ENERGY_CONSUMER_EU_LV=RECIPE_ENERGY_CONSUMER_EU_LV,
